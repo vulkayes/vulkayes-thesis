@@ -1,0 +1,19 @@
+>> Moving out
+original Window { a: 1 }
+
+in surface Some(Window { a: 1 })
+
+Destroying surface with window None
+Destroying dummy
+moved out Window { a: 1 }
+
+Destroying window 1
+
+>>Not moving out
+original Window { a: 2 }
+
+in surface Some(Window { a: 2 })
+
+Destroying surface with window Some(Window { a: 2 })
+Destroying dummy
+Destroying window 2

@@ -1,0 +1,40 @@
+@startuml object_lifetime
+
+skinparam {
+	ArrowColor #black
+	ComponentBorderColor #333
+	ComponentBorderThickness 1
+}
+
+component [Instance] <<Vrc>> #FFBF00
+component [PhysicalDevice] #5D8AA8
+component [Window] #79443B
+component [Surface] #FF9966
+component [Device] <<Vrc>> #318CE7
+component [Swapchain] <<Vrc>> #CC0000
+component [SwapchainImage] <<Vrc>>
+component [Queue] <<Vrc>> #FF033E
+component [Resource] <<Vrc>> #E3DAC9
+component [CommandBuffer] <<Vrc>>
+
+[Instance] <-- [Surface]
+[Window] <-- [Surface]
+
+[Instance] <-- [PhysicalDevice]
+
+[PhysicalDevice] <-- [Device]
+
+[Surface] <-- [Swapchain]
+[Device] <-- [Swapchain]
+
+[Device] <-- [Queue]
+
+[Device] <-- [Resource]
+
+[Device] <-- [CommandBuffer]
+[Resource] <-- [CommandBuffer]
+[SwapchainImage] <-- [CommandBuffer]
+
+[Swapchain] <-- [SwapchainImage]
+
+@enduml

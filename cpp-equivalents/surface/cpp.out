@@ -1,0 +1,33 @@
+>> Moving out
+original 1
+
+Moving window 1
+Moving window 1
+Destroying window -1
+original -1
+in surface 1
+
+Moving window 1
+original -1
+in surface -1
+moved out 1
+
+Destroying window 1
+Destroying surface with window -1
+Destroying dummy
+Destroying window -1
+Destroying window -1
+
+>> Not moving out
+original 2
+
+Moving window 2
+Moving window 2
+Destroying window -2
+original -2
+in surface 2
+
+Destroying surface with window 2
+Destroying dummy
+Destroying window 2
+Destroying window -2
