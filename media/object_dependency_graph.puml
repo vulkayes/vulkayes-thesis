@@ -1,0 +1,62 @@
+@startuml object_dependency_graph
+
+skinparam {
+	ArrowColor #black
+	ComponentBorderColor #333
+	ComponentBorderThickness 1
+}
+
+note left of [Instance]
+	<color 66FF98>Green</color> = done
+	<color 66CDFF>Blue</color> = in-progress
+	<color FF6680>Red</color> = planned
+end note
+
+component [Instance] <<Vrc>> #66FF98
+component [Window] #66FF98
+
+component [PhysicalDevice] #66FF98
+component [Surface] #66FF98
+
+component [Device] <<Vrc>> #66FF98
+
+component [Queue] <<Vrc>> #66CDFF
+component [Swapchain] <<Vrc>> #66CDFF
+component [SwapchainImage] <<Vrc>> #66CDFF
+
+component [Image] <<Vrc>> #66CDFF
+component [Buffer] <<Vrc>> #FF6680
+
+component [ImageView] <<Vrc>> #FF6680
+component [BufferView] <<Vrc>> #FF6680
+
+component [CommandPool] <<Vrc>> #FF6680
+component [CommandBuffer] <<Vrc>> #FF6680
+
+component [RenderPass] <<Vrc>> #FF6680
+component [FrameBuffer] <<Vrc>> #FF6680
+component [ComputePipeline] <<Vrc>> #FF6680
+component [GraphicsPipeline] <<Vrc>> #FF6680
+component [DescriptorSet] <<Vrc>> #FF6680
+
+[Instance] <-- [PhysicalDevice]
+[Instance] <-- [Surface]
+[Window] <-- [Surface]
+
+[PhysicalDevice] <-- [Device]
+[Surface] <-- [Swapchain] : <<Vrc>>
+
+[Device] <-- [Queue]
+[Device] <-- [Swapchain]
+[Device] <-- [Image]
+[Device] <-- [Buffer]
+[Device] <-- [CommandBuffer]
+
+[Swapchain] <-- [SwapchainImage]
+
+[Image] <.. [SwapchainImage] : Inlined
+[Image] <-- [ImageView]
+
+[Buffer] <-- [BufferView]
+
+@enduml
