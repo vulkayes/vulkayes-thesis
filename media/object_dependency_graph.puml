@@ -1,6 +1,8 @@
 @startuml object_dependency_graph
 
 skinparam {
+	defaultFontName Fira Sans
+
 	ArrowColor #black
 	ComponentBorderColor #333
 	ComponentBorderThickness 1
