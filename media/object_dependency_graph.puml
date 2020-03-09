@@ -39,26 +39,44 @@ component [RenderPass] <<Vrc>> #FF6680
 component [FrameBuffer] <<Vrc>> #FF6680
 component [ComputePipeline] <<Vrc>> #FF6680
 component [GraphicsPipeline] <<Vrc>> #FF6680
+
+component [DescriptorSetLayout] <<Vrc>> #FF6680
+component [PipelineLayout] <<Vrc>> #FF6680
+
+component [DescriptorPool] <<Vrc>> #FF6680
+
 component [DescriptorSet] <<Vrc>> #FF6680
 
 [Instance] <-- [PhysicalDevice]
 [Instance] <-- [Surface]
-[Window] <-- [Surface]
 
+[Window] <-- [Surface]
 [PhysicalDevice] <-- [Device]
 [Surface] <-- [Swapchain] : <<Vrc>>
 
-[Device] <-- [Queue]
+[Device] <- [Queue]
 [Device] <-- [Swapchain]
 [Device] <-- [Image]
 [Device] <-- [Buffer]
-[Device] <-- [CommandBuffer]
+[Device] <-- [CommandPool]
+[Device] <-- [RenderPass]
+[Device] <-- [DescriptorSetLayout]
+[Device] <-- [PipelineLayout]
+[Device] <-- [DescriptorPool]
 
 [Swapchain] <-- [SwapchainImage]
 
 [Image] <.. [SwapchainImage] : Inlined
 [Image] <-- [ImageView]
-
 [Buffer] <-- [BufferView]
+
+[CommandPool] <-- [CommandBuffer]
+
+[RenderPass] <.. [FrameBuffer]
+[DescriptorSetLayout] <.. [DescriptorSet]
+[DescriptorSetLayout] <.. [PipelineLayout]
+[PipelineLayout] <.. [ComputePipeline]
+[PipelineLayout] <.. [GraphicsPipeline]
+[DescriptorPool] <-- [DescriptorSet]
 
 @enduml
