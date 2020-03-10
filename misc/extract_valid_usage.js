@@ -93,3 +93,7 @@ function extract_valid_usage(selector) {
 // VkDescriptorPoolSize: extract_valid_usage("div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(5) > div:nth-child(8) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)")
 // VkDescriptorSetAllocateInfo: extract_valid_usage("div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(5) > div:nth-child(12) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)")
 // VkDescriptorSetVariableDescriptorCountAllocateInfo: extract_valid_usage("div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(5) > div:nth-child(13) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)")
+
+// vkQueueSubmit: extract_valid_usage("div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(9) > div:nth-child(2) > div:nth-child(1) > div:nth-child(11) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)")
+// VkSubmitInfo: extract_valid_usage("div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(9) > div:nth-child(3) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)")
+// VkPresentInfoKHR: extract_valid_usage("div.sect1:nth-child(33) > div:nth-child(2) > div:nth-child(10) > div:nth-child(64) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)")

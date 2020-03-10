@@ -32,8 +32,8 @@ component [Buffer] <<Vrc>> #FF6680
 component [ImageView] <<Vrc>> #FF6680
 component [BufferView] <<Vrc>> #FF6680
 
-component [CommandPool] <<Vrc>> #FF6680
-component [CommandBuffer] <<Vrc>> #FF6680
+component [CommandPool] <<Vrc>> #66CDFF
+component [CommandBuffer] <<Vrc>> #66CDFF
 
 component [RenderPass] <<Vrc>> #FF6680
 component [FrameBuffer] <<Vrc>> #FF6680
@@ -61,7 +61,6 @@ component [DescriptorSet] <<Vrc>> #FF6680
 [Device] <-- [CommandPool]
 [Device] <-- [RenderPass]
 [Device] <-- [DescriptorSetLayout]
-[Device] <-- [PipelineLayout]
 [Device] <-- [DescriptorPool]
 
 [Swapchain] <-- [SwapchainImage]
@@ -73,10 +72,10 @@ component [DescriptorSet] <<Vrc>> #FF6680
 [CommandPool] <-- [CommandBuffer]
 
 [RenderPass] <.. [FrameBuffer]
-[DescriptorSetLayout] <.. [DescriptorSet]
-[DescriptorSetLayout] <.. [PipelineLayout]
-[PipelineLayout] <.. [ComputePipeline]
-[PipelineLayout] <.. [GraphicsPipeline]
+[DescriptorSetLayout] <.. [DescriptorSet] : Copy?
+[DescriptorSetLayout] <.. [PipelineLayout] : Copy? + Device
+[PipelineLayout] <.. [ComputePipeline] : Copy?
+[PipelineLayout] <.. [GraphicsPipeline] : Copy?
 [DescriptorPool] <-- [DescriptorSet]
 
 @enduml
