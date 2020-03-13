@@ -1,0 +1,49 @@
+{
+	"implicit_validations": {
+		
+	},
+	"creation_validations": {
+		"VkDeviceCreateInfo": {
+			"1": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"],
+			"5": ["comment", "Handled by API design"],
+			"6": ["comment", "Handled by API design"],
+			"7": ["comment", "Handled by API design"],
+			"8": ["comment", "Handled by API design"],
+			"9": ["comment", "Handled by API design"],
+			"10": ["comment", "Handled by API design"]
+		},
+		"VkDeviceQueueCreateInfo": {
+			"3": ["comment", "Handled by API design"]
+		},
+		"VkSwapchainCreateInfoKHR": {
+			"6": ["comment", "Guaranteed by the type system"],
+			"7": ["comment", "Lower bound guaranteed by the type system"],
+
+			"10": ["comment", "Guaranteed by the type system"],
+			"11": ["comment", "Guaranteed by the type system"],
+
+			"16": ["comment", "Handled by API design"],
+			"17": ["comment", "Handled by API design"],
+
+			"19": ["comment", "Handled by API design"],
+			"20": ["comment", "Handled by API design"],
+			"21": ["comment", "Handled by API design"]
+		},
+		"vkCreateCommandPool": {
+			"0": ["comment", "Handled by API design"]
+		},
+		"VkCommandPoolCreateInfo": {
+			"0": ["comment", "Handled by API design"]
+		},
+		"VkCommandBufferAllocateInfo": {
+			"0": ["comment", "Guaranteed by the type system"]
+		},
+		"VkSemaphoreTypeCreateInfo": {
+			"1": ["comment", "Handled by API design"]
+		}
+	},
+	"usage_validations": {
+		
+	}
+}

@@ -44,8 +44,10 @@ component [DescriptorSetLayout] <<Vrc>> #FF6680
 component [PipelineLayout] <<Vrc>> #FF6680
 
 component [DescriptorPool] <<Vrc>> #FF6680
-
 component [DescriptorSet] <<Vrc>> #FF6680
+
+component [Semaphore] <<Vrc>> #66CDFF
+component [Fence] <<Vrc>> #66CDFF
 
 [Instance] <-- [PhysicalDevice]
 [Instance] <-- [Surface]
@@ -62,6 +64,8 @@ component [DescriptorSet] <<Vrc>> #FF6680
 [Device] <-- [RenderPass]
 [Device] <-- [DescriptorSetLayout]
 [Device] <-- [DescriptorPool]
+[Device] <- [Semaphore]
+[Device] <- [Fence]
 
 [Swapchain] <-- [SwapchainImage]
 

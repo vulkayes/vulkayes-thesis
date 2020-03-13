@@ -1,12 +1,33 @@
 #!/bin/sh
 
+function include_filter() {
+	python3 -c '
+import sys
+import re
+
+INCLUDE_RE = re.compile("!\[\]\(([^).]+)\.md\)")
+
+def filter_include(lines):
+	for line in lines:
+		match = INCLUDE_RE.match(line)
+		if match is not None:
+			with open("documents/" + match.group(1) + ".md", "r") as sub:
+				filter_include(sub)
+		else:
+			print(line, end = "")
+
+with open(sys.argv[1], "r") as file:
+	filter_include(file)
+' "$@"
+}
+
 function render() {
 	local document=$1
 
-	pandoc \
+	include_filter "documents/$document.md" | pandoc \
 		--highlight-style "misc/code.theme" --css "misc/style.css" \
 		--from markdown --to pdf --standalone --pdf-engine=xelatex \
-		"documents/$document.md" --output "pdfs/$document.pdf"
+		--output "pdfs/$document.pdf"
 }
 
 and_open=${2:-1}

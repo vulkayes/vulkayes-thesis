@@ -1,0 +1,90 @@
+{
+	"implicit_validations": [
+		"Instance",
+		["vkCreateInstance", "div.sect1:nth-child(4) > div:nth-child(2) > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkInstanceCreateInfo", "div.sect1:nth-child(4) > div:nth-child(2) > div:nth-child(3) > div:nth-child(5) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		"Device",
+		["vkCreateDevice", "div.sect1:nth-child(5) > div:nth-child(2) > div:nth-child(4) > div:nth-child(9) > div:nth-child(3) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkDeviceCreateInfo", "div.sect1:nth-child(5) > div:nth-child(2) > div:nth-child(4) > div:nth-child(9) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkDeviceQueueCreateInfo", "div.sect1:nth-child(5) > div:nth-child(2) > div:nth-child(5) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		["vkCreateSwapchainKHR", "div.sect1:nth-child(33) > div:nth-child(2) > div:nth-child(10) > div:nth-child(12) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkSwapchainCreateInfoKHR", "div.sect1:nth-child(33) > div:nth-child(2) > div:nth-child(10) > div:nth-child(13) > div:nth-child(1) > div:nth-child(12) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		["vkCreateCommandPool", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(6) > div:nth-child(3) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkCommandPoolCreateInfo", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(6) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkCommandBufferAllocateInfo", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(7) > div:nth-child(2) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"]
+	],
+	"creation_validations": [
+		"Instance",
+		["vkCreateInstance", "div.sect1:nth-child(4) > div:nth-child(2) > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		
+		"Device",
+		["vkCreateDevice", "div.sect1:nth-child(5) > div:nth-child(2) > div:nth-child(4) > div:nth-child(9) > div:nth-child(3) > div:nth-child(1) > div:nth-child(7) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkDeviceCreateInfo", "div.sect1:nth-child(5) > div:nth-child(2) > div:nth-child(4) > div:nth-child(9) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		
+		"Queue",
+		["VkDeviceQueueCreateInfo", "div.sect1:nth-child(5) > div:nth-child(2) > div:nth-child(5) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		"Swapchain",
+		["VkSwapchainCreateInfoKHR", "div.sect1:nth-child(33) > div:nth-child(2) > div:nth-child(10) > div:nth-child(13) > div:nth-child(1) > div:nth-child(11) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		"Command buffer",
+		["vkCreateCommandPool", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(6) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkCommandPoolCreateInfo", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(6) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkCommandBufferAllocateInfo", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(7) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		"Render pass",
+		["VkRenderPassCreateInfo2", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(13) > div:nth-child(42) > div:nth-child(1) > div:nth-child(9) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkAttachmentDescription2", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(13) > div:nth-child(43) > div:nth-child(1) > div:nth-child(10) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkSubpassDescription2", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(13) > div:nth-child(45) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkAttachmentReference2", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(13) > div:nth-child(49) > div:nth-child(1) > div:nth-child(10) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkSubpassDependency2", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(13) > div:nth-child(51) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		"Framebuffer",
+		["vkCreateFramebuffer", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(15) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkFramebufferCreateInfo", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(15) > div:nth-child(4) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		"Compute pipeline",
+		["vkCreateComputePipelines", "div.sect1:nth-child(10) > div:nth-child(2) > div:nth-child(18) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkComputePipelineCreateInfo", "div.sect1:nth-child(10) > div:nth-child(2) > div:nth-child(18) > div:nth-child(5) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		
+		"Graphics pipeline",
+		["VkPipelineShaderStageCreateInfo", "div.sect1:nth-child(10) > div:nth-child(2) > div:nth-child(18) > div:nth-child(6) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["vkCreateGraphicsPipelines", "div.sect1:nth-child(10) > div:nth-child(2) > div:nth-child(19) > div:nth-child(3) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkGraphicsPipelineCreateInfo", "div.sect1:nth-child(10) > div:nth-child(2) > div:nth-child(19) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		"Buffer",
+		["vkCreateBuffer", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkBufferCreateInfo", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkBufferViewCreateInfo", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		"Image",
+		["vkCreateImage", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(4) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkImageCreateInfo", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(13) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkImageViewCreateInfo", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(6) > div:nth-child(5) > div:nth-child(1) > div:nth-child(14) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkImageSubresourceRange", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(6) > div:nth-child(9) > div:nth-child(1) > div:nth-child(12) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		"Descriptor layout",
+		["VkDescriptorSetLayoutCreateInfo", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkDescriptorSetLayoutBinding", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(3) > div:nth-child(7) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkPipelineLayoutCreateInfo", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkPushConstantRange", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(4) > div:nth-child(6) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		"Descriptor set",
+		["VkDescriptorPoolCreateInfo", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(5) > div:nth-child(4) > div:nth-child(1) > div:nth-child(9) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkDescriptorPoolSize", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(5) > div:nth-child(8) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkDescriptorSetAllocateInfo", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(5) > div:nth-child(12) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkDescriptorSetVariableDescriptorCountAllocateInfo", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(5) > div:nth-child(13) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+
+		"Sempahore",
+		["VkSemaphoreTypeCreateInfo", "div.sect1:nth-child(7) > div:nth-child(2) > div:nth-child(7) > div:nth-child(6) > div:nth-child(1) > div:nth-child(7) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"]
+	],
+	"usage_validations": [
+		"Queue",
+		["vkQueueSubmit", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(9) > div:nth-child(2) > div:nth-child(1) > div:nth-child(11) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkSubmitInfo", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(9) > div:nth-child(3) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkPresentInfoKHR", "div.sect1:nth-child(33) > div:nth-child(2) > div:nth-child(10) > div:nth-child(64) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"]
+	]
+}

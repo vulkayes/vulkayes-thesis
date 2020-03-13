@@ -1,48 +1,6 @@
----
-geometry:
-	- margin=2cm
-header-includes:
-	- |
-		```{=latex}
-			\usepackage[most,breakable]{tcolorbox}
-
-			\definecolor{inline-code}{HTML}{264357}
-
-			\definecolor{validation-box}{HTML}{EAEAEA}
-			\definecolor{validation-comment}{HTML}{0099B3}
-			\definecolor{validation-comment-box}{HTML}{0099B3}
-			\definecolor{validation-done}{HTML}{00B372}
-			\definecolor{validation-done-box}{HTML}{00B372}
-
-			\let\oldtexttt\texttt
-			\renewcommand{\texttt}[1]{\textcolor{inline-code}{\oldtexttt{#1}}}
-
-			\newtcolorbox{validation-box}{breakable,colback=validation-box,boxrule=0pt,arc=0pt,halign=left,left=-5pt}
-			\newcommand{\valbox}{\begin{validation-box}\pretolerance=10000}
-			\newcommand{\valboxend}{\end{validation-box}}
-
-			\newtcolorbox{validation-comment-box}{breakable,colback=validation-box,colframe=validation-comment-box,size=fbox,left*=0pt,leftrule=10pt}
-			\newcommand{\valcombox}{\begin{validation-comment-box}}
-			\newcommand{\valcomboxend}{\end{validation-comment-box}}
-
-			\newtcolorbox{validation-done-box}{breakable,colback=validation-box,colframe=validation-done-box,size=fbox,left*=0pt,leftrule=10pt}
-			\newcommand{\valdonebox}{\begin{validation-done-box}}
-			\newcommand{\valdoneboxend}{\end{validation-done-box}}
-		```
-mainfont: Fira Sans
-sansfont: Fira Sans
-monofont: Fira Code
----
-
-# Plan of implementation
-
-![Object Dependency Graph](media/object_dependency_graph.svg)
-
 ## Creation validation
 
-Validations of correct usage in create functions as dictated by the Vulkan specification. Some of these validations are statically fulfilled using the type system or the API design, other are left to the user.
-
-Validations resolved statically are enclosd in blue boxes below.
+Validations of correct usage in create functions as dictated by the Vulkan specification.
 
 ### Instance
 
@@ -71,8 +29,9 @@ Validations for `VkDeviceCreateInfo`:
 * The `queueFamilyIndex` member of each element of `pQueueCreateInfos` must be unique within `pQueueCreateInfos`, except that two members can share the same `queueFamilyIndex` if one is a protected-capable queue and one is not a protected-capable queue
 
 \valcombox
+
 * If the `pNext` chain includes a `VkPhysicalDeviceFeatures2` structure, then `pEnabledFeatures` must be `NULL`
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 \valcomboxend
 
@@ -81,26 +40,27 @@ Validations for `VkDeviceCreateInfo`:
 * `ppEnabledExtensionNames` must not contain both `VK_KHR_buffer_device_address` and `VK_EXT_buffer_device_address`
 
 \valcombox
+
 * If the `pNext` chain includes a `VkPhysicalDeviceVulkan11Features` structure, then it must not include a `VkPhysicalDevice16BitStorageFeatures`, `VkPhysicalDeviceMultiviewFeatures`, `VkPhysicalDeviceVariablePointersFeatures`, `VkPhysicalDeviceProtectedMemoryFeatures`, `VkPhysicalDeviceSamplerYcbcrConversionFeatures`, or `VkPhysicalDeviceShaderDrawParametersFeatures` structure
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 * If the `pNext` chain includes a `VkPhysicalDeviceVulkan12Features` structure, then it must not include a `VkPhysicalDevice8BitStorageFeatures`, `VkPhysicalDeviceShaderAtomicInt64Features`, `VkPhysicalDeviceShaderFloat16Int8Features`, `VkPhysicalDeviceDescriptorIndexingFeatures`, `VkPhysicalDeviceScalarBlockLayoutFeatures`, `VkPhysicalDeviceImagelessFramebufferFeatures`, `VkPhysicalDeviceUniformBufferStandardLayoutFeatures`, `VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures`, `VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures`, `VkPhysicalDeviceHostQueryResetFeatures`, `VkPhysicalDeviceTimelineSemaphoreFeatures`, `VkPhysicalDeviceBufferDeviceAddressFeatures`, or `VkPhysicalDeviceVulkanMemoryModelFeatures` structure
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 * If `ppEnabledExtensions` contains code:"VK_KHR_draw_indirect_count" and the `pNext` chain includes a `VkPhysicalDeviceVulkan12Features` structure, then `VkPhysicalDeviceVulkan12Features`::`drawIndirectCount` must be `VK_TRUE`
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 * If `ppEnabledExtensions` contains code:"VK_KHR_sampler_mirror_clamp_to_edge" and the `pNext` chain includes a `VkPhysicalDeviceVulkan12Features` structure, then `VkPhysicalDeviceVulkan12Features`::`samplerMirrorClampToEdge` must be `VK_TRUE`
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 * If `ppEnabledExtensions` contains code:"VK_EXT_descriptor_indexing" and the `pNext` chain includes a `VkPhysicalDeviceVulkan12Features` structure, then `VkPhysicalDeviceVulkan12Features`::`descriptorIndexing` must be `VK_TRUE`
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 * If `ppEnabledExtensions` contains code:"VK_EXT_sampler_filter_minmax" and the `pNext` chain includes a `VkPhysicalDeviceVulkan12Features` structure, then `VkPhysicalDeviceVulkan12Features`::`samplerFilterMinmax` must be `VK_TRUE`
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 * If `ppEnabledExtensions` contains code:"VK_EXT_shader_viewport_index_layer" and the `pNext` chain includes a `VkPhysicalDeviceVulkan12Features` structure, then `VkPhysicalDeviceVulkan12Features`::`shaderOutputViewportIndex` and `VkPhysicalDeviceVulkan12Features`::`shaderOutputLayer` must both be `VK_TRUE`
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 \valcomboxend
 
@@ -119,8 +79,9 @@ Validations for `VkDeviceQueueCreateInfo`:
 * Each element of `pQueuePriorities` must be between `0.0` and `1.0` inclusive
 
 \valcombox
+
 * If the protected memory feature is not enabled, the `VK_DEVICE_QUEUE_CREATE_PROTECTED_BIT` bit of `flags` must not be set.
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 \valcomboxend
 
@@ -147,10 +108,10 @@ Validations for `VkSwapchainCreateInfoKHR`:
 \valcombox
 
 * `imageExtent` members `width` and `height` must both be non-zero
-	- \color{validation-comment} Guaranteed by the type system
+	- \valcom Guaranteed by the type system
 
 * `imageArrayLayers` must be greater than `0` and less than or equal to the `maxImageArrayLayers` member of the `VkSurfaceCapabilitiesKHR` structure returned by `vkGetPhysicalDeviceSurfaceCapabilitiesKHR` for the surface
-	- \color{validation-comment} Lower bound guaranteed by the type system
+	- \valcom Lower bound guaranteed by the type system
 
 \valcomboxend
 
@@ -159,11 +120,12 @@ Validations for `VkSwapchainCreateInfoKHR`:
 * If `presentMode` is `VK_PRESENT_MODE_SHARED_DEMAND_REFRESH_KHR` or `VK_PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR`, `imageUsage` must be a subset of the supported usage flags present in the `sharedPresentSupportedUsageFlags` member of the `VkSharedPresentSurfaceCapabilitiesKHR` structure returned by `vkGetPhysicalDeviceSurfaceCapabilities2KHR` for `surface`
 
 \valcombox
+
 * If `imageSharingMode` is `VK_SHARING_MODE_CONCURRENT`, `pQueueFamilyIndices` must be a valid pointer to an array of `queueFamilyIndexCount` `uint32_t` values
-	- \color{validation-comment} Guaranteed by the type system
+	- \valcom Guaranteed by the type system
 
 * If `imageSharingMode` is `VK_SHARING_MODE_CONCURRENT`, `queueFamilyIndexCount` must be greater than `1`
-	- \color{validation-comment} Guaranteed by the type system
+	- \valcom Guaranteed by the type system
 
 \valcomboxend
 
@@ -176,39 +138,42 @@ Validations for `VkSwapchainCreateInfoKHR`:
 * `presentMode` must be one of the `VkPresentModeKHR` values returned by `vkGetPhysicalDeviceSurfacePresentModesKHR` for the surface
 
 \valcombox
+
 * If the logical device was created with `VkDeviceGroupDeviceCreateInfo`::`physicalDeviceCount` equal to 1, `flags` must not contain `VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR`
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 * If `oldSwapchain` is not `VK_NULL_HANDLE`, `oldSwapchain` must be a non-retired swapchain associated with native window referred to by `surface`
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 \valcomboxend
 
 * The implied image creation parameters of the swapchain must be supported as reported by `vkGetPhysicalDeviceImageFormatProperties`
 
 \valcombox
+
 * If `flags` contains `VK_SWAPCHAIN_CREATE_MUTABLE_FORMAT_BIT_KHR` then the `pNext` chain must include a `VkImageFormatListCreateInfo` structure with a `viewFormatCount` greater than zero and `pViewFormats` must have an element equal to `imageFormat`
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 * If `flags` contains `VK_SWAPCHAIN_CREATE_PROTECTED_BIT_KHR`, then `VkSurfaceProtectedCapabilitiesKHR`::`supportsProtected` must be `VK_TRUE` in the `VkSurfaceProtectedCapabilitiesKHR` structure returned by `vkGetPhysicalDeviceSurfaceCapabilities2KHR` for `surface`
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 * If the `pNext` chain includes a `VkSurfaceFullScreenExclusiveInfoEXT` structure with its `fullScreenExclusive` member set to `VK_FULL_SCREEN_EXCLUSIVE_APPLICATION_CONTROLLED_EXT`, and `surface` was created using `vkCreateWin32SurfaceKHR`, a `VkSurfaceFullScreenExclusiveWin32InfoEXT` structure must be included in the `pNext` chain
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 \valcomboxend
 
 \valboxend
 
-### CommandPool
+### Command buffer
 
 Validations for `vkCreateCommandPool`:
 
 \valbox
 
 \valcombox
+
 * `pCreateInfo->queueFamilyIndex` must be the index of a queue family available in the logical device `device`.
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 \valcomboxend
 
@@ -219,28 +184,28 @@ Validations for `VkCommandPoolCreateInfo`:
 \valbox
 
 \valcombox
+
 * If the protected memory feature is not enabled, the `VK_COMMAND_POOL_CREATE_PROTECTED_BIT` bit of `flags` must not be set.
-	- \color{validation-comment} Handled by API design
+	- \valcom Handled by API design
 
 \valcomboxend
 
 \valboxend
-
-### CommandBuffer
 
 Validations for `VkCommandBufferAllocateInfo`:
 
 \valbox
 
 \valcombox
+
 * `commandBufferCount` must be greater than `0`
-	- \color{validation-comment} Guaranteed by the type system
+	- \valcom Guaranteed by the type system
 
 \valcomboxend
 
 \valboxend
 
-### RenderPass
+### Render pass
 
 Validations for `VkRenderPassCreateInfo2`:
 
@@ -464,9 +429,9 @@ Validations for `VkFramebufferCreateInfo`:
 
 * If `renderPass` was not specified with non-zero view masks, each element of `pAttachments` that is referenced by `fragmentDensityMapAttachment` must have a `layerCount` equal to `1`
 
-* If `flags` does not include `VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT`, an element of `pAttachments` that is referenced by `fragmentDensityMapAttachment` must have a width at least as large as `ceil(width / maxFragmentDensityTexelSize_width)`
+* If `flags` does not include `VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT`, an element of `pAttachments` that is referenced by `fragmentDensityMapAttachment` must have a width at least as large as $\lceil{\frac{width}{maxFragmentDensityTexelSize_{width}}}\rceil$
 
-* If `flags` does not include `VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT`, an element of `pAttachments` that is referenced by `fragmentDensityMapAttachment` must have a height at least as large as `ceil(height / maxFragmentDensityTexelSize_height)`
+* If `flags` does not include `VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT`, an element of `pAttachments` that is referenced by `fragmentDensityMapAttachment` must have a height at least as large as $\lceil{\frac{height}{maxFragmentDensityTexelSize_{height}}}\rceil$
 
 * If `flags` does not include `VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT`, each element of `pAttachments` must only specify a single mip level
 
@@ -500,9 +465,9 @@ Validations for `VkFramebufferCreateInfo`:
 
 * If `flags` includes `VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT`, the `height` member of any element of the `pAttachmentImageInfos` member of a `VkFramebufferAttachmentsCreateInfo` structure included in the `pNext` chain must be greater than or equal to `height`, except for any element that is referenced by `VkRenderPassFragmentDensityMapCreateInfoEXT`::`fragmentDensityMapAttachment` in `renderPass`
 
-* If `flags` includes `VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT`, the `width` member of any element of the `pAttachmentImageInfos` member of a `VkFramebufferAttachmentsCreateInfo` structure included in the `pNext` chain that is referenced by `VkRenderPassFragmentDensityMapCreateInfoEXT`::`fragmentDensityMapAttachment` in `renderPass` must be greater than or equal to `ceil(width / maxFragmentDensityTexelSize_width)`
+* If `flags` includes `VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT`, the `width` member of any element of the `pAttachmentImageInfos` member of a `VkFramebufferAttachmentsCreateInfo` structure included in the `pNext` chain that is referenced by `VkRenderPassFragmentDensityMapCreateInfoEXT`::`fragmentDensityMapAttachment` in `renderPass` must be greater than or equal to $\lceil{\frac{width}{maxFragmentDensityTexelSize_{width}}}\rceil$
 
-* If `flags` includes `VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT`, the `height` member of any element of the `pAttachmentImageInfos` member of a `VkFramebufferAttachmentsCreateInfo` structure included in the `pNext` chain that is referenced by `VkRenderPassFragmentDensityMapCreateInfoEXT`::`fragmentDensityMapAttachment` in `renderPass` must be greater than or equal to `ceil(height / maxFragmentDensityTexelSize_height)`
+* If `flags` includes `VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT`, the `height` member of any element of the `pAttachmentImageInfos` member of a `VkFramebufferAttachmentsCreateInfo` structure included in the `pNext` chain that is referenced by `VkRenderPassFragmentDensityMapCreateInfoEXT`::`fragmentDensityMapAttachment` in `renderPass` must be greater than or equal to $\lceil{\frac{height}{maxFragmentDensityTexelSize_{height}}}\rceil$
 
 * If multiview is enabled for `renderPass`, and `flags` includes `VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT`, the `layerCount` member of any element of the `pAttachmentImageInfos` member of a `VkFramebufferAttachmentsCreateInfo` structure included in the `pNext` chain must be greater than the maximum bit index set in the view mask in the subpasses in which it is used in `renderPass`
 
@@ -520,7 +485,7 @@ Validations for `VkFramebufferCreateInfo`:
 
 \valboxend
 
-### ComputePipeline
+### Compute pipeline
 
 Validations for `vkCreateComputePipelines`:
 
@@ -538,7 +503,7 @@ Validations for `VkComputePipelineCreateInfo`:
 
 * If `flags` contains the `VK_PIPELINE_CREATE_DERIVATIVE_BIT` flag, and `basePipelineIndex` is -1, `basePipelineHandle` must be a valid handle to a compute `VkPipeline`
 
-* If `flags` contains the `VK_PIPELINE_CREATE_DERIVATIVE_BIT` flag, and `basePipelineHandle` is `VK_NULL_HANDLE`, `basePipelineIndex` must be a valid index into the calling commandâ€™s `pCreateInfos` parameter
+* If `flags` contains the `VK_PIPELINE_CREATE_DERIVATIVE_BIT` flag, and `basePipelineHandle` is `VK_NULL_HANDLE`, `basePipelineIndex` must be a valid index into the calling command’s `pCreateInfos` parameter
 
 * If `flags` contains the `VK_PIPELINE_CREATE_DERIVATIVE_BIT` flag, and `basePipelineIndex` is not -1, `basePipelineHandle` must be `VK_NULL_HANDLE`
 
@@ -553,6 +518,8 @@ Validations for `VkComputePipelineCreateInfo`:
 * The number of resources in `layout` accessible to the compute shader stage must be less than or equal to `VkPhysicalDeviceLimits`::`maxPerStageResources`
 
 \valboxend
+
+### Graphics pipeline
 
 Validations for `VkPipelineShaderStageCreateInfo`:
 
@@ -618,8 +585,6 @@ Validations for `VkPipelineShaderStageCreateInfo`:
 
 \valboxend
 
-### GraphicsPipeline
-
 Validations for `vkCreateGraphicsPipelines`:
 
 \valbox
@@ -636,7 +601,7 @@ Validations for `VkGraphicsPipelineCreateInfo`:
 
 * If `flags` contains the `VK_PIPELINE_CREATE_DERIVATIVE_BIT` flag, and `basePipelineIndex` is -1, `basePipelineHandle` must be a valid handle to a graphics `VkPipeline`
 
-* If `flags` contains the `VK_PIPELINE_CREATE_DERIVATIVE_BIT` flag, and `basePipelineHandle` is `VK_NULL_HANDLE`, `basePipelineIndex` must be a valid index into the calling commandâ€™s `pCreateInfos` parameter
+* If `flags` contains the `VK_PIPELINE_CREATE_DERIVATIVE_BIT` flag, and `basePipelineHandle` is `VK_NULL_HANDLE`, `basePipelineIndex` must be a valid index into the calling command’s `pCreateInfos` parameter
 
 * If `flags` contains the `VK_PIPELINE_CREATE_DERIVATIVE_BIT` flag, and `basePipelineIndex` is not -1, `basePipelineHandle` must be `VK_NULL_HANDLE`
 
@@ -682,7 +647,7 @@ Validations for `VkGraphicsPipelineCreateInfo`:
 
 * If rasterization is not disabled and `subpass` uses a depth/stencil attachment in `renderPass` that has a layout of `VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL` or `VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL` in the `VkAttachmentReference` defined by `subpass`, the `failOp`, `passOp` and `depthFailOp` members of each of the `front` and `back` members of `pDepthStencilState` must be `VK_STENCIL_OP_KEEP`
 
-* If rasterization is not disabled and the subpass uses color attachments, then for each color attachment in the subpass the `blendEnable` member of the corresponding element of the `pAttachment` member of `pColorBlendState` must be `VK_FALSE` if the attached imageâ€™s format features does not contain `VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT`.
+* If rasterization is not disabled and the subpass uses color attachments, then for each color attachment in the subpass the `blendEnable` member of the corresponding element of the `pAttachment` member of `pColorBlendState` must be `VK_FALSE` if the attached image’s format features does not contain `VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT`.
 
 * If rasterization is not disabled and the subpass uses color attachments, the `attachmentCount` member of `pColorBlendState` must be equal to the `colorAttachmentCount` used to create `subpass`
 
@@ -812,8 +777,6 @@ Validations for `VkBufferCreateInfo`:
 
 \valboxend
 
-### BufferView
-
 Validations for `VkBufferViewCreateInfo`:
 
 \valbox
@@ -916,9 +879,9 @@ Validations for `VkImageCreateInfo`:
 
 * If `usage` includes `VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT`, `VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT`, `VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT`, or `VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT`, `extent.height` must be less than or equal to `VkPhysicalDeviceLimits`::`maxFramebufferHeight`
 
-* If `usage` includes `VK_IMAGE_USAGE_FRAGMENT_DENSITY_MAP_BIT_EXT`, `extent.width` must be less than or equal to `ceil(maxFramebufferWidth / minFragmentDensityTexelSize_width)`
+* If `usage` includes `VK_IMAGE_USAGE_FRAGMENT_DENSITY_MAP_BIT_EXT`, `extent.width` must be less than or equal to $\lceil{\frac{maxFramebufferWidth}{minFragmentDensityTexelSize_{width}}}\rceil$
 
-* If `usage` includes `VK_IMAGE_USAGE_FRAGMENT_DENSITY_MAP_BIT_EXT`, `extent.height` must be less than or equal to `ceild(maxFramebufferHeight / minFragmentDensityTexelSize_height)`
+* If `usage` includes `VK_IMAGE_USAGE_FRAGMENT_DENSITY_MAP_BIT_EXT`, `extent.height` must be less than or equal to $\lceil{\frac{maxFramebufferHeight}{minFragmentDensityTexelSize_{height}}}\rceil$
 
 * If `usage` includes `VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT`, `usage` must also contain at least one of `VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT`, `VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT`, or `VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT`.
 
@@ -968,15 +931,15 @@ Validations for `VkImageCreateInfo`:
 
 * `initialLayout` must be `VK_IMAGE_LAYOUT_UNDEFINED` or `VK_IMAGE_LAYOUT_PREINITIALIZED`.
 
-*     If the `pNext` chain includes a `VkExternalMemoryImageCreateInfo` or `VkExternalMemoryImageCreateInfoNV`     structure whose `handleTypes` member is not `0`, `initialLayout`     must be `VK_IMAGE_LAYOUT_UNDEFINED`
+*     If the `pNext` chain includes a `VkExternalMemoryImageCreateInfo` or `VkExternalMemoryImageCreateInfoNV`     structure whose `handleTypes` member is not `0`, `initialLayout` must be `VK_IMAGE_LAYOUT_UNDEFINED`
 
-* If the image `format` is one of those listed in Formats requiring sampler Yâ€²CBCR conversion for VK_IMAGE_ASPECT_COLOR_BIT image views, then `mipLevels` must be 1
+* If the image `format` is one of those listed in Formats requiring sampler Y′CBCRconversion forVK_IMAGE_ASPECT_COLOR_BITimage views, then `mipLevels` must be 1
 
-* If the image `format` is one of those listed in Formats requiring sampler Yâ€²CBCR conversion for VK_IMAGE_ASPECT_COLOR_BIT image views, `samples` must be `VK_SAMPLE_COUNT_1_BIT`
+* If the image `format` is one of those listed in Formats requiring sampler Y′CBCRconversion forVK_IMAGE_ASPECT_COLOR_BITimage views, `samples` must be `VK_SAMPLE_COUNT_1_BIT`
 
-* If the image `format` is one of those listed in Formats requiring sampler Yâ€²CBCR conversion for VK_IMAGE_ASPECT_COLOR_BIT image views, `imageType` must be `VK_IMAGE_TYPE_2D`
+* If the image `format` is one of those listed in Formats requiring sampler Y′CBCRconversion forVK_IMAGE_ASPECT_COLOR_BITimage views, `imageType` must be `VK_IMAGE_TYPE_2D`
 
-* If the image `format` is one of those listed in Formats requiring sampler Yâ€²CBCR conversion for VK_IMAGE_ASPECT_COLOR_BIT image views, and the `ycbcrImageArrays` feature is not enabled, `arrayLayers` must be 1
+* If the image `format` is one of those listed in Formats requiring sampler Y′CBCRconversion forVK_IMAGE_ASPECT_COLOR_BITimage views, and the `ycbcrImageArrays` feature is not enabled, `arrayLayers` must be 1
 
 * If `format` is a _multi-planar_ format, and if `imageCreateFormatFeatures` (as defined in Image Creation Limits) does not contain `VK_FORMAT_FEATURE_DISJOINT_BIT`, then `flags` must not contain `VK_IMAGE_CREATE_DISJOINT_BIT`
 
@@ -1038,8 +1001,6 @@ Validations for `VkImageCreateInfo`:
 
 \valboxend
 
-### ImageView
-
 Validations for `VkImageViewCreateInfo`:
 
 \valbox
@@ -1056,27 +1017,27 @@ Validations for `VkImageViewCreateInfo`:
 
 * If `usage` contains `VK_IMAGE_USAGE_SAMPLED_BIT`, then the format features of the resultant image view must contain `VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT`.
 
-* If `usage` contains `VK_IMAGE_USAGE_STORAGE_BIT`, then the image viewâ€™s format features must contain `VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT`.
+* If `usage` contains `VK_IMAGE_USAGE_STORAGE_BIT`, then the image view’s format features must contain `VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT`.
 
-* If `usage` contains `VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT`, then the image viewâ€™s format features must contain `VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT`.
+* If `usage` contains `VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT`, then the image view’s format features must contain `VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT`.
 
-* If `usage` contains `VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT`, then the image viewâ€™s format features must contain `VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT`.
+* If `usage` contains `VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT`, then the image view’s format features must contain `VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT`.
 
-* If `usage` contains `VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT`, then the image viewâ€™s format features must contain at least one of `VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT` or `VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT`.
+* If `usage` contains `VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT`, then the image view’s format features must contain at least one of `VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT` or `VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT`.
 
 * `subresourceRange.baseMipLevel` must be less than the `mipLevels` specified in `VkImageCreateInfo` when `image` was created
 
-* If `subresourceRange.levelCount` is not `VK_REMAINING_MIP_LEVELS`, `subresourceRange.baseMipLevel + subresourceRange.levelCount` must be less than or equal to the `mipLevels` specified in `VkImageCreateInfo` when `image` was created
+* If `subresourceRange.levelCount` is not `VK_REMAINING_MIP_LEVELS`, `subresourceRange.baseMipLevel+subresourceRange.levelCount` must be less than or equal to the `mipLevels` specified in `VkImageCreateInfo` when `image` was created
 
 * If `image` was created with `usage` containing `VK_IMAGE_USAGE_FRAGMENT_DENSITY_MAP_BIT_EXT`, `subresourceRange.levelCount` must be `1`
 
 * If `image` is not a 3D image created with `VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT` set, or `viewType` is not `VK_IMAGE_VIEW_TYPE_2D` or `VK_IMAGE_VIEW_TYPE_2D_ARRAY`, `subresourceRange.baseArrayLayer` must be less than the `arrayLayers` specified in `VkImageCreateInfo` when `image` was created
 
-* If `subresourceRange.layerCount` is not `VK_REMAINING_ARRAY_LAYERS`, `image` is not a 3D image created with `VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT` set, or `viewType` is not `VK_IMAGE_VIEW_TYPE_2D` or `VK_IMAGE_VIEW_TYPE_2D_ARRAY`, `subresourceRange.layerCount` must be non-zero and `subresourceRange.baseArrayLayer + subresourceRange.layerCount` must be less than or equal to the `arrayLayers` specified in `VkImageCreateInfo` when `image` was created
+* If `subresourceRange.layerCount` is not `VK_REMAINING_ARRAY_LAYERS`, `image` is not a 3D image created with `VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT` set, or `viewType` is not `VK_IMAGE_VIEW_TYPE_2D` or `VK_IMAGE_VIEW_TYPE_2D_ARRAY`, `subresourceRange.layerCount` must be non-zero and `subresourceRange.baseArrayLayer+subresourceRange.layerCount` must be less than or equal to the `arrayLayers` specified in `VkImageCreateInfo` when `image` was created
 
 * If `image` is a 3D image created with `VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT` set, and `viewType` is `VK_IMAGE_VIEW_TYPE_2D` or `VK_IMAGE_VIEW_TYPE_2D_ARRAY`, `subresourceRange.baseArrayLayer` must be less than the depth computed from `baseMipLevel` and `extent.depth` specified in `VkImageCreateInfo` when `image` was created, according to the formula defined in Image Miplevel Sizing.
 
-* If `subresourceRange.layerCount` is not `VK_REMAINING_ARRAY_LAYERS`, `image` is a 3D image created with `VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT` set, and `viewType` is `VK_IMAGE_VIEW_TYPE_2D` or `VK_IMAGE_VIEW_TYPE_2D_ARRAY`, `subresourceRange.layerCount` must be non-zero and `subresourceRange.baseArrayLayer + subresourceRange.layerCount` must be less than or equal to the depth computed from `baseMipLevel` and `extent.depth` specified in `VkImageCreateInfo` when `image` was created, according to the formula defined in Image Miplevel Sizing.
+* If `subresourceRange.layerCount` is not `VK_REMAINING_ARRAY_LAYERS`, `image` is a 3D image created with `VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT` set, and `viewType` is `VK_IMAGE_VIEW_TYPE_2D` or `VK_IMAGE_VIEW_TYPE_2D_ARRAY`, `subresourceRange.layerCount` must be non-zero and `subresourceRange.baseArrayLayer+subresourceRange.layerCount` must be less than or equal to the depth computed from `baseMipLevel` and `extent.depth` specified in `VkImageCreateInfo` when `image` was created, according to the formula defined in Image Miplevel Sizing.
 
 * If `image` was created with the `VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT` flag, `format` must be compatible with the `format` used to create `image`, as defined in Format Compatibility Classes
 
@@ -1134,7 +1095,7 @@ Validations for `VkImageSubresourceRange`:
 
 \valboxend
 
-### DescriptorSetLayout
+### Descriptor layout
 
 Validations for `VkDescriptorSetLayoutCreateInfo`:
 
@@ -1169,8 +1130,6 @@ Validations for `VkDescriptorSetLayoutBinding`:
 * If `descriptorType` is `VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT` and `descriptorCount` is not `0`, then `stageFlags` must be `0` or `VK_SHADER_STAGE_FRAGMENT_BIT`
 
 \valboxend
-
-### PipelineLayout
 
 Validations for `VkPipelineLayoutCreateInfo`:
 
@@ -1266,7 +1225,7 @@ Validations for `VkPushConstantRange`:
 
 \valboxend
 
-### DescriptorPool
+### Descriptor set
 
 Validations for `VkDescriptorPoolCreateInfo`:
 
@@ -1285,8 +1244,6 @@ Validations for `VkDescriptorPoolSize`:
 * If `type` is `VK_DESCRIPTOR_TYPE_INLINE_UNIFORM_BLOCK_EXT` then `descriptorCount` must be a multiple of `4`
 
 \valboxend
-
-### DescriptorSet
 
 Validations for `VkDescriptorSetAllocateInfo`:
 
@@ -1308,84 +1265,20 @@ Validations for `VkDescriptorSetVariableDescriptorCountAllocateInfo`:
 
 \valboxend
 
-## Usage validations
+### Sempahore
 
-Validations of correct unsage in other functions as dictated by the Vulkan specification.
-
-### Queue operations
-
-Validations for `vkQueueSubmit`:
+Validations for `VkSemaphoreTypeCreateInfo`:
 
 \valbox
 
-* If `fence` is not `VK_NULL_HANDLE`, `fence` must be unsignaled
+* If the `timelineSemaphore` feature is not enabled, `semaphoreType` must not equal `VK_SEMAPHORE_TYPE_TIMELINE`
 
-* If `fence` is not `VK_NULL_HANDLE`, `fence` must not be associated with any other queue command that has not yet completed execution on that queue
+\valcombox
 
-* Any calls to `vkCmdSetEvent`, `vkCmdResetEvent` or `vkCmdWaitEvents` that have been recorded into any of the command buffer elements of the `pCommandBuffers` member of any element of `pSubmits`, must not reference any `VkEvent` that is referenced by any of those commands in a command buffer that has been submitted to another queue and is still in the _pending state_
+* If `semaphoreType` is `VK_SEMAPHORE_TYPE_BINARY`, `initialValue` must be zero.
+	- \valcom Handled by API design
 
-* Any stage flag included in any element of the `pWaitDstStageMask` member of any element of `pSubmits` must be a pipeline stage supported by one of the capabilities of `queue`, as specified in the table of supported pipeline stages
-
-* Each element of the `pSignalSemaphores` member of any element of `pSubmits` must be unsignaled when the semaphore signal operation it defines is executed on the device
-
-* When a semaphore wait operation referring to a binary semaphore defined by any element of the `pWaitSemaphores` member of any element of `pSubmits` executes on `queue`, there must be no other queues waiting on the same semaphore
-
-* All elements of the `pWaitSemaphores` member of all elements of `pSubmits` created with a `VkSemaphoreType` of `VK_SEMAPHORE_TYPE_BINARY` must reference a semaphore signal operation that has been submitted for execution and any semaphore signal operations on which it depends (if any) must have also been submitted for execution
-
-* Each element of the `pCommandBuffers` member of each element of `pSubmits` must be in the pending or executable state
-
-* If any element of the `pCommandBuffers` member of any element of `pSubmits` was not recorded with the `VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT`, it must not be in the pending state
-
-* Any secondary command buffers recorded into any element of the `pCommandBuffers` member of any element of `pSubmits` must be in the pending or executable state
-
-* If any secondary command buffers recorded into any element of the `pCommandBuffers` member of any element of `pSubmits` was not recorded with the `VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT`, it must not be in the pending state
-
-* Each element of the `pCommandBuffers` member of each element of `pSubmits` must have been allocated from a `VkCommandPool` that was created for the same queue family `queue` belongs to
-
-* If any element of `pSubmits->pCommandBuffers` includes a Queue Family Transfer Acquire Operation, there must exist a previously submitted Queue Family Transfer Release Operation on a queue in the queue family identified by the acquire operation, with parameters matching the acquire operation as defined in the definition of such acquire operations, and which happens before the acquire operation
-
-* If a command recorded into any element of `pCommandBuffers` was a `vkCmdBeginQuery` whose `queryPool` was created with a `queryType` of `VK_QUERY_TYPE_PERFORMANCE_QUERY_KHR`, the profiling lock must have been held continuously on the `VkDevice` that `queue` was retrieved from, throughout recording of those command buffers
-
-* Any resource created with `VK_SHARING_MODE_EXCLUSIVE` that is read by an operation specified by `pSubmits` must not be owned by any queue family other than the one which `queue` belongs to, at the time it is executed
+\valcomboxend
 
 \valboxend
 
-Validations for `VkSubmitInfo`:
-
-\valbox
-
-* Each element of `pCommandBuffers` must not have been allocated with `VK_COMMAND_BUFFER_LEVEL_SECONDARY`
-
-* If the geometry shaders feature is not enabled, each element of `pWaitDstStageMask` must not contain `VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT`
-
-* If the tessellation shaders feature is not enabled, each element of `pWaitDstStageMask` must not contain `VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT` or `VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT`
-
-* Each element of `pWaitDstStageMask` must not include `VK_PIPELINE_STAGE_HOST_BIT`.
-
-* If any element of `pWaitSemaphores` or `pSignalSemaphores` was created with a `VkSemaphoreType` of `VK_SEMAPHORE_TYPE_TIMELINE`, then the `pNext` chain must include a `VkTimelineSemaphoreSubmitInfo` structure
-
-* If the `pNext` chain of this structure includes a `VkTimelineSemaphoreSubmitInfo` structure and any element of `pWaitSemaphores` was created with a `VkSemaphoreType` of `VK_SEMAPHORE_TYPE_TIMELINE`, then its `waitSemaphoreValueCount` member must equal `waitSemaphoreCount`
-
-* If the `pNext` chain of this structure includes a `VkTimelineSemaphoreSubmitInfo` structure and any element of `pSignalSemaphores` was created with a `VkSemaphoreType` of `VK_SEMAPHORE_TYPE_TIMELINE`, then its `signalSemaphoreValueCount` member must equal `signalSemaphoreCount`
-
-* For each element of `pSignalSemaphores` created with a `VkSemaphoreType` of `VK_SEMAPHORE_TYPE_TIMELINE` the corresponding element of `VkTimelineSemaphoreSubmitInfo`::pSignalSemaphoreValues must have a value greater than the current value of the semaphore when the semaphore signal operation is executed
-
-* For each element of `pWaitSemaphores` created with a `VkSemaphoreType` of `VK_SEMAPHORE_TYPE_TIMELINE` the corresponding element of `VkTimelineSemaphoreSubmitInfo`::pWaitSemaphoreValues must have a value which does not differ from the current value of the semaphore or the value of any outstanding semaphore wait or signal operation on that semaphore by more than `maxTimelineSemaphoreValueDifference`.
-
-* For each element of `pSignalSemaphores` created with a `VkSemaphoreType` of `VK_SEMAPHORE_TYPE_TIMELINE` the corresponding element of `VkTimelineSemaphoreSubmitInfo`::pSignalSemaphoreValues must have a value which does not differ from the current value of the semaphore or the value of any outstanding semaphore wait or signal operation on that semaphore by more than `maxTimelineSemaphoreValueDifference`.
-
-* If the mesh shaders feature is not enabled, each element of `pWaitDstStageMask` must not contain `VK_PIPELINE_STAGE_MESH_SHADER_BIT_NV`
-
-* If the task shaders feature is not enabled, each element of `pWaitDstStageMask` must not contain `VK_PIPELINE_STAGE_TASK_SHADER_BIT_NV`
-
-\valboxend
-
-Validations for `VkPresentInfoKHR`:
-
-\valbox
-
-* Each element of `pImageIndices` must be the index of a presentable image acquired from the swapchain specified by the corresponding element of the `pSwapchains` array, and the presented image subresource must be in the `VK_IMAGE_LAYOUT_PRESENT_SRC_KHR` or `VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR` layout at the time the operation is executed on a `VkDevice`
-
-* All elements of the `pWaitSemaphores` must have a `VkSemaphoreType` of `VK_SEMAPHORE_TYPE_BINARY`
-
-\valboxend
