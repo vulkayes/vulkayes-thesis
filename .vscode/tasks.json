@@ -32,6 +32,21 @@
 				"clear": false
 			},
 			"problemMatcher": []
+		},
+		{
+			"label": "Run extractor.py",
+			"type": "shell",
+			"group": "build",
+			"command": "misc/spec_extractor/extractor.py misc/spec_extractor/structure.json vkspec.html documents/validations",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"problemMatcher": []
 		}
 	]
 }

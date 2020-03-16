@@ -8,7 +8,7 @@ skinparam {
 	ComponentBorderThickness 1
 }
 
-note left of [Instance]
+note left of [Window]
 	<color 66FF98>Green</color> = done
 	<color 66CDFF>Blue</color> = in-progress
 	<color FF6680>Red</color> = planned
@@ -22,8 +22,8 @@ component [Surface] #66FF98
 
 component [Device] <<Vrc>> #66FF98
 
-component [Queue] <<Vrc>> #66CDFF
-component [Swapchain] <<Vrc>> #66CDFF
+component [Queue] <<Vrc>> #66FF98
+component [Swapchain] <<Vrc>> #66FF98
 component [SwapchainImage] <<Vrc>> #66CDFF
 
 component [Image] <<Vrc>> #66CDFF
@@ -32,7 +32,7 @@ component [Buffer] <<Vrc>> #FF6680
 component [ImageView] <<Vrc>> #FF6680
 component [BufferView] <<Vrc>> #FF6680
 
-component [CommandPool] <<Vrc>> #66CDFF
+component [CommandPool] <<Vrc>> #66FF98
 component [CommandBuffer] <<Vrc>> #66CDFF
 
 component [RenderPass] <<Vrc>> #FF6680
@@ -46,8 +46,8 @@ component [PipelineLayout] <<Vrc>> #FF6680
 component [DescriptorPool] <<Vrc>> #FF6680
 component [DescriptorSet] <<Vrc>> #FF6680
 
-component [Semaphore] <<Vrc>> #66CDFF
-component [Fence] <<Vrc>> #66CDFF
+component [Semaphore] <<Vrc>> #66FF98
+component [Fence] <<Vrc>> #66FF98
 
 [Instance] <-- [PhysicalDevice]
 [Instance] <-- [Surface]
@@ -57,7 +57,7 @@ component [Fence] <<Vrc>> #66CDFF
 [Surface] <-- [Swapchain] : <<Vrc>>
 
 [Device] <- [Queue]
-[Device] <-- [Swapchain]
+[Swapchain] -> [Device]
 [Device] <-- [Image]
 [Device] <-- [Buffer]
 [Device] <-- [CommandPool]

@@ -1,90 +1,367 @@
 {
 	"implicit_validations": [
 		"Instance",
-		["vkCreateInstance", "div.sect1:nth-child(4) > div:nth-child(2) > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkInstanceCreateInfo", "div.sect1:nth-child(4) > div:nth-child(2) > div:nth-child(3) > div:nth-child(5) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["vkCreateInstance", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkInstanceCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"],
+			"4": ["comment", "Handled by API design (ash)"],
+			"5": ["done", "Returns error"],
+			"6": ["done", "Returns error"]
+		}],
 
 		"Device",
-		["vkCreateDevice", "div.sect1:nth-child(5) > div:nth-child(2) > div:nth-child(4) > div:nth-child(9) > div:nth-child(3) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkDeviceCreateInfo", "div.sect1:nth-child(5) > div:nth-child(2) > div:nth-child(4) > div:nth-child(9) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkDeviceQueueCreateInfo", "div.sect1:nth-child(5) > div:nth-child(2) > div:nth-child(5) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["vkCreateDevice", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design (ash)"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkDeviceCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"],
+			"4": ["comment", "Handled by API design (ash)"],
+			"5": ["done", "Returns error"],
+			"6": ["done", "Returns error"],
+			"7": ["comment", "Handled by API design (ash)"],
+			"8": ["done", "Returns error"]
+		}],
+		
+		"Queue",
+		["VkDeviceQueueCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"],
+			"4": ["comment", "Handled by API design (ash)"],
+			"5": ["done", "Returns error"]
+		}],
+		["vkGetDeviceQueue", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"]
+		}],
+		["vkGetDeviceQueue2", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"]
+		}],
+		["VkDeviceQueueInfo2", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design (ash)"]
+		}],
+		["vkQueueSubmit", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["done", "Returns error"]
+		}],
+		["VkSubmitInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"],
+			"4": ["comment", "Handled by API design (ash)"],
+			"5": ["comment", "Handled by API design"],
+			"6": ["comment", "Handled by API design (ash)"],
+			"7": ["comment", "Handled by API design (ash)"],
+			"8": ["done", "Returns error"]
+		}],
 
-		["vkCreateSwapchainKHR", "div.sect1:nth-child(33) > div:nth-child(2) > div:nth-child(10) > div:nth-child(12) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkSwapchainCreateInfoKHR", "div.sect1:nth-child(33) > div:nth-child(2) > div:nth-child(10) > div:nth-child(13) > div:nth-child(1) > div:nth-child(12) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		"Swapchain",
+		["vkCreateSwapchainKHR", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design (ash)"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkSwapchainCreateInfoKHR", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"],
+			"4": ["comment", "Handled by API design (ash)"],
+			"5": ["comment", "Handled by API design (ash)"],
+			"6": ["comment", "Handled by API design (ash)"],
+			"7": ["comment", "Handled by API design (ash)"],
+			"8": ["done", "Returns error"],
+			"9": ["comment", "Handled by API design (ash)"],
+			"10": ["comment", "Handled by API design (ash)"],
+			"11": ["comment", "Handled by API design (ash)"],
+			"12": ["comment", "Handled by API design (ash)"],
+			"13": ["comment", "Handled by API design (ash)"],
+			"14": ["comment", "Handled by API design"],
+			"15": ["comment", "Handled by API design"]
+		}],
+		["vkGetSwapchainImagesKHR", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design (ash)"],
+			"3": ["comment", "Handled by API design (ash)"],
+			"4": ["comment", "Handled by API design"]
+		}],
+		["vkQueuePresentKHR", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkPresentInfoKHR", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"],
+			"4": ["comment", "Handled by API design (ash)"],
+			"5": ["comment", "Handled by API design (ash)"],
+			"6": ["comment", "Handled by API design (ash)"],
+			"7": ["done", "Returns error"],
+			"8": ["done", "Returns error"]
+		}],
+		["vkAcquireNextImageKHR", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design (ash)"],
+			"5": ["done", "Returns error"],
+			"6": ["done", "Returns error"],
+			"7": ["comment", "Handled by API design"]
+		}],
+		
+		"Command Buffer",
+		["vkCreateCommandPool", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkCommandPoolCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design (ash)"]
+		}],
+		["vkTrimCommandPool", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"]
+		}],
+		["vkResetCommandPool", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"]
+		}],
 
-		["vkCreateCommandPool", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(6) > div:nth-child(3) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkCommandPoolCreateInfo", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(6) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkCommandBufferAllocateInfo", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(7) > div:nth-child(2) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"]
+		["VkCommandBufferAllocateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design (ash)"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+
+		"Fence",
+		["vkCreateFence", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design (ash)"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkFenceCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["vkGetFenceStatus", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"]
+		}],
+		["vkResetFences", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"]
+		}],
+		["vkWaitForFences", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"]
+		}],
+
+		"Sempahore",
+		["vkCreateSemaphore", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design (ash)"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkSemaphoreCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkSemaphoreTypeCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"]
+		}],
+
+		"Image",
+		["vkCreateImage", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkImageCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design (ash)"],
+			"5": ["comment", "Handled by API design (ash)"],
+			"6": ["comment", "Handled by API design (ash)"],
+			"7": ["comment", "Handled by API design (ash)"],
+			"8": ["comment", "Handled by API design"],
+			"9": null,
+			"10": ["comment", "Handled by API design (ash)"],
+			"11": ["comment", "Handled by API design (ash)"]
+		}]
 	],
 	"creation_validations": [
 		"Instance",
-		["vkCreateInstance", "div.sect1:nth-child(4) > div:nth-child(2) > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["vkCreateInstance", "explicit"],
 		
 		"Device",
-		["vkCreateDevice", "div.sect1:nth-child(5) > div:nth-child(2) > div:nth-child(4) > div:nth-child(9) > div:nth-child(3) > div:nth-child(1) > div:nth-child(7) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkDeviceCreateInfo", "div.sect1:nth-child(5) > div:nth-child(2) > div:nth-child(4) > div:nth-child(9) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["vkCreateDevice", "explicit"],
+		["VkDeviceCreateInfo", "explicit", {
+			"1": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"],
+			"5": ["comment", "Handled by API design"],
+			"6": ["comment", "Handled by API design"],
+			"7": ["comment", "Handled by API design"],
+			"8": ["comment", "Handled by API design"],
+			"9": ["comment", "Handled by API design"],
+			"10": ["comment", "Handled by API design"]
+		}],
 		
 		"Queue",
-		["VkDeviceQueueCreateInfo", "div.sect1:nth-child(5) > div:nth-child(2) > div:nth-child(5) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkDeviceQueueCreateInfo", "explicit", {
+			"3": ["comment", "Handled by API design"]
+		}],
 
 		"Swapchain",
-		["VkSwapchainCreateInfoKHR", "div.sect1:nth-child(33) > div:nth-child(2) > div:nth-child(10) > div:nth-child(13) > div:nth-child(1) > div:nth-child(11) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkSwapchainCreateInfoKHR", "explicit", {
+			"6": ["comment", "Guaranteed by the type system"],
+			"7": ["comment", "Lower bound guaranteed by the type system"],
+
+			"10": ["comment", "Guaranteed by the type system"],
+			"11": ["comment", "Guaranteed by the type system"],
+
+			"16": ["comment", "Handled by API design"],
+			"17": ["comment", "Handled by API design"],
+
+			"19": ["comment", "Handled by API design"],
+			"20": ["comment", "Handled by API design"],
+			"21": ["comment", "Handled by API design"]
+		}],
 
 		"Command buffer",
-		["vkCreateCommandPool", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(6) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkCommandPoolCreateInfo", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(6) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkCommandBufferAllocateInfo", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(7) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["vkCreateCommandPool", "explicit", {
+			"0": ["comment", "Handled by API design"]
+		}],
+		["VkCommandPoolCreateInfo", "explicit", {
+			"0": ["comment", "Handled by API design"]
+		}],
+		["VkCommandBufferAllocateInfo", "explicit", {
+			"0": ["comment", "Guaranteed by the type system"]
+		}],
 
 		"Render pass",
-		["VkRenderPassCreateInfo2", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(13) > div:nth-child(42) > div:nth-child(1) > div:nth-child(9) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkAttachmentDescription2", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(13) > div:nth-child(43) > div:nth-child(1) > div:nth-child(10) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkSubpassDescription2", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(13) > div:nth-child(45) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkAttachmentReference2", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(13) > div:nth-child(49) > div:nth-child(1) > div:nth-child(10) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkSubpassDependency2", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(13) > div:nth-child(51) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkRenderPassCreateInfo2", "explicit"],
+		["VkAttachmentDescription2", "explicit"],
+		["VkSubpassDescription2", "explicit"],
+		["VkAttachmentReference2", "explicit"],
+		["VkSubpassDependency2", "explicit"],
 
 		"Framebuffer",
-		["vkCreateFramebuffer", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(15) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkFramebufferCreateInfo", "div.sect1:nth-child(8) > div:nth-child(2) > div:nth-child(15) > div:nth-child(4) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["vkCreateFramebuffer", "explicit"],
+		["VkFramebufferCreateInfo", "explicit"],
 
 		"Compute pipeline",
-		["vkCreateComputePipelines", "div.sect1:nth-child(10) > div:nth-child(2) > div:nth-child(18) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkComputePipelineCreateInfo", "div.sect1:nth-child(10) > div:nth-child(2) > div:nth-child(18) > div:nth-child(5) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["vkCreateComputePipelines", "explicit"],
+		["VkComputePipelineCreateInfo", "explicit"],
 		
 		"Graphics pipeline",
-		["VkPipelineShaderStageCreateInfo", "div.sect1:nth-child(10) > div:nth-child(2) > div:nth-child(18) > div:nth-child(6) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["vkCreateGraphicsPipelines", "div.sect1:nth-child(10) > div:nth-child(2) > div:nth-child(19) > div:nth-child(3) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkGraphicsPipelineCreateInfo", "div.sect1:nth-child(10) > div:nth-child(2) > div:nth-child(19) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkPipelineShaderStageCreateInfo", "explicit"],
+		["vkCreateGraphicsPipelines", "explicit"],
+		["VkGraphicsPipelineCreateInfo", "explicit"],
 
 		"Buffer",
-		["vkCreateBuffer", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkBufferCreateInfo", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkBufferViewCreateInfo", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["vkCreateBuffer", "explicit"],
+		["VkBufferCreateInfo", "explicit"],
+		["VkBufferViewCreateInfo", "explicit"],
 
 		"Image",
-		["vkCreateImage", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(4) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkImageCreateInfo", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(13) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkImageViewCreateInfo", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(6) > div:nth-child(5) > div:nth-child(1) > div:nth-child(14) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkImageSubresourceRange", "div.sect1:nth-child(12) > div:nth-child(2) > div:nth-child(6) > div:nth-child(9) > div:nth-child(1) > div:nth-child(12) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["vkCreateImage", "explicit"],
+		["VkImageCreateInfo", "explicit"],
+		["VkImageViewCreateInfo", "explicit"],
+		["VkImageSubresourceRange", "explicit"],
 
 		"Descriptor layout",
-		["VkDescriptorSetLayoutCreateInfo", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkDescriptorSetLayoutBinding", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(3) > div:nth-child(7) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkPipelineLayoutCreateInfo", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkPushConstantRange", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(4) > div:nth-child(6) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkDescriptorSetLayoutCreateInfo", "explicit"],
+		["VkDescriptorSetLayoutBinding", "explicit"],
+		["VkPipelineLayoutCreateInfo", "explicit"],
+		["VkPushConstantRange", "explicit"],
 
 		"Descriptor set",
-		["VkDescriptorPoolCreateInfo", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(5) > div:nth-child(4) > div:nth-child(1) > div:nth-child(9) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkDescriptorPoolSize", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(5) > div:nth-child(8) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkDescriptorSetAllocateInfo", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(5) > div:nth-child(12) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkDescriptorSetVariableDescriptorCountAllocateInfo", "div.sect1:nth-child(14) > div:nth-child(2) > div:nth-child(5) > div:nth-child(5) > div:nth-child(13) > div:nth-child(1) > div:nth-child(8) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
+		["VkDescriptorPoolCreateInfo", "explicit"],
+		["VkDescriptorPoolSize", "explicit"],
+		["VkDescriptorSetAllocateInfo", "explicit"],
+		["VkDescriptorSetVariableDescriptorCountAllocateInfo", "explicit"],
 
 		"Sempahore",
-		["VkSemaphoreTypeCreateInfo", "div.sect1:nth-child(7) > div:nth-child(2) > div:nth-child(7) > div:nth-child(6) > div:nth-child(1) > div:nth-child(7) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"]
+		["VkSemaphoreTypeCreateInfo", "explicit", {
+			"1": ["comment", "Handled by API design"]
+		}]
 	],
 	"usage_validations": [
 		"Queue",
-		["vkQueueSubmit", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(9) > div:nth-child(2) > div:nth-child(1) > div:nth-child(11) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkSubmitInfo", "div.sect1:nth-child(6) > div:nth-child(2) > div:nth-child(9) > div:nth-child(3) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"],
-		["VkPresentInfoKHR", "div.sect1:nth-child(33) > div:nth-child(2) > div:nth-child(10) > div:nth-child(64) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > ul:nth-child(1)"]
+		["vkGetDeviceQueue", "explicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"]
+		}],
+		["vkGetDeviceQueue2", "explicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"]
+		}],
+		["vkQueueSubmit", "explicit", {
+			"11": ["done", "Returns error"]
+		}],
+		["VkSubmitInfo", "explicit"],
+
+		"Swapchain",
+		["vkAcquireNextImageKHR", "implicit", {
+
+		}],
+		["vkQueuePresentKHR", "explicit", {
+			"4": ["comment", "Handled by API design"]
+		}],
+		["VkPresentInfoKHR", "explicit", {
+			"0": ["comment", "Guaranteed by the type system"]
+		}],
+
+		"Fence",
+		["vkResetFences", "explicit"]
 	]
 }

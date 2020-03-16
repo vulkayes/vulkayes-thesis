@@ -1,5 +1,3 @@
-## Externally Synchronized Parameters
-
 \valbox
 
 \valcombox
@@ -12,11 +10,9 @@
 * The `queue` parameter in `vkQueueSubmit`
 	- \valcom Synchronized internally
 
-\valcomboxend
-
 * The `fence` parameter in `vkQueueSubmit`
+	- \valcom Synchronized internally
 
-\valcombox
 * The `queue` parameter in `vkQueueWaitIdle`
 	- \valcom Synchronized internally
 

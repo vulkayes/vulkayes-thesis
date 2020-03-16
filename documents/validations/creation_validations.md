@@ -1,7 +1,3 @@
-## Creation validation
-
-Validations of correct usage in create functions as dictated by the Vulkan specification.
-
 ### Instance
 
 Validations for `vkCreateInstance`:

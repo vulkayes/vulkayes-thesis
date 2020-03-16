@@ -1,8 +1,25 @@
-## Usage validations
-
-Validations of correct unsage in other functions as dictated by the Vulkan specification.
-
 ### Queue
+
+Validations for `vkGetDeviceQueue`:
+
+\valbox
+
+\valcombox
+
+* `queueFamilyIndex` must be one of the queue family indices specified when `device` was created, via the `VkDeviceQueueCreateInfo` structure
+	- \valcom Handled by API design
+
+* `queueIndex` must be less than the number of queues created for the specified queue family index when `device` was created, via the `queueCount` member of the `VkDeviceQueueCreateInfo` structure
+	- \valcom Handled by API design
+
+* `VkDeviceQueueCreateInfo`::`flags` must have been set to zero when `device` was created
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+Validations for `vkGetDeviceQueue2`:
 
 Validations for `vkQueueSubmit`:
 
@@ -30,7 +47,12 @@ Validations for `vkQueueSubmit`:
 
 * If any secondary command buffers recorded into any element of the `pCommandBuffers` member of any element of `pSubmits` was not recorded with the `VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT`, it must not be in the pending state
 
+\valdonebox
+
 * Each element of the `pCommandBuffers` member of each element of `pSubmits` must have been allocated from a `VkCommandPool` that was created for the same queue family `queue` belongs to
+	- \valdone Returns error
+
+\valdoneboxend
 
 * If any element of `pSubmits->pCommandBuffers` includes a Queue Family Transfer Acquire Operation, there must exist a previously submitted Queue Family Transfer Release Operation on a queue in the queue family identified by the acquire operation, with parameters matching the acquire operation as defined in the definition of such acquire operations, and which happens before the acquire operation
 
@@ -70,13 +92,75 @@ Validations for `VkSubmitInfo`:
 
 \valboxend
 
+### Swapchain
+
+Validations for `vkAcquireNextImageKHR`:
+
+\valbox
+
+* `device` must be a valid `VkDevice` handle
+
+* `swapchain` must be a valid `VkSwapchainKHR` handle
+
+* If `semaphore` is not `VK_NULL_HANDLE`, `semaphore` must be a valid `VkSemaphore` handle
+
+* If `fence` is not `VK_NULL_HANDLE`, `fence` must be a valid `VkFence` handle
+
+* `pImageIndex` must be a valid pointer to a `uint32_t` value
+
+* If `semaphore` is a valid handle, it must have been created, allocated, or retrieved from `device`
+
+* If `fence` is a valid handle, it must have been created, allocated, or retrieved from `device`
+
+* Both of `device`, and `swapchain` that are valid handles of non-ignored parameters must have been created, allocated, or retrieved from the same `VkInstance`
+
+\valboxend
+
+Validations for `vkQueuePresentKHR`:
+
+\valbox
+
+* Each element of `pSwapchains` member of `pPresentInfo` must be a swapchain that is created for a surface for which presentation is supported from `queue` as determined using a call to `vkGetPhysicalDeviceSurfaceSupportKHR`
+
+* If more than one member of `pSwapchains` was created from a display surface, all display surfaces referenced that refer to the same display must use the same display mode
+
+* When a semaphore wait operation referring to a binary semaphore defined by the elements of the `pWaitSemaphores` member of `pPresentInfo` executes on `queue`, there must be no other queues waiting on the same semaphore.
+
+* All elements of the `pWaitSemaphores` member of `pPresentInfo` must be semaphores that are signaled, or have semaphore signal operations previously submitted for execution.
+
+\valcombox
+
+* All elements of the `pWaitSemaphores` member of `pPresentInfo` must be created with a `VkSemaphoreType` of `VK_SEMAPHORE_TYPE_BINARY`.
+	- \valcom Handled by API design
+
+\valcomboxend
+
+* All elements of the `pWaitSemaphores` member of `pPresentInfo` must reference a semaphore signal operation that has been submitted for execution and any semaphore signal operations on which it depends (if any) must have also been submitted for execution.
+
+\valboxend
+
 Validations for `VkPresentInfoKHR`:
 
 \valbox
 
+\valcombox
+
 * Each element of `pImageIndices` must be the index of a presentable image acquired from the swapchain specified by the corresponding element of the `pSwapchains` array, and the presented image subresource must be in the `VK_IMAGE_LAYOUT_PRESENT_SRC_KHR` or `VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR` layout at the time the operation is executed on a `VkDevice`
+	- \valcom Guaranteed by the type system
+
+\valcomboxend
 
 * All elements of the `pWaitSemaphores` must have a `VkSemaphoreType` of `VK_SEMAPHORE_TYPE_BINARY`
+
+\valboxend
+
+### Fence
+
+Validations for `vkResetFences`:
+
+\valbox
+
+* Each element of `pFences` must not be currently associated with any queue command that has not yet completed execution on that queue
 
 \valboxend
 
