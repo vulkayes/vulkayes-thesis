@@ -79,7 +79,7 @@ def extract_usage(stream, soup, name, type, comments, stats):
 
 	lines = ul.select("li > p")
 	for index in range(len(lines)):
-		line_buffer = "*"
+		line_buffer = f"{index + 1}."
 
 		line = lines[index]
 		for child in line.children:

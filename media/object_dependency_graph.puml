@@ -24,12 +24,12 @@ component [Device] <<Vrc>> #66FF98
 
 component [Queue] <<Vrc>> #66FF98
 component [Swapchain] <<Vrc>> #66FF98
-component [SwapchainImage] <<Vrc>> #66CDFF
+component [SwapchainImage] <<Vrc>> #66FF98
 
-component [Image] <<Vrc>> #66CDFF
+component [Image] <<Vrc>> #66FF98
 component [Buffer] <<Vrc>> #FF6680
 
-component [ImageView] <<Vrc>> #FF6680
+component [ImageView] <<Vrc>> #66CDFF
 component [BufferView] <<Vrc>> #FF6680
 
 component [CommandPool] <<Vrc>> #66FF98

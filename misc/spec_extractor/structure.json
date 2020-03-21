@@ -232,9 +232,16 @@
 			"6": ["comment", "Handled by API design (ash)"],
 			"7": ["comment", "Handled by API design (ash)"],
 			"8": ["comment", "Handled by API design"],
-			"9": null,
+			"9": ["done", "Return error"],
 			"10": ["comment", "Handled by API design (ash)"],
 			"11": ["comment", "Handled by API design (ash)"]
+		}],
+		["vkBindImageMemory", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["done", "Return error"]
 		}]
 	],
 	"creation_validations": [
@@ -286,48 +293,38 @@
 			"0": ["comment", "Guaranteed by the type system"]
 		}],
 
-		"Render pass",
-		["VkRenderPassCreateInfo2", "explicit"],
-		["VkAttachmentDescription2", "explicit"],
-		["VkSubpassDescription2", "explicit"],
-		["VkAttachmentReference2", "explicit"],
-		["VkSubpassDependency2", "explicit"],
-
-		"Framebuffer",
-		["vkCreateFramebuffer", "explicit"],
-		["VkFramebufferCreateInfo", "explicit"],
-
-		"Compute pipeline",
-		["vkCreateComputePipelines", "explicit"],
-		["VkComputePipelineCreateInfo", "explicit"],
-		
-		"Graphics pipeline",
-		["VkPipelineShaderStageCreateInfo", "explicit"],
-		["vkCreateGraphicsPipelines", "explicit"],
-		["VkGraphicsPipelineCreateInfo", "explicit"],
-
-		"Buffer",
-		["vkCreateBuffer", "explicit"],
-		["VkBufferCreateInfo", "explicit"],
-		["VkBufferViewCreateInfo", "explicit"],
-
 		"Image",
 		["vkCreateImage", "explicit"],
-		["VkImageCreateInfo", "explicit"],
+		["VkImageCreateInfo", "explicit", {
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Lower bound handled by API design"],
+			
+			"4": ["comment", "Handled by API design"],
+			"5": ["comment", "Handled by API design"],
+			
+			"6": ["comment", "Guaranteed by the type system"],
+			"7": ["comment", "Guaranteed by the type system"],
+			"8": ["comment", "Guaranteed by the type system"],
+			"9": ["comment", "Guaranteed by the type system"],
+			"10": ["comment", "Guaranteed by the type system"],
+
+			"11": ["comment", "Guaranteed by the type system"],
+			"12": ["comment", "Guaranteed by the type system"],
+			"13": ["comment", "Guaranteed by the type system"],
+			"17": ["comment", "Guaranteed by the type system"],
+			"18": ["comment", "Guaranteed by the type system"],
+			"19": ["comment", "Guaranteed by the type system"],
+			
+			"20": ["comment", "Guaranteed by the type system"],
+			"23": ["comment", "Guaranteed by the type system"],
+			"24": ["comment", "Guaranteed by the type system"],
+			"25": ["comment", "Guaranteed by the type system"],
+
+			"54": ["comment", "Guaranteed by the type system"]
+		}],
 		["VkImageViewCreateInfo", "explicit"],
 		["VkImageSubresourceRange", "explicit"],
-
-		"Descriptor layout",
-		["VkDescriptorSetLayoutCreateInfo", "explicit"],
-		["VkDescriptorSetLayoutBinding", "explicit"],
-		["VkPipelineLayoutCreateInfo", "explicit"],
-		["VkPushConstantRange", "explicit"],
-
-		"Descriptor set",
-		["VkDescriptorPoolCreateInfo", "explicit"],
-		["VkDescriptorPoolSize", "explicit"],
-		["VkDescriptorSetAllocateInfo", "explicit"],
-		["VkDescriptorSetVariableDescriptorCountAllocateInfo", "explicit"],
 
 		"Sempahore",
 		["VkSemaphoreTypeCreateInfo", "explicit", {
@@ -351,7 +348,7 @@
 		["VkSubmitInfo", "explicit"],
 
 		"Swapchain",
-		["vkAcquireNextImageKHR", "implicit", {
+		["vkAcquireNextImageKHR", "explicit", {
 
 		}],
 		["vkQueuePresentKHR", "explicit", {

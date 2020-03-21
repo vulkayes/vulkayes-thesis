@@ -19,15 +19,15 @@ header-includes:
 			\newcommand{\valcom}{\color{validation-comment}}
 			\newcommand{\valdone}{\color{validation-done}}
 
-			\newtcolorbox{validation-box}{breakable,colback=validation-box,boxrule=0pt,arc=0pt,halign=left,left=-5pt}
+			\newtcolorbox{validation-box}{breakable,colback=validation-box,boxrule=0pt,arc=0pt,halign=left,left=0pt}
 			\newcommand{\valbox}{\begin{validation-box}\pretolerance=10000}
 			\newcommand{\valboxend}{\end{validation-box}}
 
-			\newtcolorbox{validation-comment-box}{breakable,colback=validation-box,colframe=validation-comment-box,size=fbox,left*=0pt,leftrule=10pt}
+			\newtcolorbox{validation-comment-box}{breakable,colback=validation-box,colframe=validation-comment-box,size=fbox,left*=0pt,leftrule=10pt,extrude left by=5pt}
 			\newcommand{\valcombox}{\begin{validation-comment-box}}
 			\newcommand{\valcomboxend}{\end{validation-comment-box}}
 
-			\newtcolorbox{validation-done-box}{breakable,colback=validation-box,colframe=validation-done-box,size=fbox,left*=0pt,leftrule=10pt}
+			\newtcolorbox{validation-done-box}{breakable,colback=validation-box,colframe=validation-done-box,size=fbox,left*=0pt,leftrule=10pt,extrude left by=5pt}
 			\newcommand{\valdonebox}{\begin{validation-done-box}}
 			\newcommand{\valdoneboxend}{\end{validation-done-box}}
 		```

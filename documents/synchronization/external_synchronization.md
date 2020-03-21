@@ -16,9 +16,10 @@
 * The `queue` parameter in `vkQueueWaitIdle`
 	- \valcom Synchronized internally
 
-\valcomboxend
-
 * The `memory` parameter in `vkFreeMemory`
+	- \valcom Consequence of shared pointer usage
+
+\valcomboxend
 
 * The `memory` parameter in `vkMapMemory`
 
@@ -26,7 +27,11 @@
 
 * The `buffer` parameter in `vkBindBufferMemory`
 
+\valcombox
 * The `image` parameter in `vkBindImageMemory`
+	- \valcom Handled by API design
+
+\valcomboxend
 
 * The `queue` parameter in `vkQueueBindSparse`
 
@@ -200,7 +205,11 @@
 
 * The `commandBuffer` parameter in `vkCmdDispatchBase`
 
+\valcombox
 * The `commandPool` parameter in `vkTrimCommandPool`
+	- \valcom Internally synchronized
+
+\valcomboxend
 
 * The `ycbcrConversion` parameter in `vkDestroySamplerYcbcrConversion`
 
@@ -223,7 +232,7 @@
 	- \valcom Consequence of shared pointer usage
 
 * The `surface` member of the `pCreateInfo` parameter in `vkCreateSwapchainKHR`
-	- \valcom 
+	- \valcom Handled by a combination of API design and swapchain internal synchronization
 
 * The `oldSwapchain` member of the `pCreateInfo` parameter in `vkCreateSwapchainKHR`
 	- \valcom Internally synchronized
@@ -231,15 +240,19 @@
 * The `swapchain` parameter in `vkDestroySwapchainKHR`
 	- \valcom Consequence of shared pointer usage
 
-\valcomboxend
-
 * The `swapchain` parameter in `vkAcquireNextImageKHR`
+	- \valcom Internally synchronized
 
 * The `semaphore` parameter in `vkAcquireNextImageKHR`
+	- \valcom Internally synchronized
 
 * The `fence` parameter in `vkAcquireNextImageKHR`
+	- \valcom Internally synchronized
 
 * The `queue` parameter in `vkQueuePresentKHR`
+	- \valcom Internally synchronized
+
+\valcomboxend
 
 * The `surface` parameter in `vkGetDeviceGroupSurfacePresentModesKHR`
 
@@ -253,7 +266,7 @@
 
 * The `commandBuffer` parameter in `vkCmdDispatchBaseKHR`
 
-* The `commandPool` parameter in `vkTrimCommandPoolKHR`
+<!-- * The `commandPool` parameter in `vkTrimCommandPoolKHR` -->
 
 * The `commandBuffer` parameter in `vkCmdPushDescriptorSetKHR`
 
