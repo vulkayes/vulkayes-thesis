@@ -158,7 +158,6 @@
 			"2": ["comment", "Handled by API design"],
 			"3": ["comment", "Handled by API design"]
 		}],
-
 		["VkCommandBufferAllocateInfo", "implicit", {
 			"0": ["comment", "Handled by API design (ash)"],
 			"1": ["comment", "Handled by API design (ash)"],
@@ -232,7 +231,7 @@
 			"6": ["comment", "Handled by API design (ash)"],
 			"7": ["comment", "Handled by API design (ash)"],
 			"8": ["comment", "Handled by API design"],
-			"9": ["done", "Return error"],
+			"9": ["done", "Returns error"],
 			"10": ["comment", "Handled by API design (ash)"],
 			"11": ["comment", "Handled by API design (ash)"]
 		}],
@@ -241,15 +240,93 @@
 			"1": ["comment", "Handled by API design"],
 			"2": ["comment", "Handled by API design"],
 			"3": ["comment", "Handled by API design"],
-			"4": ["done", "Return error"]
+			"4": ["done", "Returns error"]
+		}],
+
+		["vkCreateImageView", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkImageViewCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"],
+			"5": ["comment", "Handled by API design"],
+			"6": ["comment", "Handled by API design"],
+			"7": ["comment", "Handled by API design"],
+			"8": ["comment", "Handled by API design"]
+		}],
+
+		"Buffer",
+		["vkCreateBuffer", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkBufferCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"],
+			"5": ["done", "Return error"],
+			"6": ["comment", "Handled by API design"]
+		}],
+		["vkBindBufferMemory", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["done", "Returns error"]
+		}],
+
+		["vkCreateBufferView", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkBufferViewCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"],
+			"4": ["comment", "Handled by API design (ash)"]
+		}],
+		["vkMapMemory", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"],
+			"4": ["comment", "Handled by API design"]
+		}],
+		["vkFlushMappedMemoryRanges", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"]
+		}],
+		["vkInvalidateMappedMemoryRanges", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"]
+		}],
+		["VkMappedMemoryRange", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"]
 		}]
 	],
 	"creation_validations": [
 		"Instance",
-		["vkCreateInstance", "explicit"],
+		["vkCreateInstance", "explicit", {}],
 		
 		"Device",
-		["vkCreateDevice", "explicit"],
+		["vkCreateDevice", "explicit", {}],
 		["VkDeviceCreateInfo", "explicit", {
 			"1": ["comment", "Handled by API design"],
 			"4": ["comment", "Handled by API design"],
@@ -293,8 +370,13 @@
 			"0": ["comment", "Guaranteed by the type system"]
 		}],
 
+		"Sempahore",
+		["VkSemaphoreTypeCreateInfo", "explicit", {
+			"1": ["comment", "Handled by API design"]
+		}],
+
 		"Image",
-		["vkCreateImage", "explicit"],
+		["vkCreateImage", "explicit", {}],
 		["VkImageCreateInfo", "explicit", {
 			"1": ["comment", "Handled by API design"],
 			"2": ["comment", "Handled by API design"],
@@ -321,15 +403,39 @@
 			"24": ["comment", "Guaranteed by the type system"],
 			"25": ["comment", "Guaranteed by the type system"],
 
-			"54": ["comment", "Guaranteed by the type system"]
-		}],
-		["VkImageViewCreateInfo", "explicit"],
-		["VkImageSubresourceRange", "explicit"],
+			"47": ["comment", "Handled by API design"],
+			"48": ["comment", "Handled by API design"],
+			"49": ["comment", "Handled by API design"],
+			
+			"54": ["comment", "Guaranteed by the type system"],
 
-		"Sempahore",
-		["VkSemaphoreTypeCreateInfo", "explicit", {
-			"1": ["comment", "Handled by API design"]
-		}]
+			"55": ["comment", "Handled by API design"],
+			"63": ["comment", "Handled by API design"],
+			"66": ["comment", "Handled by API design"],
+			"67": ["comment", "Handled by API design"],
+			"68": ["comment", "Handled by API design"],
+			"69": ["comment", "Handled by API design"],
+			"70": ["comment", "Handled by API design"]
+		}],
+		["VkImageViewCreateInfo", "explicit", {
+			"34": ["comment", "Handled by API design"],
+			"35": ["comment", "Handled by API design"],
+			"36": ["comment", "Handled by API design"]
+		}],
+		["VkImageSubresourceRange", "explicit", {
+			"0": ["comment", "Guaranteed by the type system"],
+			"1": ["comment", "Guaranteed by the type system"]
+		}],
+
+		"Buffer",
+		["vkCreateBuffer", "explicit", {}],
+		["VkBufferCreateInfo", "explicit", {
+			"0": ["comment", "Guaranteed by the type system"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"]
+		}],
+		["VkBufferViewCreateInfo", "explicit"]
 	],
 	"usage_validations": [
 		"Queue",
@@ -345,11 +451,12 @@
 		["vkQueueSubmit", "explicit", {
 			"11": ["done", "Returns error"]
 		}],
-		["VkSubmitInfo", "explicit"],
+		["VkSubmitInfo", "explicit", {}],
 
 		"Swapchain",
 		["vkAcquireNextImageKHR", "explicit", {
-
+			"4": ["comment", "Handled by API design"],
+			"6": ["comment", "Guaranteed by the type system"]
 		}],
 		["vkQueuePresentKHR", "explicit", {
 			"4": ["comment", "Handled by API design"]
@@ -359,6 +466,33 @@
 		}],
 
 		"Fence",
-		["vkResetFences", "explicit"]
+		["vkResetFences", "explicit", {}],
+
+		"Image",
+		["vkBindImageMemory", "explicit", {
+			"1": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"],
+			"5": ["comment", "Handled by API design"],
+			"6": ["comment", "Handled by API design"]
+		}],
+
+		"Buffer",
+		["vkBindBufferMemory", "explicit", {
+			"0": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"],
+			"5": ["comment", "Handled by API design"]
+		}],
+		["vkMapMemory", "explicit", {
+			"0": ["comment", "Handled by API design"],
+			"2": ["comment", "Guaranteed by the type system"]
+		}],
+		["VkMappedMemoryRange", "explicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"]
+		}]
 	]
 }

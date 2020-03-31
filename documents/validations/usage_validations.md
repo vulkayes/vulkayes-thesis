@@ -106,11 +106,21 @@ Validations for `vkAcquireNextImageKHR`:
 
 4. If `fence` is not `VK_NULL_HANDLE` it must be unsignaled and must not be associated with any other queue command that has not yet completed execution on that queue
 
+\valcombox
+
 5. `semaphore` and `fence` must not both be equal to `VK_NULL_HANDLE`
+	- \valcom Handled by API design
+
+\valcomboxend
 
 6. If the number of currently acquired images is greater than the difference between the number of images in `swapchain` and the value of `VkSurfaceCapabilitiesKHR`::`minImageCount` as returned by a call to `vkGetPhysicalDeviceSurfaceCapabilities2KHR` with the `surface` used to create `swapchain`, `timeout` must not be `UINT64_MAX`
 
+\valcombox
+
 7. `semaphore` must have a `VkSemaphoreType` of `VK_SEMAPHORE_TYPE_BINARY`
+	- \valcom Guaranteed by the type system
+
+\valcomboxend
 
 \valboxend
 
@@ -159,6 +169,159 @@ Validations for `vkResetFences`:
 \valbox
 
 1. Each element of `pFences` must not be currently associated with any queue command that has not yet completed execution on that queue
+
+\valboxend
+
+### Image
+
+Validations for `vkBindImageMemory`:
+
+\valbox
+
+1. `image` must not have been created with the `VK_IMAGE_CREATE_DISJOINT_BIT` set.
+
+\valcombox
+
+2. `image` must not already be backed by a memory object
+	- \valcom Handled by API design
+
+\valcomboxend
+
+3. `image` must not have been created with any sparse memory binding flags
+
+\valcombox
+
+4. `memoryOffset` must be less than the size of `memory`
+	- \valcom Handled by API design
+
+5. `memory` must have been allocated using one of the memory types allowed in the `memoryTypeBits` member of the `VkMemoryRequirements` structure returned from a call to `vkGetImageMemoryRequirements` with `image`
+	- \valcom Handled by API design
+
+6. `memoryOffset` must be an integer multiple of the `alignment` member of the `VkMemoryRequirements` structure returned from a call to `vkGetImageMemoryRequirements` with `image`
+	- \valcom Handled by API design
+
+7. The difference of the size of `memory` and `memoryOffset` must be greater than or equal to the `size` member of the `VkMemoryRequirements` structure returned from a call to `vkGetImageMemoryRequirements` with the same `image`
+	- \valcom Handled by API design
+
+\valcomboxend
+
+8. If `image` requires a dedicated allocation (as reported by `vkGetImageMemoryRequirements2` in `VkMemoryDedicatedRequirements`::requiresDedicatedAllocation for `image`), `memory` must have been created with `VkMemoryDedicatedAllocateInfo`::`image` equal to `image`
+
+9. If the dedicated allocation image aliasing feature is not enabled, and the `VkMemoryAllocateInfo` provided when `memory` was allocated included a `VkMemoryDedicatedAllocateInfo` structure in its `pNext` chain, and `VkMemoryDedicatedAllocateInfo`::`image` was not `VK_NULL_HANDLE`, then `image` must equal `VkMemoryDedicatedAllocateInfo`::`image` and `memoryOffset` must be zero.
+
+10. If the dedicated allocation image aliasing feature is enabled, and the `VkMemoryAllocateInfo` provided when `memory` was allocated included a `VkMemoryDedicatedAllocateInfo` structure in its `pNext` chain, and `VkMemoryDedicatedAllocateInfo`::`image` was not `VK_NULL_HANDLE`, then `memoryOffset` must be zero, and `image` must be either equal to `VkMemoryDedicatedAllocateInfo`::`image` or an image that was created using the same parameters in `VkImageCreateInfo`, with the exception that `extent` and `arrayLayers` may differ subject to the following restrictions: every dimension in the `extent` parameter of the image being bound must be equal to or smaller than the original image for which the allocation was created; and the `arrayLayers` parameter of the image being bound must be equal to or smaller than the original image for which the allocation was created.
+
+11. If image was created with the `VK_IMAGE_CREATE_PROTECTED_BIT` bit set, the image must be bound to a memory object allocated with a memory type that reports `VK_MEMORY_PROPERTY_PROTECTED_BIT`
+
+12. If image was created with the `VK_IMAGE_CREATE_PROTECTED_BIT` bit not set, the image must not be bound to a memory object created with a memory type that reports `VK_MEMORY_PROPERTY_PROTECTED_BIT`
+
+13. If `image` was created with `VkDedicatedAllocationImageCreateInfoNV`::`dedicatedAllocation` equal to `VK_TRUE`, `memory` must have been created with `VkDedicatedAllocationMemoryAllocateInfoNV`::`image` equal to an image handle created with identical creation parameters to `image` and `memoryOffset` must be zero
+
+14. If the value of `VkExportMemoryAllocateInfo`::`handleTypes` used to allocate `memory` is not `0`, it must include at least one of the handles set in `VkExternalMemoryImageCreateInfo`::`handleTypes` when `image` was created
+
+15. If `memory` was created by a memory import operation, the external handle type of the imported memory must also have been set in `VkExternalMemoryImageCreateInfo`::`handleTypes` when `image` was created
+
+\valboxend
+
+### Buffer
+
+Validations for `vkBindBufferMemory`:
+
+\valbox
+
+\valcombox
+
+1. `buffer` must not already be backed by a memory object
+	- \valcom Handled by API design
+
+\valcomboxend
+
+2. `buffer` must not have been created with any sparse memory binding flags
+
+\valcombox
+
+3. `memoryOffset` must be less than the size of `memory`
+	- \valcom Handled by API design
+
+4. `memory` must have been allocated using one of the memory types allowed in the `memoryTypeBits` member of the `VkMemoryRequirements` structure returned from a call to `vkGetBufferMemoryRequirements` with `buffer`
+	- \valcom Handled by API design
+
+5. `memoryOffset` must be an integer multiple of the `alignment` member of the `VkMemoryRequirements` structure returned from a call to `vkGetBufferMemoryRequirements` with `buffer`
+	- \valcom Handled by API design
+
+6. The `size` member of the `VkMemoryRequirements` structure returned from a call to `vkGetBufferMemoryRequirements` with `buffer` must be less than or equal to the size of `memory` minus `memoryOffset`
+	- \valcom Handled by API design
+
+\valcomboxend
+
+7. If `buffer` requires a dedicated allocation(as reported by `vkGetBufferMemoryRequirements2` in `VkMemoryDedicatedRequirements`::requiresDedicatedAllocation for `buffer`), `memory` must have been created with `VkMemoryDedicatedAllocateInfo`::`buffer` equal to `buffer`
+
+8. If the `VkMemoryAllocateInfo` provided when `memory` was allocated included a `VkMemoryDedicatedAllocateInfo` structure in its `pNext` chain, and `VkMemoryDedicatedAllocateInfo`::`buffer` was not `VK_NULL_HANDLE`, then `buffer` must equal `VkMemoryDedicatedAllocateInfo`::`buffer`, and `memoryOffset` must be zero.
+
+9. If buffer was created with the `VK_BUFFER_CREATE_PROTECTED_BIT` bit set, the buffer must be bound to a memory object allocated with a memory type that reports `VK_MEMORY_PROPERTY_PROTECTED_BIT`
+
+10. If buffer was created with the `VK_BUFFER_CREATE_PROTECTED_BIT` bit not set, the buffer must not be bound to a memory object created with a memory type that reports `VK_MEMORY_PROPERTY_PROTECTED_BIT`
+
+11. If `buffer` was created with `VkDedicatedAllocationBufferCreateInfoNV`::`dedicatedAllocation` equal to `VK_TRUE`, `memory` must have been created with `VkDedicatedAllocationMemoryAllocateInfoNV`::`buffer` equal to a buffer handle created with identical creation parameters to `buffer` and `memoryOffset` must be zero
+
+12. If the value of `VkExportMemoryAllocateInfo`::`handleTypes` used to allocate `memory` is not `0`, it must include at least one of the handles set in `VkExternalMemoryBufferCreateInfo`::`handleTypes` when `buffer` was created
+
+13. If `memory` was created by a memory import operation, the external handle type of the imported memory must also have been set in `VkExternalMemoryBufferCreateInfo`::`handleTypes` when `buffer` was created
+
+14. If the `VkPhysicalDeviceBufferDeviceAddressFeatures`::`bufferDeviceAddress` feature is enabled and `buffer` was created with the `VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT` bit set, `memory` must have been allocated with the `VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_BIT` bit set
+
+\valboxend
+
+Validations for `vkMapMemory`:
+
+\valbox
+
+\valcombox
+
+1. `memory` must not be currently host mapped
+	- \valcom Handled by API design
+
+\valcomboxend
+
+2. `offset` must be less than the size of `memory`
+
+\valcombox
+
+3. If `size` is not equal to `VK_WHOLE_SIZE`, `size` must be greater than `0`
+	- \valcom Guaranteed by the type system
+
+\valcomboxend
+
+4. If `size` is not equal to `VK_WHOLE_SIZE`, `size` must be less than or equal to the size of the `memory` minus `offset`
+
+5. `memory` must have been created with a memory type that reports `VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT`
+
+6. `memory` must not have been allocated with multiple instances.
+
+\valboxend
+
+Validations for `VkMappedMemoryRange`:
+
+\valbox
+
+\valcombox
+
+1. `memory` must be currently host mapped
+	- \valcom Handled by API design
+
+2. If `size` is not equal to `VK_WHOLE_SIZE`, `offset` and `size` must specify a range contained within the currently mapped range of `memory`
+	- \valcom Handled by API design
+
+3. If `size` is equal to `VK_WHOLE_SIZE`, `offset` must be within the currently mapped range of `memory`
+	- \valcom Handled by API design
+
+\valcomboxend
+
+4. If `size` is equal to `VK_WHOLE_SIZE`, the end of the current mapping of `memory` must be a multiple of `VkPhysicalDeviceLimits`::`nonCoherentAtomSize` bytes from the beginning of the memory object.
+
+5. `offset` must be a multiple of `VkPhysicalDeviceLimits`::`nonCoherentAtomSize`
+
+6. If `size` is not equal to `VK_WHOLE_SIZE`, `size` must either be a multiple of `VkPhysicalDeviceLimits`::`nonCoherentAtomSize`, or `offset` plus `size` must equal the size of `memory`.
 
 \valboxend
 

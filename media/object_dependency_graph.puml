@@ -26,11 +26,13 @@ component [Queue] <<Vrc>> #66FF98
 component [Swapchain] <<Vrc>> #66FF98
 component [SwapchainImage] <<Vrc>> #66FF98
 
-component [Image] <<Vrc>> #66FF98
-component [Buffer] <<Vrc>> #FF6680
+component [DeviceMemory] #66FF98
 
-component [ImageView] <<Vrc>> #66CDFF
-component [BufferView] <<Vrc>> #FF6680
+component [Image] <<Vrc>> #66FF98
+component [Buffer] <<Vrc>> #66FF98
+
+component [ImageView] <<Vrc>> #66FF98
+component [BufferView] <<Vrc>> #66FF98
 
 component [CommandPool] <<Vrc>> #66FF98
 component [CommandBuffer] <<Vrc>> #66CDFF
@@ -58,6 +60,7 @@ component [Fence] <<Vrc>> #66FF98
 
 [Device] <- [Queue]
 [Swapchain] -> [Device]
+[DeviceMemory] -> [Device]
 [Device] <-- [Image]
 [Device] <-- [Buffer]
 [Device] <-- [CommandPool]
@@ -69,7 +72,10 @@ component [Fence] <<Vrc>> #66FF98
 
 [Swapchain] <-- [SwapchainImage]
 
-[Image] <.. [SwapchainImage] : Inlined
+[DeviceMemory] ..> [Image]
+[DeviceMemory] ..> [Buffer]
+
+[SwapchainImage] <. [Image]
 [Image] <-- [ImageView]
 [Buffer] <-- [BufferView]
 

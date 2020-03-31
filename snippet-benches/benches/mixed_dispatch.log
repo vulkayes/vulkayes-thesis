@@ -1,0 +1,19 @@
+# Blackboxed everything
+
+Enum::Foo               time:   [497.31 ps 499.01 ps 500.81 ps]
+Enum::Bar               time:   [497.09 ps 499.47 ps 502.18 ps]
+Enum::Dyn               time:   [1.2967 ns 1.3018 ns 1.3072 ns]
+Foo                     time:   [497.59 ps 499.36 ps 501.17 ps]
+Bar                     time:   [496.86 ps 499.03 ps 501.38 ps]
+Qux                     time:   [311.22 ps 313.34 ps 316.49 ps]
+dyn Qux                 time:   [1.5010 ns 1.5104 ns 1.5206 ns]
+
+# Blackboxed nothing
+
+Enum::Foo               time:   [250.14 ps 251.31 ps 252.62 ps]
+Enum::Bar               time:   [250.73 ps 252.67 ps 255.06 ps]
+Enum::Dun               time:   [1.2450 ns 1.2512 ns 1.2581 ns]
+Foo                     time:   [258.55 ps 260.76 ps 263.04 ps]
+Bar                     time:   [250.89 ps 252.18 ps 253.49 ps]
+Qux                     time:   [249.09 ps 250.41 ps 251.83 ps]
+dyn Qux                 time:   [1.4968 ns 1.5028 ns 1.5093 ns]

@@ -838,7 +838,7 @@ Validations for `VkImageCreateInfo`:
 \valdonebox
 
 10. `usage` must not be `0`
-	- \valdone Return error
+	- \valdone Returns error
 
 \valdoneboxend
 
@@ -877,9 +877,289 @@ Validations for `vkBindImageMemory`:
 \valdonebox
 
 5. `memory` must have been created, allocated, or retrieved from `device`
+	- \valdone Returns error
+
+\valdoneboxend
+
+\valboxend
+
+Validations for `vkCreateImageView`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pCreateInfo` must be a valid pointer to a valid `VkImageViewCreateInfo` structure
+	- \valcom Handled by API design (ash)
+
+3. If `pAllocator` is not `NULL`, `pAllocator` must be a valid pointer to a valid `VkAllocationCallbacks` structure
+	- \valcom Handled by API design
+
+4. `pView` must be a valid pointer to a `VkImageView` handle
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkImageViewCreateInfo`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO`
+	- \valcom Handled by API design (ash)
+
+2. Each `pNext` member of any structure (including this one) in the `pNext` chain must be either `NULL` or a pointer to a valid instance of `VkImageViewASTCDecodeModeEXT`, `VkImageViewUsageCreateInfo`, or `VkSamplerYcbcrConversionInfo`
+	- \valcom Handled by API design (ash)
+
+3. The `sType` value of each struct in the `pNext` chain must be unique
+	- \valcom Handled by API design
+
+4. `flags` must be a valid combination of `VkImageViewCreateFlagBits` values
+	- \valcom Handled by API design
+
+5. `image` must be a valid `VkImage` handle
+	- \valcom Handled by API design
+
+6. `viewType` must be a valid `VkImageViewType` value
+	- \valcom Handled by API design
+
+7. `format` must be a valid `VkFormat` value
+	- \valcom Handled by API design
+
+8. `components` must be a valid `VkComponentMapping` structure
+	- \valcom Handled by API design
+
+9. `subresourceRange` must be a valid `VkImageSubresourceRange` structure
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+### Buffer
+
+Validations for `vkCreateBuffer`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pCreateInfo` must be a valid pointer to a valid `VkBufferCreateInfo` structure
+	- \valcom Handled by API design (ash)
+
+3. If `pAllocator` is not `NULL`, `pAllocator` must be a valid pointer to a valid `VkAllocationCallbacks` structure
+	- \valcom Handled by API design
+
+4. `pBuffer` must be a valid pointer to a `VkBuffer` handle
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkBufferCreateInfo`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO`
+	- \valcom Handled by API design (ash)
+
+2. Each `pNext` member of any structure (including this one) in the `pNext` chain must be either `NULL` or a pointer to a valid instance of `VkBufferDeviceAddressCreateInfoEXT`, `VkBufferOpaqueCaptureAddressCreateInfo`, `VkDedicatedAllocationBufferCreateInfoNV`, or `VkExternalMemoryBufferCreateInfo`
+	- \valcom Handled by API design (ash)
+
+3. The `sType` value of each struct in the `pNext` chain must be unique
+	- \valcom Handled by API design
+
+4. `flags` must be a valid combination of `VkBufferCreateFlagBits` values
+	- \valcom Handled by API design
+
+5. `usage` must be a valid combination of `VkBufferUsageFlagBits` values
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valdonebox
+
+6. `usage` must not be `0`
 	- \valdone Return error
 
 \valdoneboxend
+
+\valcombox
+
+7. `sharingMode` must be a valid `VkSharingMode` value
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+Validations for `vkBindBufferMemory`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `buffer` must be a valid `VkBuffer` handle
+	- \valcom Handled by API design
+
+3. `memory` must be a valid `VkDeviceMemory` handle
+	- \valcom Handled by API design
+
+4. `buffer` must have been created, allocated, or retrieved from `device`
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valdonebox
+
+5. `memory` must have been created, allocated, or retrieved from `device`
+	- \valdone Returns error
+
+\valdoneboxend
+
+\valboxend
+
+Validations for `vkCreateBufferView`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pCreateInfo` must be a valid pointer to a valid `VkBufferViewCreateInfo` structure
+	- \valcom Handled by API design (ash)
+
+3. If `pAllocator` is not `NULL`, `pAllocator` must be a valid pointer to a valid `VkAllocationCallbacks` structure
+	- \valcom Handled by API design
+
+4. `pView` must be a valid pointer to a `VkBufferView` handle
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkBufferViewCreateInfo`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_BUFFER_VIEW_CREATE_INFO`
+	- \valcom Handled by API design (ash)
+
+2. `pNext` must be `NULL`
+	- \valcom Handled by API design (ash)
+
+3. `flags` must be `0`
+	- \valcom Handled by API design
+
+4. `buffer` must be a valid `VkBuffer` handle
+	- \valcom Handled by API design (ash)
+
+5. `format` must be a valid `VkFormat` value
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+Validations for `vkMapMemory`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `memory` must be a valid `VkDeviceMemory` handle
+	- \valcom Handled by API design
+
+3. `flags` must be `0`
+	- \valcom Handled by API design
+
+4. `ppData` must be a valid pointer to a pointer value
+	- \valcom Handled by API design (ash)
+
+5. `memory` must have been created, allocated, or retrieved from `device`
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+Validations for `vkFlushMappedMemoryRanges`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pMemoryRanges` must be a valid pointer to an array of `memoryRangeCount` valid `VkMappedMemoryRange` structures
+	- \valcom Handled by API design
+
+3. `memoryRangeCount` must be greater than `0`
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+Validations for `vkInvalidateMappedMemoryRanges`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pMemoryRanges` must be a valid pointer to an array of `memoryRangeCount` valid `VkMappedMemoryRange` structures
+	- \valcom Handled by API design
+
+3. `memoryRangeCount` must be greater than `0`
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkMappedMemoryRange`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE`
+	- \valcom Handled by API design (ash)
+
+2. `pNext` must be `NULL`
+	- \valcom Handled by API design (ash)
+
+3. `memory` must be a valid `VkDeviceMemory` handle
+	- \valcom Handled by API design
+
+\valcomboxend
 
 \valboxend
 

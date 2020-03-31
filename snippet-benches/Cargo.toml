@@ -1,0 +1,18 @@
+[package]
+name = "snippet-benches"
+version = "0.1.0"
+authors = ["edward"]
+edition = "2018"
+
+[dependencies]
+
+[dev-dependencies]
+criterion = { version = "0.3", features = ["real_blackbox"] }
+
+[[bench]]
+name = "mixed_dispatch"
+harness = false
+
+[[bench]]
+name = "mixed_dispatch_fn"
+harness = false

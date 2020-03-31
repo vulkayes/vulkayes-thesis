@@ -19,15 +19,15 @@
 * The `memory` parameter in `vkFreeMemory`
 	- \valcom Consequence of shared pointer usage
 
-\valcomboxend
-
 * The `memory` parameter in `vkMapMemory`
+	- \valcom Synchronized internally
 
 * The `memory` parameter in `vkUnmapMemory`
+	- \valcom Synchronized internally
 
 * The `buffer` parameter in `vkBindBufferMemory`
+	- \valcom Handled by API design
 
-\valcombox
 * The `image` parameter in `vkBindImageMemory`
 	- \valcom Handled by API design
 
@@ -54,17 +54,20 @@
 
 * The `queryPool` parameter in `vkDestroyQueryPool`
 
+\valcombox
 * The `buffer` parameter in `vkDestroyBuffer`
+	- \valcom Consequence of shared pointer usage
 
 * The `bufferView` parameter in `vkDestroyBufferView`
+	- \valcom Consequence of shared pointer usage
 
-\valcombox
 * The `image` parameter in `vkDestroyImage`
 	- \valcom Consequence of shared pointer usage
 
-\valcomboxend
-
 * The `imageView` parameter in `vkDestroyImageView`
+	- \valcom Consequence of shared pointer usage
+
+\valcomboxend
 
 * The `shaderModule` parameter in `vkDestroyShaderModule`
 

@@ -1,0 +1,6 @@
+# Blackboxed nothing
+
+Enum::Static            time:   [1.9750 ns 1.9799 ns 1.9854 ns]
+Enum::Dyn               time:   [1.7293 ns 1.7339 ns 1.7390 ns]
+Static                  time:   [247.06 ps 247.68 ps 248.38 ps]
+Dyn                     time:   [1.4806 ns 1.4841 ns 1.4880 ns]
