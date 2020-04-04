@@ -36,7 +36,7 @@ sansfont: Fira Sans
 monofont: Fira Code
 ---
 
-![Object Dependency Graph](media/object_dependency_graph.svg)
+![Object Dependency Graph](assets/diagrams/object_dependency_graph.svg)
 
 This document describes the plan and progress of the implementation of Vulkayes.
 

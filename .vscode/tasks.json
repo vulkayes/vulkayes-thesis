@@ -7,7 +7,7 @@
 			"label": "Run gen.sh",
 			"type": "shell",
 			"group": "build",
-			"command": "misc/gen.sh ${fileBasenameNoExtension}",
+			"command": "scripts/gen.sh ${fileBasenameNoExtension}",
 			"presentation": {
 				"echo": true,
 				"reveal": "always",
@@ -37,7 +37,7 @@
 			"label": "Run extractor.py",
 			"type": "shell",
 			"group": "build",
-			"command": "misc/spec_extractor/extractor.py misc/spec_extractor/structure.json vkspec.html documents/validations",
+			"command": "scripts/spec_extractor.py assets/spec_validations.json assets/vkspec.html documents/validations",
 			"presentation": {
 				"echo": true,
 				"reveal": "always",

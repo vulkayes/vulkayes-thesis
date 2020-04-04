@@ -25,7 +25,7 @@ function render() {
 	local document=$1
 
 	include_filter "documents/$document.md" | pandoc \
-		--highlight-style "misc/code.theme" --css "misc/style.css" \
+		--highlight-style "assets/code.theme" \
 		--from markdown --to pdf --standalone --pdf-engine=xelatex \
 		--output "pdfs/$document.pdf"
 }
