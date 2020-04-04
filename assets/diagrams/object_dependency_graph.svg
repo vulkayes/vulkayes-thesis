@@ -52,7 +52,7 @@ reverse link DescriptorSetLayout to DescriptorSet--><path d="M476.15,412.15 C487
 reverse link DescriptorSetLayout to PipelineLayout--><path d="M424.78,414.14 C422.8,422.17 421,430.85 420,439 C418.09,454.55 420.72,471.86 424,485.72 " fill="none" id="DescriptorSetLayout&lt;-PipelineLayout" style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#000000" points="426.03,409.24,419.9183,416.9632,424.7871,414.0831,427.6672,418.9518,426.03,409.24" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="Fira Sans" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="85" x="421" y="452.155">Copy? + Device</text><!--MD5=[7e0dc7a75d00bc06b584df322f2c74b4]
 reverse link PipelineLayout to ComputePipeline--><path d="M412.67,544.41 C398.65,566.46 379.9,595.96 366.57,616.93 " fill="none" id="PipelineLayout&lt;-ComputePipeline" style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#000000" points="415.41,540.11,407.2131,545.5699,412.733,544.333,413.9699,549.853,415.41,540.11" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="Fira Sans" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="35" x="396" y="583.155">Copy?</text><!--MD5=[27cc0bccccfed3058d66055fcc0a1ef1]
 reverse link PipelineLayout to GraphicsPipeline--><path d="M451.33,544.41 C465.35,566.46 484.1,595.96 497.43,616.93 " fill="none" id="PipelineLayout&lt;-GraphicsPipeline" style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#000000" points="448.59,540.11,450.0301,549.853,451.267,544.333,456.7869,545.5699,448.59,540.11" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="Fira Sans" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="35" x="478" y="583.155">Copy?</text><!--MD5=[a938b21e95382d85ef65afae3004fc90]
-reverse link DescriptorPool to DescriptorSet--><path d="M597.85,414.24 C595.64,436.19 592.71,465.22 590.63,485.93 " fill="none" id="DescriptorPool&lt;-DescriptorSet" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="598.37,409.11,593.4651,417.6506,597.8555,414.0835,601.4227,418.4738,598.37,409.11" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[9f9521cd04b4cb5faa1f0faf5bfddf99]
+reverse link DescriptorPool to DescriptorSet--><path d="M597.85,414.24 C595.64,436.19 592.71,465.22 590.63,485.93 " fill="none" id="DescriptorPool&lt;-DescriptorSet" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="598.37,409.11,593.4651,417.6506,597.8555,414.0835,601.4227,418.4738,598.37,409.11" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[f409fc2dd21357eb73f45f75be538b62]
 @startuml object_dependency_graph
 
 skinparam {
@@ -145,8 +145,8 @@ component [Fence] <<Vrc>> #66FF98
 
 @enduml
 
-PlantUML version 1.2020.02(Sun Mar 01 11:22:07 CET 2020)
-(GPL source distribution)
+PlantUML version 1.2020.05(Thu Mar 19 22:17:32 CET 2020)
+(MIT source distribution)
 Java Runtime: OpenJDK Runtime Environment
 JVM: OpenJDK 64-Bit Server VM
 Java Version: 13.0.1+9

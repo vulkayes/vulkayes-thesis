@@ -37,7 +37,7 @@
 			"label": "Run extractor.py",
 			"type": "shell",
 			"group": "build",
-			"command": "scripts/spec_extractor.py assets/spec_validations.json assets/vkspec.html documents/validations",
+			"command": "scripts/spec_extractor.py assets/spec_validations.json assets/vkspec-slim.html documents/validations",
 			"presentation": {
 				"echo": true,
 				"reveal": "always",
