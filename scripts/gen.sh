@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 function include_filter() {
 	python3 -c '
