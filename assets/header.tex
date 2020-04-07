@@ -9,53 +9,53 @@
 \definecolor{validation-done}{HTML}{00B372}
 \definecolor{validation-done-box}{HTML}{00B372}
 
-% color boxes
-\let\oldtexttt\texttt
-\renewcommand{\texttt}[1]{\textcolor{inline-code}{\oldtexttt{#1}}}
-\newcommand{\valcom}{\color{validation-comment}}
-\newcommand{\valdone}{\color{validation-done}}
+% % color boxes
+% \let\oldtexttt\texttt
+% \renewcommand{\texttt}[1]{\textcolor{inline-code}{\oldtexttt{#1}}}
+% \newcommand{\valcom}{\color{validation-comment}}
+% \newcommand{\valdone}{\color{validation-done}}
 
-\newtcolorbox{validation-box}{breakable,colback=validation-box,boxrule=0pt,arc=0pt,halign=left,left=0pt}
-\newcommand{\valbox}{\begin{validation-box}\pretolerance=10000}
-\newcommand{\valboxend}{\end{validation-box}}
+% \newtcolorbox{validation-box}{breakable,colback=validation-box,boxrule=0pt,arc=0pt,halign=left,left=0pt}
+% \newcommand{\valbox}{\begin{validation-box}\pretolerance=10000}
+% \newcommand{\valboxend}{\end{validation-box}}
 
-\newtcolorbox{validation-comment-box}{breakable,colback=validation-box,colframe=validation-comment-box,size=fbox,left*=0pt,leftrule=10pt,extrude left by=5pt}
-\newcommand{\valcombox}{\begin{validation-comment-box}}
-\newcommand{\valcomboxend}{\end{validation-comment-box}}
+% \newtcolorbox{validation-comment-box}{breakable,colback=validation-box,colframe=validation-comment-box,size=fbox,left*=0pt,leftrule=10pt,extrude left by=5pt}
+% \newcommand{\valcombox}{\begin{validation-comment-box}}
+% \newcommand{\valcomboxend}{\end{validation-comment-box}}
 
-\newtcolorbox{validation-done-box}{breakable,colback=validation-box,colframe=validation-done-box,size=fbox,left*=0pt,leftrule=10pt,extrude left by=5pt}
-\newcommand{\valdonebox}{\begin{validation-done-box}}
-\newcommand{\valdoneboxend}{\end{validation-done-box}}
+% \newtcolorbox{validation-done-box}{breakable,colback=validation-box,colframe=validation-done-box,size=fbox,left*=0pt,leftrule=10pt,extrude left by=5pt}
+% \newcommand{\valdonebox}{\begin{validation-done-box}}
+% \newcommand{\valdoneboxend}{\end{validation-done-box}}
 
-\ctusetup{
-	mainlanguage = english,
-	title-czech = {Implementace zobrazovacího systému v jazyce Rust},
-	title-english = {Implementation of rendering system in Rust},
-	doctype = B,
-	faculty = F3,
-  	department-czech = {Katedra počítačové grafiky a interakce},
-	department-english = {Department of Computer Graphics and Interaction},
-	author = {Eduard Lavuš},
-  	supervisor = {doc. Ing. Jiří Bittner, Ph.D.},
-	fieldofstudy-english = {Open Informatics},
-	subfieldofstudy-english = {Computer Games and Graphics},
-	fieldofstudy-czech = {Otevřená informatika},
-	subfieldofstudy-czech = {Počítačové hry a grafika},
-	keywords-czech = {TODO key, TODO word},
-	keywords-english = {TODO key, TODO word},
-	day = 22,
-	month = 5,
-	year = 2020,
-	specification-file = {zav_prace.pdf},
-	front-specification = true,
-	front-list-of-figures = false,
-	front-list-of-tables = false,
-}
-\ctuprocess
-
-% \addto\ctucaptionsczech{%
-% 	\def\supervisorname{Vedoucí}%
-% 	\def\subfieldofstudyname{Studijní program}%
+% \ctusetup{
+% 	mainlanguage = english,
+% 	%
+% 	title-czech = {Implementace zobrazovacího systému v jazyce Rust},
+% 	title-english = {Implementation of rendering system in Rust},
+% 	author = {Eduard Lavuš},
+% 	supervisor = {doc. Ing. Jiří Bittner, Ph.D.},
+% 	%
+% 	doctype = B,
+% 	faculty = F3,
+% 	department-czech = {Katedra počítačové grafiky a interakce},
+% 	department-english = {Department of Computer Graphics and Interaction},
+% 	fieldofstudy-english = {Open Informatics},
+% 	subfieldofstudy-english = {Computer Games and Graphics},
+% 	fieldofstudy-czech = {Otevřená informatika},
+% 	subfieldofstudy-czech = {Počítačové hry a grafika},
+% 	keywords-czech = {TODO key, TODO word},
+% 	keywords-english = {TODO key, TODO word},
+% 	%
+% 	day = 22,
+% 	month = 5,
+% 	year = 2020,
+% 	%
+% 	specification-file = {zav_prace.pdf},
+% 	front-specification = true,
+% 	front-list-of-figures = false,
+% 	front-list-of-tables = false,
+% 	%
+% 	pkg-hyperref = false,
 % }
 
 % \ctutemplateset{maketitle twocolumn default}{

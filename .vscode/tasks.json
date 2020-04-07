@@ -19,10 +19,25 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Run generate.sh",
+			"label": "Generate thesis",
 			"type": "shell",
 			"group": "build",
 			"command": "scripts/generate.sh",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Count words",
+			"type": "shell",
+			"group": "build",
+			"command": "scripts/include_filter.py 'documents/thesis.md' | scripts/word_count.py",
 			"presentation": {
 				"echo": true,
 				"reveal": "always",
@@ -49,10 +64,10 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Run extractor.py",
+			"label": "Spec extractor",
 			"type": "shell",
 			"group": "build",
-			"command": "scripts/spec_extractor.py assets/spec_validations.json assets/vkspec-slim.html documents/validations",
+			"command": "scripts/spec_extractor.py assets/spec_validations.json assets/vkspec.html documents/validations",
 			"presentation": {
 				"echo": true,
 				"reveal": "always",

@@ -1,5 +1,36 @@
 [
 	{
+		"id": "VulkanAPI",
+		"type": "Webpage",
+		"title": "Vulkan® 1.2.136 - A Specification ",
+		"agent": "The Khronos® Vulkan Working Group",
+		"URL": "https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html",
+		"accessed": "2020-04-05"
+	},
+	
+	{
+		"id": "RFC-1857",
+		"type": "Webpage",
+		"title": "RFC-1857 Stabilize Drop Order",
+		"URL": "https://github.com/rust-lang/rfcs/blob/master/text/1857-stabilize-drop-order.md",
+		"accessed": "2020-03-03"
+	},
+	{
+		"id": "RustDrop",
+		"type": "Webpage",
+		"title": "Drop",
+		"URL": "https://doc.rust-lang.org/std/ops/trait.Drop.html",
+		"accessed": "2020-03-03"
+	},
+	{
+		"id": "RustManuallyDrop",
+		"type": "Webpage",
+		"title": "ManuallyDrop",
+		"URL": "https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html",
+		"accessed": "2020-03-03"
+	},
+
+	{
 		"id": "Vulkayes",
 		"type": "Webpage",
 		"title": "Vulkayes",

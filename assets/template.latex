@@ -1,3 +1,5 @@
+% Just a slightly edited pandoc template for latex
+
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
@@ -35,9 +37,7 @@ $endif$
 $for(classoption)$
   $classoption$$sep$,
 $endfor$
-twoside,
-]{ctuthesis}
-%
+]{$documentclass$}
 $if(beamer)$
 $if(background-image)$
 \usebackgroundtemplate{%
@@ -202,34 +202,34 @@ $if(verbatim-in-note)$
 $endif$
 \usepackage{xcolor}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-% \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-% \hypersetup{
-% $if(title-meta)$
-%   pdftitle={$title-meta$},
-% $endif$
-% $if(author-meta)$
-%   pdfauthor={$author-meta$},
-% $endif$
-% $if(lang)$
-%   pdflang={$lang$},
-% $endif$
-% $if(subject)$
-%   pdfsubject={$subject$},
-% $endif$
-% $if(keywords)$
-%   pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
-% $endif$
-% $if(colorlinks)$
-%   colorlinks=true,
-%   linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
-%   filecolor=$if(filecolor)$$filecolor$$else$Maroon$endif$,
-%   citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
-%   urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
-% $else$
-%   hidelinks,
-% $endif$
-%   pdfcreator={LaTeX via pandoc}}
-% \urlstyle{same} % disable monospaced font for URLs
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+$if(title-meta)$
+  pdftitle={$title-meta$},
+$endif$
+$if(author-meta)$
+  pdfauthor={$author-meta$},
+$endif$
+$if(lang)$
+  pdflang={$lang$},
+$endif$
+$if(subject)$
+  pdfsubject={$subject$},
+$endif$
+$if(keywords)$
+  pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
+$endif$
+$if(colorlinks)$
+  colorlinks=true,
+  linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
+  filecolor=$if(filecolor)$$filecolor$$else$Maroon$endif$,
+  citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
+  urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
+$else$
+  hidelinks,
+$endif$
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allow verbatim text in footnotes
 $endif$
@@ -320,121 +320,140 @@ $if(block-headings)$
 \fi
 $endif$
 $endif$
+
 $if(pagestyle)$
-\pagestyle{$pagestyle$}
+  \pagestyle{$pagestyle$}
 $endif$
+
 $for(header-includes)$
-$header-includes$
+  $header-includes$
 $endfor$
+
 $if(lang)$
-\ifxetex
-  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
-  \usepackage{polyglossia}
-  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
-$for(polyglossia-otherlangs)$
-  \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
-$endfor$
-\else
-  \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
-$if(babel-newcommands)$
-  $babel-newcommands$
+  \ifxetex
+    % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
+    \usepackage{polyglossia}
+    \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
+  $for(polyglossia-otherlangs)$
+    \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
+  $endfor$
+  \else
+    \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
+    $if(babel-newcommands)$
+      $babel-newcommands$
+    $endif$
+  \fi
 $endif$
-\fi
-$endif$
+
 $if(dir)$
-\ifxetex
-  % Load bidi as late as possible as it modifies e.g. graphicx
-  \usepackage{bidi}
-\fi
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \TeXXeTstate=1
-  \newcommand{\RL}[1]{\beginR #1\endR}
-  \newcommand{\LR}[1]{\beginL #1\endL}
-  \newenvironment{RTL}{\beginR}{\endR}
-  \newenvironment{LTR}{\beginL}{\endL}
-\fi
+  \ifxetex
+    % Load bidi as late as possible as it modifies e.g. graphicx
+    \usepackage{bidi}
+  \fi
+  \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+    \TeXXeTstate=1
+    \newcommand{\RL}[1]{\beginR #1\endR}
+    \newcommand{\LR}[1]{\beginL #1\endL}
+    \newenvironment{RTL}{\beginR}{\endR}
+    \newenvironment{LTR}{\beginL}{\endL}
+  \fi
 $endif$
+
 $if(natbib)$
-\usepackage[$natbiboptions$]{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+  \usepackage[$natbiboptions$]{natbib}
+  \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
 $endif$
 $if(biblatex)$
-\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
-$for(bibliography)$
-\addbibresource{$bibliography$}
-$endfor$
-$endif$
-$if(csl-refs)$
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newenvironment{cslreferences}%
-  {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
-  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
-  {\par}
+  \usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+  $for(bibliography)$
+    \addbibresource{$bibliography$}
+  $endfor$
 $endif$
 
-$if(title)$
-\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$if(csl-refs)$
+  \newlength{\cslhangindent}
+  \setlength{\cslhangindent}{1.5em}
+  \newenvironment{cslreferences}%
+    {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
+    \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
+    {\par}
 $endif$
-$if(subtitle)$
-$if(beamer)$
-$else$
-\usepackage{etoolbox}
-\makeatletter
-\providecommand{\subtitle}[1]{% add subtitle to \maketitle
-  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
-}
-\makeatother
-$endif$
-\subtitle{$subtitle$}
-$endif$
-\author{$for(author)$$author$$sep$ \and $endfor$}
-\date{$date$}
-$if(beamer)$
-$if(institute)$
-\institute{$for(institute)$$institute$$sep$ \and $endfor$}
-$endif$
-$if(titlegraphic)$
-\titlegraphic{\includegraphics{$titlegraphic$}}
-$endif$
-$if(logo)$
-\logo{\includegraphics{$logo$}}
-$endif$
-$endif$
+
+% $if(title)$
+%   \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+% $endif$
+
+% $if(subtitle)$
+%   $if(beamer)$
+%   $else$
+%     \usepackage{etoolbox}
+%     \makeatletter
+%     \providecommand{\subtitle}[1]{% add subtitle to \maketitle
+%       \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+%     }
+%     \makeatother
+%   $endif$
+%   \subtitle{$subtitle$}
+% $endif$
+
+% \author{$for(author)$$author$$sep$ \and $endfor$}
+% \date{$date$}
+% $if(beamer)$
+%   $if(institute)$
+%     \institute{$for(institute)$$institute$$sep$ \and $endfor$}
+%   $endif$
+%   $if(titlegraphic)$
+%   \titlegraphic{\includegraphics{$titlegraphic$}}
+%   $endif$
+%   $if(logo)$
+%   \logo{\includegraphics{$logo$}}
+%   $endif$
+% $endif$
 
 \begin{document}
-$if(has-frontmatter)$
+
 \frontmatter
-$endif$
-$if(title)$
-$if(beamer)$
-\frame{\titlepage}
-$else$
-\maketitle
-$endif$
-$if(abstract)$
-\begin{abstract}
-$abstract$
-\end{abstract}
-$endif$
-$endif$
-
 $for(include-before)$
-$include-before$
-
+  $include-before$
 $endfor$
 
+$if(toc)$
+  $if(toc-title)$
+    \renewcommand*\contentsname{$toc-title$}
+  $endif$
+  $if(beamer)$
+    \begin{frame}[allowframebreaks]
+    $if(toc-title)$
+      \frametitle{$toc-title$}
+    $endif$
+    \tableofcontents[hideallsubsections]
+    \end{frame}
+  $else$ {
+    $if(colorlinks)$
+      \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$$endif$}
+    $endif$
+    \setcounter{tocdepth}{$toc-depth$}
+    \tableofcontents
+  }
+  $endif$
+$endif$
+
+$if(lot)$
+  \listoftables
+$endif$
+
+$if(lof)$
+  \listoffigures
+$endif$
+
 $if(linestretch)$
-\setstretch{$linestretch$}
+  \setstretch{$linestretch$}
 $endif$
-$if(has-frontmatter)$
+
 \mainmatter
-$endif$
 $body$
 
-$if(has-frontmatter)$
 \backmatter
-$endif$
 $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$
@@ -466,8 +485,9 @@ $else$
 $endif$
 
 $endif$
+
 $for(include-after)$
 $include-after$
-
 $endfor$
+
 \end{document}

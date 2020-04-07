@@ -1,79 +1,43 @@
 ---
 title: Implementation of rendering system in Rust
+author: Eduard Lavuš
+date: 2020-05-22
+lang: en
+
+bibliography:
+	- assets/bibliography.json
+csl: assets/ieee-with-url.csl
+link-citations: true
+reference-section-title: Bibliography
+
+documentclass: book
+fontsize: 12pt
+mainfont: Fira Sans
+mathfont: Fira Code
+geometry: margin=2cm
+urlcolor: blue
+
+output:
+	pdf_document:
+		toc: true
+		number_sections: true
 ---
 
 # Introduction
+
+Since its release in 2016, Vulkan API[@VulkanAPI] has been gaining traction as a go-to API for high-performance realtime 3D applications across all platforms. The main reason for this, apart from being cross-platform, is that Vulkan is designed as to be low-level, close to metal and with minimal overhead. This, in contrast to Khornos' older API OpenGL, leaves most of the overhead, but also complexity, to the user of the API. The user can then make decisions on where to sacrifice performance for added usability or vice versa.
 
 Talk about Vulkan API and why it is great
 
 Talk about what the project aims to achieve in short and long term, mention Rust
 
-# Related work
+![](related_work.md)
 
-Talk about V-EZ, Vulkano, gfx-hal, mention tephra
+![](design/design.md)
 
-# Design
+![](implementation/implementation.md)
 
-## Rust
-
-Talk about why Rust was chosen, include cpp vs Rust examples
-
-## Object lifetime management
-
-Talk about how object lifetime is managed, maybe compare to tephra, talk about cargo features toggling
-
-## Synchronization
-
-Talk about how some objects are internally synchronized
-
-Talk about how GPU synchronization is left for future work
-
-## Validations
-
-Talk about how only implicit validation are guaranteed, but some explicit validations are implicitly handled by api design and type system
-
-## Memory management
-
-Talk about how device memory management is done through user-supplied memory allocator
-
-## Windows
-
-Talk about how windows are handle, what is a surface and a swapchain and how they are supported
-
-# Implementation
-
-## Cargo features
-
-Talk about what cargo features are available and why they are beneficial
-
-### Vrc, Vutex etc.
-
-Talk about Vrc and Vutex aliases
-
-
-## Generics
-
-Talk about how Rust generics are used and optimized for comfort with minimal overhead
-
-### Deref
-
-Talk about Deref trait usage
-
-### User code a.k.a. `dyn FnMut`
-
-Talk about usage of `dyn`
-
-
-# Benchmarks
-
-Talk about benchmarks
-
-## Scene 1
-
-## Scene 2
-
-## Scene 3
-
+![](evaluation/evaluation.md)
 
 # Conclusion
 
