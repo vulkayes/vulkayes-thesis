@@ -1,5 +1,7 @@
 \usepackage{subfig}
 \usepackage[most,breakable]{tcolorbox}
+\usepackage{pdfpages}
+\usepackage{titlesec}
 
 \definecolor{inline-code}{HTML}{264357}
 
@@ -8,6 +10,8 @@
 \definecolor{validation-comment-box}{HTML}{0099B3}
 \definecolor{validation-done}{HTML}{00B372}
 \definecolor{validation-done-box}{HTML}{00B372}
+
+\definecolor{CTU-blue}{cmyk}{1, 0.43, 0, 0}
 
 % % color boxes
 % \let\oldtexttt\texttt
@@ -27,44 +31,24 @@
 % \newcommand{\valdonebox}{\begin{validation-done-box}}
 % \newcommand{\valdoneboxend}{\end{validation-done-box}}
 
-% \ctusetup{
-% 	mainlanguage = english,
-% 	%
-% 	title-czech = {Implementace zobrazovacího systému v jazyce Rust},
-% 	title-english = {Implementation of rendering system in Rust},
-% 	author = {Eduard Lavuš},
-% 	supervisor = {doc. Ing. Jiří Bittner, Ph.D.},
-% 	%
-% 	doctype = B,
-% 	faculty = F3,
-% 	department-czech = {Katedra počítačové grafiky a interakce},
-% 	department-english = {Department of Computer Graphics and Interaction},
-% 	fieldofstudy-english = {Open Informatics},
-% 	subfieldofstudy-english = {Computer Games and Graphics},
-% 	fieldofstudy-czech = {Otevřená informatika},
-% 	subfieldofstudy-czech = {Počítačové hry a grafika},
-% 	keywords-czech = {TODO key, TODO word},
-% 	keywords-english = {TODO key, TODO word},
-% 	%
-% 	day = 22,
-% 	month = 5,
-% 	year = 2020,
-% 	%
-% 	specification-file = {zav_prace.pdf},
-% 	front-specification = true,
-% 	front-list-of-figures = false,
-% 	front-list-of-tables = false,
-% 	%
-% 	pkg-hyperref = false,
-% }
+\newcommand{\projectType}{Bachelor's Thesis}
+\newcommand{\universityName}{Czech Technical University in Prague}
+\newcommand{\universityLogo}{assets/logo_ctu}
+\newcommand{\facultyNum}{F3}
+\newcommand{\facultyName}{Faculty of Electrical Engineering}
+\newcommand{\departmentName}{Department of Computer Graphics and Interaction}
 
-% \ctutemplateset{maketitle twocolumn default}{
-% 	\begin{twocolumnfrontmatterpage}
-% 		\ctutemplate{twocolumn.thanks}
-% 		\ctutemplate{twocolumn.declaration}
-% 		\ctutemplate{twocolumn.abstract.in.titlelanguage}
-% 		\ctutemplate{twocolumn.abstract.in.secondlanguage}
-% 		\ctutemplate{twocolumn.tableofcontents}
-% 		\ctutemplate{twocolumn.listoffigures}
-% 	\end{twocolumnfrontmatterpage}
-% }
+\newcommand{\supervisorName}{doc. Ing. Jiří Bittner, Ph.D.}
+\newcommand{\fieldOfStudy}{Open Informatics}
+\newcommand{\subfieldOfStudy}{Computer Games and Graphics}
+
+\newcommand{\specificationFile}{zav_prace.pdf}
+
+
+\titleformat{\chapter}[block]{\LARGE\bfseries\color{CTU-blue}}{\thechapter}{5pt}{\color{black}}
+\titlespacing{\chapter}{0pt}{0pt}{0pt}
+
+\titleformat{\section}[block]{\Large\bfseries\color{CTU-blue}}{\thesection}{5pt}{\color{black}}
+% \titlespacing{\chapter}{0pt}{0pt}{0pt}
+
+\titleformat{\subsection}[block]{\large\bfseries\color{CTU-blue}}{\thesubsection}{5pt}{\color{black}}

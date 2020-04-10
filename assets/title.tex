@@ -1,0 +1,88 @@
+% Extracted from ctuthesis repo
+
+\newcommand{\CtuTitlePage}[3]{
+	\thispagestyle{empty}
+	\noindent
+	\vbox to \textheight{%
+		% The titlepage goes all way up to the header (taking one \baselineskip of the head)
+		\vspace*{\dimexpr-\baselineskip-\headsep}
+		\vss
+		{
+			\noindent
+			\leavevmode
+			\color{CTU-blue}
+			\vrule width 11pt
+			\hspace*{11pt}
+		}
+		% The main vbox of the titlepage is larger by (bls + heasep) up and (footskip) down
+		\vbox to \dimexpr\textheight + \baselineskip + \headsep + \footskip {
+			% Reduce hsize by the rule width and the sep
+			\hsize\dimexpr\linewidth-17pt
+			% No justification, sf bf font
+			\raggedright \sffamily \bfseries
+			% \selectctulanguage{title}
+			%
+			% The document type
+			{
+				\projectType{}
+				\par
+			}
+			%
+			\vspace*{3ex}
+			%
+			{
+				\Large\includegraphics[height=\dimexpr4\normalbaselineskip-1ex]{\universityLogo}
+				\par
+			}
+			{
+				\facultyName{}
+				\\
+				\departmentName{}
+				\par
+			}
+			%
+			\vspace{8ex plus 1fill}
+			%
+			% The title
+			{
+				\LARGE\color{CTU-blue}
+				#1
+				\par
+			}
+		% 	%
+			\vspace{3ex}
+		% 	%
+			{
+				\Large\color{CTU-blue}
+				
+				\par
+			}
+			%
+			\vspace*{8ex}
+			%
+			% The author
+			{
+				\Large
+				#2
+				\par
+			}
+			%
+			\vspace{0pt plus 3fill}
+			{
+				% The "metadata": supervisor, field of study, month and year
+				\parskip 1pt
+				Supervisor:~{\frenchspacing\supervisorName}\par
+				% \ctuiffield*{supervisor-specialist}{\supervisorspecialistname :~{\frenchspacing\ctufield{supervisor-specialist}}\par}{}
+				Field of study:~\fieldOfStudy\par
+				Subfield:~\subfieldOfStudy\par
+				Date:~#3\par
+			}
+		}
+		\vss
+		% The titlepage goes all way down to the foot
+		\vspace*{-\footskip}
+	}
+	\par
+
+	\includepdf[pages=-]{\specificationFile}
+}

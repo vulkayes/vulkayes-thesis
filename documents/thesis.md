@@ -14,13 +14,10 @@ documentclass: book
 fontsize: 12pt
 mainfont: Fira Sans
 mathfont: Fira Code
+papersize: a4
 geometry: margin=2cm
 urlcolor: blue
-
-output:
-	pdf_document:
-		toc: true
-		number_sections: true
+secnumdepth: 2
 ---
 
 # Introduction
