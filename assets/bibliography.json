@@ -3,9 +3,40 @@
 		"id": "VulkanAPI",
 		"type": "Webpage",
 		"title": "Vulkan® 1.2.136 - A Specification ",
-		"agent": "The Khronos® Vulkan Working Group",
 		"URL": "https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html",
 		"accessed": "2020-04-05"
+	},
+	{
+		"id": "V-EZ",
+		"type": "Webpage",
+		"title": "V-EZ",
+		"URL": "https://github.com/GPUOpen-LibrariesAndSDKs/V-EZ",
+		"accessed": "2020-04-10"
+	},
+	{
+		"id": "gfx-hal",
+		"type": "Webpage",
+		"title": "gfx-hal",
+		"URL": "https://github.com/gfx-rs/gfx",
+		"accessed": "2020-04-10"
+	},
+	{
+		"id": "Vulkano",
+		"type": "Webpage",
+		"title": "Vulkano",
+		"URL": "https://github.com/vulkano-rs/vulkano",
+		"accessed": "2020-04-10"
+	},
+	{
+		"id": "Tephra"
+	},
+
+	{
+		"id": "clang",
+		"type": "Webpage",
+		"title": "The Development of the C Language",
+		"URL": "https://www.bell-labs.com/usr/dmr/www/chist.html",
+		"accessed": "2020-04-10"
 	},
 	
 	{
