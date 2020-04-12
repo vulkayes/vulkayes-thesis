@@ -1081,6 +1081,8 @@ Validations for `VkBufferViewCreateInfo`:
 
 \valboxend
 
+### Memory
+
 Validations for `vkMapMemory`:
 
 \valbox
@@ -1158,6 +1160,92 @@ Validations for `VkMappedMemoryRange`:
 
 3. `memory` must be a valid `VkDeviceMemory` handle
 	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+### Descriptors
+
+Validations for `vkCreateDescriptorSetLayout`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pCreateInfo` must be a valid pointer to a valid `VkDescriptorSetLayoutCreateInfo` structure
+	- \valcom Handled by API design
+
+3. If `pAllocator` is not `NULL`, `pAllocator` must be a valid pointer to a valid `VkAllocationCallbacks` structure
+	- \valcom Handled by API design
+
+4. `pSetLayout` must be a valid pointer to a `VkDescriptorSetLayout` handle
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkDescriptorSetLayoutCreateInfo`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO`
+	- \valcom Handled by API design (ash)
+
+2. `pNext` must be `NULL` or a pointer to a valid instance of `VkDescriptorSetLayoutBindingFlagsCreateInfo`
+	- \valcom Handled by API design (ash)
+
+3. The `sType` value of each struct in the `pNext` chain must be unique
+	- \valcom Handled by API design
+
+4. `flags` must be a valid combination of `VkDescriptorSetLayoutCreateFlagBits` values
+	- \valcom Handled by API design
+
+5. If `bindingCount` is not `0`, `pBindings` must be a valid pointer to an array of `bindingCount` valid `VkDescriptorSetLayoutBinding` structures
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkDescriptorSetLayoutBinding`:
+
+\valbox
+
+\valcombox
+
+1. `descriptorType` must be a valid `VkDescriptorType` value
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+### Pipeline
+
+Validations for `vkCreatePipelineLayout`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pCreateInfo` must be a valid pointer to a valid `VkPipelineLayoutCreateInfo` structure
+	- \valcom Handled by API design
+
+3. If `pAllocator` is not `NULL`, `pAllocator` must be a valid pointer to a valid `VkAllocationCallbacks` structure
+	- \valcom Handled by API design
+
+4. `pPipelineLayout` must be a valid pointer to a `VkPipelineLayout` handle
+	- \valcom Handled by API design (ash)
 
 \valcomboxend
 

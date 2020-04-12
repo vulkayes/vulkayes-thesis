@@ -67,7 +67,7 @@
 			"label": "Spec extractor",
 			"type": "shell",
 			"group": "build",
-			"command": "scripts/spec_extractor.py assets/spec_validations.json assets/vkspec.html documents/validations",
+			"command": "scripts/spec_extractor.py assets/spec_validations.json assets/vkspec.html documents/progress/validations",
 			"presentation": {
 				"echo": true,
 				"reveal": "always",

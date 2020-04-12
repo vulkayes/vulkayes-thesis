@@ -1,0 +1,68 @@
+global_alloc/global_alloc_empty time:   [3.7996 ns 3.8117 ns 3.8250 ns]
+global_alloc/global_alloc_short time:   [70.316 ns 70.583 ns 70.853 ns]
+global_alloc/global_alloc_medium time:   [74.918 ns 75.274 ns 75.631 ns]
+global_alloc/global_alloc_long time:   [101.63 ns 102.11 ns 102.62 ns]
+
+
+smallvec_0/smallvec_0_empty time:   [9.0344 ns 9.0893 ns 9.1560 ns]
+smallvec_0/smallvec_0_short time:   [79.241 ns 79.510 ns 79.777 ns]
+smallvec_0/smallvec_0_medium time:   [125.67 ns 127.21 ns 128.67 ns]
+smallvec_0/smallvec_0_long time:   [172.67 ns 173.23 ns 173.82 ns]
+
+smallvec_4/smallvec_4_empty time:   [9.4782 ns 9.5083 ns 9.5404 ns]
+smallvec_4/smallvec_4_short time:   [11.471 ns 11.508 ns 11.547 ns]
+smallvec_4/smallvec_4_medium time:   [127.78 ns 129.19 ns 130.55 ns]
+smallvec_4/smallvec_4_long time:   [180.60 ns 182.50 ns 184.62 ns]
+
+smallvec_32/smallvec_32_empty time:   [11.080 ns 11.139 ns 11.208 ns]
+smallvec_32/smallvec_32_short time:   [13.080 ns 13.138 ns 13.199 ns]
+smallvec_32/smallvec_32_medium time:   [22.476 ns 22.563 ns 22.649 ns]
+smallvec_32/smallvec_32_long time:   [178.37 ns 179.22 ns 180.15 ns]
+
+smallvec_128/smallvec_128_empty time:   [16.594 ns 16.659 ns 16.728 ns]
+smallvec_128/smallvec_128_short time:   [19.880 ns 19.963 ns 20.051 ns]
+smallvec_128/smallvec_128_medium time:   [28.936 ns 29.031 ns 29.127 ns]
+smallvec_128/smallvec_128_long time:   [185.43 ns 186.80 ns 188.47 ns]
+
+
+reusable_memory_1/reusable_memory_1_empty time:   [3.9341 ns 3.9940 ns 4.0643 ns]
+reusable_memory_1/reusable_memory_1_short time:   [77.937 ns 78.380 ns 78.841 ns]
+reusable_memory_1/reusable_memory_1_medium time:   [100.77 ns 101.31 ns 101.94 ns]
+reusable_memory_1/reusable_memory_1_long time:   [514.02 ns 516.02 ns 518.13 ns]
+
+reusable_memory_4/reusable_memory_4_empty time:   [3.7413 ns 3.8107 ns 3.8919 ns]
+reusable_memory_4/reusable_memory_4_short time:   [7.5317 ns 7.6506 ns 7.7893 ns]
+reusable_memory_4/reusable_memory_4_medium time:   [104.02 ns 104.58 ns 105.19 ns]
+reusable_memory_4/reusable_memory_4_long time:   [517.33 ns 519.29 ns 521.42 ns]
+
+reusable_memory_32/reusable_memory_32_empty time:   [4.2475 ns 4.4202 ns 4.6104 ns]
+reusable_memory_32/reusable_memory_32_short time:   [14.988 ns 16.478 ns 17.821 ns]
+reusable_memory_32/reusable_memory_32_medium time:   [47.555 ns 47.886 ns 48.260 ns]
+reusable_memory_32/reusable_memory_32_long time:   [567.71 ns 569.38 ns 571.12 ns]
+
+reusable_memory_128/reusable_memory_128_empty time:   [4.3969 ns 4.4609 ns 4.5216 ns]
+reusable_memory_128/reusable_memory_128_short time:   [14.739 ns 15.564 ns 16.389 ns]
+reusable_memory_128/reusable_memory_128_medium time:   [49.762 ns 50.263 ns 50.842 ns]
+reusable_memory_128/reusable_memory_128_long time:   [714.70 ns 717.87 ns 721.37 ns]
+
+
+bumpalo_0/bumpalo_0_empty time:   [4.8801 ns 4.9095 ns 4.9436 ns]
+bumpalo_0/bumpalo_0_short time:   [21.691 ns 23.535 ns 26.105 ns]
+bumpalo_0/bumpalo_0_medium time:   [53.207 ns 54.346 ns 55.480 ns]
+bumpalo_0/bumpalo_0_long time:   [644.47 ns 656.43 ns 667.90 ns]
+
+bumpalo_4/bumpalo_4_empty time:   [4.9181 ns 4.9720 ns 5.0350 ns]
+bumpalo_4/bumpalo_4_short time:   [22.659 ns 24.452 ns 26.539 ns]
+bumpalo_4/bumpalo_4_medium time:   [53.223 ns 54.263 ns 55.394 ns]
+bumpalo_4/bumpalo_4_long time:   [633.47 ns 645.22 ns 656.58 ns]
+
+bumpalo_32/bumpalo_32_empty time:   [4.8922 ns 4.9313 ns 4.9784 ns]
+bumpalo_32/bumpalo_32_short time:   [22.657 ns 23.745 ns 24.810 ns]
+bumpalo_32/bumpalo_32_medium time:   [52.923 ns 53.819 ns 54.732 ns]
+bumpalo_32/bumpalo_32_long time:   [654.22 ns 668.40 ns 681.71 ns]
+
+bumpalo_128/bumpalo_128_empty time:   [4.8732 ns 4.9033 ns 4.9397 ns]
+bumpalo_128/bumpalo_128_short time:   [40.046 ns 40.758 ns 41.472 ns]
+bumpalo_128/bumpalo_128_medium time:   [79.458 ns 81.879 ns 84.288 ns]
+bumpalo_128/bumpalo_128_long time:   [768.62 ns 784.17 ns 797.87 ns]
+

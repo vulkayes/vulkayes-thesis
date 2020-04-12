@@ -298,6 +298,8 @@
 			"3": ["comment", "Handled by API design (ash)"],
 			"4": ["comment", "Handled by API design (ash)"]
 		}],
+		
+		"Memory",
 		["vkMapMemory", "implicit", {
 			"0": ["comment", "Handled by API design"],
 			"1": ["comment", "Handled by API design"],
@@ -319,6 +321,32 @@
 			"0": ["comment", "Handled by API design (ash)"],
 			"1": ["comment", "Handled by API design (ash)"],
 			"2": ["comment", "Handled by API design"]
+		}],
+
+		"Descriptors",
+		["vkCreateDescriptorSetLayout", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkDescriptorSetLayoutCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"]
+		}],
+		["VkDescriptorSetLayoutBinding", "implicit", {
+			"0": ["comment", "Handled by API design"]
+		}],
+
+		"Pipeline",
+		["vkCreatePipelineLayout", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
 		}]
 	],
 	"creation_validations": [
@@ -435,7 +463,22 @@
 			"2": ["comment", "Handled by API design"],
 			"3": ["comment", "Handled by API design"]
 		}],
-		["VkBufferViewCreateInfo", "explicit"]
+		["VkBufferViewCreateInfo", "explicit", {
+			"1": ["comment", "Guaranteed by the type system"]
+		}],
+
+		"Descriptor",
+		["VkDescriptorSetLayoutCreateInfo", "explicit", {
+			"0": ["comment", "Handled by API design"]
+		}],
+		["VkDescriptorSetLayoutBinding", "explicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"]
+		}],
+
+		"Pipeline",
+		["vkCreatePipelineLayout", "explicit"]
 	],
 	"usage_validations": [
 		"Queue",

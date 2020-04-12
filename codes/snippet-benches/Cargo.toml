@@ -9,10 +9,18 @@ edition = "2018"
 [dev-dependencies]
 criterion = { version = "0.3", features = ["real_blackbox"] }
 
+smallvec = "1.3.0"
+reusable-memory = { path = "/Users/edward/Documents/Libraries/rs-reusable-memory" }
+bumpalo = { version = "3.2.1", features = ["collections"] }
+
 [[bench]]
 name = "mixed_dispatch"
 harness = false
 
 [[bench]]
 name = "mixed_dispatch_fn"
+harness = false
+
+[[bench]]
+name = "collecting_iterators"
 harness = false

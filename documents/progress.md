@@ -40,6 +40,6 @@ monofont: Fira Code
 
 This document describes the plan and progress of the implementation of Vulkayes.
 
-![](synchronization/synchronization.md)
+![](progress/synchronization/synchronization.md)
 
-![](validations/validations.md)
+![](progress/validations/validations.md)

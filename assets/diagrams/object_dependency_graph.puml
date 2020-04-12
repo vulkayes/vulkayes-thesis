@@ -42,7 +42,7 @@ component [FrameBuffer] <<Vrc>> #FF6680
 component [ComputePipeline] <<Vrc>> #FF6680
 component [GraphicsPipeline] <<Vrc>> #FF6680
 
-component [DescriptorSetLayout] <<Vrc>> #FF6680
+component [DescriptorSetLayout] <<Vrc>> #66CDFF
 component [PipelineLayout] <<Vrc>> #FF6680
 
 component [DescriptorPool] <<Vrc>> #FF6680

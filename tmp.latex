@@ -1,0 +1,1295 @@
+% Just a slightly edited pandoc template for latex
+
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[
+  12pt,
+  english,
+  a4paperpaper,
+]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+  \setmainfont[]{Fira Sans}
+  \setmathfont[]{Fira Code}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Implementation of rendering system in Rust},
+  pdfauthor={Eduard Lavuš},
+  pdflang={en},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=blue,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=2cm,a4paper]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.47,0.45,0.47}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.00,0.50,0.50}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.47,0.45,0.47}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.47,0.45,0.47}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.00,1.00}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.47,0.45,0.47}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.47,0.45,0.47}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.90,0.00,0.23}{#1}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.90,0.00,0.23}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.90,0.00,0.23}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.50,0.50}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.00,0.50,0.50}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.00,0.50,0.50}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.27,0.29,0.28}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.00,0.50,0.50}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.47,0.45,0.47}{\textbf{#1}}}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+
+
+  \usepackage{subfig}
+  \usepackage[most,breakable]{tcolorbox}
+  \usepackage{pdfpages}
+  \usepackage{titlesec}
+
+  \definecolor{inline-code}{HTML}{264357}
+
+  \definecolor{validation-box}{HTML}{EAEAEA}
+  \definecolor{validation-comment}{HTML}{0099B3}
+  \definecolor{validation-comment-box}{HTML}{0099B3}
+  \definecolor{validation-done}{HTML}{00B372}
+  \definecolor{validation-done-box}{HTML}{00B372}
+
+  \definecolor{CTU-blue}{cmyk}{1, 0.43, 0, 0}
+
+  % % color boxes
+  % \let\oldtexttt\texttt
+  % \renewcommand{\texttt}[1]{\textcolor{inline-code}{\oldtexttt{#1}}}
+  % \newcommand{\valcom}{\color{validation-comment}}
+  % \newcommand{\valdone}{\color{validation-done}}
+
+  % \newtcolorbox{validation-box}{breakable,colback=validation-box,boxrule=0pt,arc=0pt,halign=left,left=0pt}
+  % \newcommand{\valbox}{\begin{validation-box}\pretolerance=10000}
+  % \newcommand{\valboxend}{\end{validation-box}}
+
+  % \newtcolorbox{validation-comment-box}{breakable,colback=validation-box,colframe=validation-comment-box,size=fbox,left*=0pt,leftrule=10pt,extrude left by=5pt}
+  % \newcommand{\valcombox}{\begin{validation-comment-box}}
+  % \newcommand{\valcomboxend}{\end{validation-comment-box}}
+
+  % \newtcolorbox{validation-done-box}{breakable,colback=validation-box,colframe=validation-done-box,size=fbox,left*=0pt,leftrule=10pt,extrude left by=5pt}
+  % \newcommand{\valdonebox}{\begin{validation-done-box}}
+  % \newcommand{\valdoneboxend}{\end{validation-done-box}}
+
+  \newcommand{\projectType}{Bachelor's Thesis}
+  \newcommand{\universityName}{Czech Technical University in Prague}
+  \newcommand{\universityLogo}{assets/logo_ctu}
+  \newcommand{\facultyNum}{F3}
+  \newcommand{\facultyName}{Faculty of Electrical Engineering}
+  \newcommand{\departmentName}{Department of Computer Graphics and Interaction}
+
+  \newcommand{\supervisorName}{doc. Ing. Jiří Bittner, Ph.D.}
+  \newcommand{\fieldOfStudy}{Open Informatics}
+  \newcommand{\subfieldOfStudy}{Computer Games and Graphics}
+
+  \newcommand{\specificationFile}{zav_prace.pdf}
+
+  % \titlespacing{\chapter}{0pt}{-50pt}{0pt}
+
+  % \titleformat \chapter [display]{\huge}{{\LARGE\chaptertitlename\ }\thechapter}{-0\dp\strutbox}{\LARGE}
+  \titlespacing* \chapter {-20pt}{-20pt}{-20pt}
+  % Extracted from ctuthesis repo
+
+  \newcommand{\CtuTitlePage}[3]{
+  	\thispagestyle{empty}
+  	\noindent
+  	\vbox to \textheight{
+  		% The titlepage goes all way up to the header (taking one \baselineskip of the head)
+  		\vspace*{\dimexpr-\baselineskip-\headsep}
+  		\vss
+  		{
+  			\noindent
+  			\leavevmode
+  			\color{CTU-blue}
+  			\vrule width 11pt
+  			\hspace*{11pt}
+  		}
+  		% The main vbox of the titlepage is larger by (bls + heasep) up and (footskip) down
+  		\vbox to \dimexpr\textheight + \baselineskip + \headsep + \footskip {
+  			% Reduce hsize by the rule width and the sep
+  			\hsize\dimexpr\linewidth-17pt
+  			% No justification, sf bf font
+  			\raggedright \sffamily \bfseries
+  			% \selectctulanguage{title}
+  			%
+  			% The document type
+  			{
+  				\projectType{}
+  				\par
+  			}
+  			%
+  			\vspace*{3ex}
+  			%
+  			{
+  				\Large\includegraphics[height=\dimexpr4\normalbaselineskip-1ex]{\universityLogo}
+  				\par
+  			}
+  			{
+  				\facultyName{}
+  				\\
+  				\departmentName{}
+  				\par
+  			}
+  			%
+  			\vspace{8ex plus 1fill}
+  			%
+  			% The title
+  			{
+  				\LARGE\color{CTU-blue}
+  				#1
+  				\par
+  			}
+  		% 	%
+  			\vspace{3ex}
+  		% 	%
+  			{
+  				\Large\color{CTU-blue}
+  				
+  				\par
+  			}
+  			%
+  			\vspace*{8ex}
+  			%
+  			% The author
+  			{
+  				\Large
+  				#2
+  				\par
+  			}
+  			%
+  			\vspace{0pt plus 3fill}
+  			{
+  				% The "metadata": supervisor, field of study, month and year
+  				\parskip 1pt
+  				Supervisor:~{\frenchspacing\supervisorName}\par
+  				% \ctuiffield*{supervisor-specialist}{\supervisorspecialistname :~{\frenchspacing\ctufield{supervisor-specialist}}\par}{}
+  				Field of study:~\fieldOfStudy\par
+  				Subfield:~\subfieldOfStudy\par
+  				Date:~#3\par
+  			}
+  		}
+  		\vss
+  		% The titlepage goes all way down to the foot
+  		\vspace*{-\footskip}
+  	}
+  	\par
+
+  	\includepdf[pages=-]{\specificationFile}
+  }
+
+  \ifxetex
+    % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
+    \usepackage{polyglossia}
+    \setmainlanguage[]{english}
+    \else
+    \usepackage[shorthands=off,main=english]{babel}
+      \fi
+
+
+
+  \newlength{\cslhangindent}
+  \setlength{\cslhangindent}{1.5em}
+  \newenvironment{cslreferences}%
+    {}%
+    {\par}
+
+\begin{document}
+
+\frontmatter
+\CtuTitlePage{Implementation of rendering system in Rust}{Eduard
+Lavuš}{2020-05-22}
+  \thispagestyle{empty}
+
+  \hypertarget{acknowledgements}{%
+  \section*{Acknowledgements}\label{acknowledgements}}
+
+  Thanky.
+
+  \vfill
+
+  \hypertarget{declaration}{%
+  \section*{Declaration}\label{declaration}}
+
+  I declare that this work is all my own work and I have cited all sources
+  I have used in the bibliography. \vspace{20pt}
+
+  \hfill{}
+  \ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+  \clearpage
+  \thispagestyle{empty}
+
+  \hypertarget{abstract}{%
+  \section*{Abstract}\label{abstract}}
+
+  English abstract
+
+  \textbf{Keywords}: key word here
+
+  \vfill
+
+  \hypertarget{abstrakt}{%
+  \section*{Abstrakt}\label{abstrakt}}
+
+  Slovenský abstrakt
+
+  \textbf{Kľúčové slová}: zámok kľúč hrad
+
+  \textbf{Preklad názvu}: Implementácia zobrazovacieho systému v jazyku
+  Rust
+
+  \vfill
+
+     {
+          \hypersetup{linkcolor=}
+        \setcounter{tocdepth}{2}
+    \tableofcontents
+  }
+  
+
+
+
+\mainmatter
+\hypertarget{introduction}{%
+\chapter{Introduction}\label{introduction}}
+
+Since its release in 2016, Vulkan
+API{[}\protect\hyperlink{ref-VulkanAPI}{1}{]} has been gaining traction
+as a go-to API for high-performance realtime 3D applications across all
+platforms. The main reason for this, apart from being cross-platform, is
+that Vulkan is designed as to be low-level, close to metal and with
+minimal overhead. This, in contrast to Khornos' older API OpenGL, leaves
+most of the overhead, but also complexity, to the user of the API. The
+user can then make decisions on where to sacrifice performance for added
+usability or vice versa.
+
+Talk about Vulkan API and why it is great
+
+Talk about what the project aims to achieve in short and long term,
+mention Rust
+
+\hypertarget{related-work}{%
+\chapter{Related work}\label{related-work}}
+
+Talk about V-EZ, Vulkano, gfx-hal, mention tephra
+
+\hypertarget{design}{%
+\chapter{Design}\label{design}}
+
+Something and more
+
+\hypertarget{rust}{%
+\section{Rust}\label{rust}}
+
+Talk about why Rust was chosen, include cpp vs Rust examples
+
+\hypertarget{drop}{%
+\subsection{Drop}\label{drop}}
+
+The term \texttt{drop} refers to what is often called
+\texttt{destructor} in OOP languages. It is a piece of code that runs at
+most once exactly before the object is destroyed. In Rust, a
+user-provided \texttt{drop} code can be provided by implementing the
+\texttt{Drop}{[}\protect\hyperlink{ref-RustDrop}{2}{]} trait for your
+type:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pub} \KeywordTok{trait} \BuiltInTok{Drop} \OperatorTok{\{}
+    \KeywordTok{fn}\NormalTok{ drop(}\OperatorTok{\&}\KeywordTok{mut} \KeywordTok{self}\NormalTok{)}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Structures in Rust are dropped recursively, in this order:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The \texttt{Drop} implementation (if any) is run for the outer type
+\item
+  Each field of the struct is recursively dropped starting from the 1.
+  point
+\item
+  The object itself is destroyed by the language implementation
+\end{enumerate}
+
+It is obvious that the only way to influence this process is by
+implementing the \texttt{Drop} trait.
+
+\hypertarget{partial-dropping}{%
+\subsubsection{Partial dropping}\label{partial-dropping}}
+
+In the case of the \texttt{Surface\textless{}Window\textgreater{}}
+structure, it was needed to allow the user to retrieve the owned
+\texttt{Window} generic parameter if the user desired to work with the
+window after the library was done with it. We would like a method that
+looks like
+\texttt{pub\ fn\ drop\_without\_window(self)\ -\textgreater{}\ Window;}.
+The structure owns the window because we need to uphold an invariant
+that the window always outlives the surface.
+
+\hypertarget{first-attempt}{%
+\paragraph{First attempt}\label{first-attempt}}
+
+At first, the structure looked like:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pub} \KeywordTok{struct}\NormalTok{ Surface}\OperatorTok{\textless{}}\NormalTok{Window}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+\NormalTok{    window}\OperatorTok{:}\NormalTok{ Window}\OperatorTok{,}
+\NormalTok{    loader}\OperatorTok{:} \PreprocessorTok{ash::extensions::khr::}\NormalTok{Surface}\OperatorTok{,}
+\NormalTok{    surface}\OperatorTok{:} \PreprocessorTok{ash::vk::}\NormalTok{SurfaceKHR}
+\OperatorTok{\}}
+\KeywordTok{impl}\OperatorTok{\textless{}}\NormalTok{W}\OperatorTok{\textgreater{}}\NormalTok{ Surface}\OperatorTok{\textless{}}\NormalTok{W}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+    \KeywordTok{pub} \KeywordTok{fn}\NormalTok{ drop\_without\_window(}\KeywordTok{self}\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ Window }\OperatorTok{\{}
+        \KeywordTok{self}\OperatorTok{.}\NormalTok{window }\CommentTok{// this will not compile because moving window out of self is a compiler error}
+        
+        \CommentTok{// here the \textasciigrave{}self\textasciigrave{} parameter would be implicitly dropped, but it is now}
+        \CommentTok{// in an inconsistent state that the compiler cannot reason about because}
+        \CommentTok{// of non{-}trivial drop implementation}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\KeywordTok{impl}\OperatorTok{\textless{}}\NormalTok{W}\OperatorTok{\textgreater{}} \BuiltInTok{Drop} \KeywordTok{for}\NormalTok{ Surface}\OperatorTok{\textless{}}\NormalTok{W}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+    \KeywordTok{fn}\NormalTok{ drop(}\OperatorTok{\&}\KeywordTok{mut} \KeywordTok{self}\NormalTok{) }\OperatorTok{\{}
+        \KeywordTok{unsafe} \OperatorTok{\{}
+            \KeywordTok{self}\OperatorTok{.}\NormalTok{loader}\OperatorTok{.}\NormalTok{destroy\_surface(}\KeywordTok{self}\OperatorTok{.}\NormalTok{surface}\OperatorTok{,} \ConstantTok{None}\NormalTok{)}\OperatorTok{;}
+        \OperatorTok{\}}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+However, manually implementing \texttt{Drop} for a type prevents
+destructuring of that type. That is the implementation of
+\texttt{drop\_without\_window} will not compile because that would
+prevent the \texttt{Drop} implementation of surface from running. This
+is a problem because this prevents us from extracting the
+\texttt{window} field out of \texttt{surface}, simply because we cannot
+prove to the compiler in a \textbf{safe} manner that the drop code does
+not depend on \texttt{window} field being valid and not moved out of.
+
+\hypertarget{second-attempt}{%
+\paragraph{Second attempt}\label{second-attempt}}
+
+Second solution was to move the fields with custom \texttt{drop} code
+into a separate inner struct:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{struct}\NormalTok{ InnerSurface }\OperatorTok{\{}
+\NormalTok{    loader}\OperatorTok{:} \PreprocessorTok{ash::extensions::khr::}\NormalTok{Surface}\OperatorTok{,}
+\NormalTok{    surface}\OperatorTok{:} \PreprocessorTok{ash::vk::}\NormalTok{SurfaceKHR}
+\OperatorTok{\}}
+\KeywordTok{impl} \BuiltInTok{Drop} \KeywordTok{for}\NormalTok{ InnerSurface }\OperatorTok{\{}
+    \KeywordTok{fn}\NormalTok{ drop(}\OperatorTok{\&}\KeywordTok{mut} \KeywordTok{self}\NormalTok{) }\OperatorTok{\{}
+        \KeywordTok{unsafe} \OperatorTok{\{}
+            \KeywordTok{self}\OperatorTok{.}\NormalTok{loader}\OperatorTok{.}\NormalTok{destroy\_surface(}\KeywordTok{self}\OperatorTok{.}\NormalTok{surface}\OperatorTok{,} \ConstantTok{None}\NormalTok{)}\OperatorTok{;}
+        \OperatorTok{\}}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\KeywordTok{pub} \KeywordTok{struct}\NormalTok{ Surface}\OperatorTok{\textless{}}\NormalTok{Window}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+    \CommentTok{// wrong order of fields, window will be dropped before inner}
+\NormalTok{    window}\OperatorTok{:}\NormalTok{ Window}\OperatorTok{,}
+\NormalTok{    inner}\OperatorTok{:}\NormalTok{ InnerSurface}
+\OperatorTok{\}}
+\KeywordTok{impl}\OperatorTok{\textless{}}\NormalTok{W}\OperatorTok{\textgreater{}}\NormalTok{ Surface}\OperatorTok{\textless{}}\NormalTok{W}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+    \KeywordTok{pub} \KeywordTok{fn}\NormalTok{ drop\_without\_window(}\KeywordTok{self}\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ Window }\OperatorTok{\{}
+        \KeywordTok{self}\OperatorTok{.}\NormalTok{window}
+
+        \CommentTok{// Implicitly drop self.inner at the end of this scope, window is returned}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+This code compiles and works. However, the \texttt{unsafe} block in the
+\texttt{drop} implemnetation has non-trivial invariants that need to be
+uphelp and they are not: \texttt{window} needs to outlive
+\texttt{inner}.
+
+Drop order of fields in structs in Rust is defined to be in the order of
+declaration, which is sometimes non-obivous and needs good documentation
+so that nobody accidentally moves struct fields around. The example
+above declares \texttt{window} field before \texttt{inner} field which
+would result in the wrong drop order and cause problems.
+
+This solution is viable, however, relying on the drop order in Rust has
+been slightly controversial, as it clashes with the notion that the
+declaration order of fields in struct does not imply their memory
+layout. Indeed, while drop order has been stabilized in
+{[}\protect\hyperlink{ref-RFC-1857}{3}{]}, it is still recommended for
+clarity to use \texttt{std::mem::ManuallyDrop} when something
+non-trivial is happening with drop.
+
+\hypertarget{third-attempt}{%
+\paragraph{Third attempt}\label{third-attempt}}
+
+Third and final attempt was inspired by the recommendation in the
+documentation of
+\texttt{ManuallyDrop}{[}\protect\hyperlink{ref-RustManuallyDrop}{4}{]}.
+The code looks like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{struct}\NormalTok{ Surface}\OperatorTok{\textless{}}\NormalTok{Window}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+\NormalTok{    window}\OperatorTok{:} \DataTypeTok{Option}\OperatorTok{\textless{}}\NormalTok{Window}\OperatorTok{\textgreater{},}
+\NormalTok{    loader}\OperatorTok{:} \PreprocessorTok{ash::extensions::khr::}\NormalTok{Surface}\OperatorTok{,}
+\NormalTok{    surface}\OperatorTok{:} \PreprocessorTok{ash::vk::}\NormalTok{SurfaceKHR}
+\OperatorTok{\}}
+\KeywordTok{impl}\OperatorTok{\textless{}}\NormalTok{W}\OperatorTok{\textgreater{}}\NormalTok{ Surface}\OperatorTok{\textless{}}\NormalTok{W}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+    \KeywordTok{pub} \KeywordTok{fn}\NormalTok{ drop\_without\_window(}\KeywordTok{mut} \KeywordTok{self}\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ Window }\OperatorTok{\{}
+        \KeywordTok{self}\OperatorTok{.}\NormalTok{window}\OperatorTok{.}\NormalTok{take()}\OperatorTok{.}\NormalTok{unwrap()}
+        \CommentTok{// This will never panic as there is no way to create instance of Surface }
+        \CommentTok{// without window set as Some. However, if you somehow do manage to create}
+        \CommentTok{// such instance *without undefined behavior*, no undefined behavior will occur.}
+        \CommentTok{// The compiler should also be able to reason that the value of window will}
+        \CommentTok{// never be \textasciigrave{}None\textasciigrave{} and optimize the branch out.}
+        
+        \CommentTok{// here self is still in valid state and is implicitly dropped in full}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\KeywordTok{impl}\OperatorTok{\textless{}}\NormalTok{W}\OperatorTok{\textgreater{}} \BuiltInTok{Drop} \KeywordTok{for}\NormalTok{ Surface}\OperatorTok{\textless{}}\NormalTok{W}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+    \KeywordTok{fn}\NormalTok{ drop(}\OperatorTok{\&}\KeywordTok{mut} \KeywordTok{self}\NormalTok{) }\OperatorTok{\{}
+        \KeywordTok{unsafe} \OperatorTok{\{}
+            \KeywordTok{self}\OperatorTok{.}\NormalTok{loader}\OperatorTok{.}\NormalTok{destroy\_surface(}\KeywordTok{self}\OperatorTok{.}\NormalTok{surface}\OperatorTok{,} \ConstantTok{None}\NormalTok{)}\OperatorTok{;}
+        \OperatorTok{\}}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+This code upholds all invariants, does not require additional
+\texttt{unsafe} code and makes it obvious that \texttt{window} is not a
+normal field but something with special logic. In the end, this code is
+not only safest of all the alternatives, but also the easiest to
+implement.
+
+\hypertarget{in-c}{%
+\subsubsection{In C++}\label{in-c}}
+
+For comparison, this problem in C++ be much harder to solve correctly.
+Consider the following two programs:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ main() \{}
+    \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"\textgreater{}\textgreater{} Moving out"}\NormalTok{ \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{    \{}
+\NormalTok{        Window original(}\DecValTok{1}\NormalTok{);}
+        \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"original "}\NormalTok{ \textless{}\textless{} original.a \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+
+\NormalTok{        Surface\textless{}Window\textgreater{} surface(}\BuiltInTok{std::}\NormalTok{move(original));}
+        \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"original "}\NormalTok{ \textless{}\textless{} original.a \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+        \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"in surface "}\NormalTok{ \textless{}\textless{} surface.window.a \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+
+\NormalTok{        Window moved = surface.destroy\_without\_window();}
+
+        \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"original "}\NormalTok{ \textless{}\textless{} original.a \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+        \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"in surface "}\NormalTok{ \textless{}\textless{} surface.window.a \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+        \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"moved out "}\NormalTok{ \textless{}\textless{} moved.a \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{    \}}
+
+    \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl \textless{}\textless{} }\StringTok{"\textgreater{}\textgreater{} Not moving out"}\NormalTok{ \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{    \{}
+\NormalTok{        Window original(}\DecValTok{2}\NormalTok{);}
+        \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"original "}\NormalTok{ \textless{}\textless{} original.a \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+
+\NormalTok{        Surface\textless{}Window\textgreater{} surface(}\BuiltInTok{std::}\NormalTok{move(original));}
+        \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"original "}\NormalTok{ \textless{}\textless{} original.a \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+        \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"in surface "}\NormalTok{ \textless{}\textless{} surface.window.a \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{    \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{fn}\NormalTok{ main() }\OperatorTok{\{}
+    \PreprocessorTok{println!}\NormalTok{(}\StringTok{"\textgreater{}\textgreater{} Moving out"}\NormalTok{)}\OperatorTok{;}
+    \OperatorTok{\{}
+        \KeywordTok{let}\NormalTok{ original }\OperatorTok{=} \PreprocessorTok{Window::}\NormalTok{new(}\DecValTok{1}\NormalTok{)}\OperatorTok{;}
+        \PreprocessorTok{println!}\NormalTok{(}\StringTok{"original \{:?\}}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\OperatorTok{,}\NormalTok{ original)}\OperatorTok{;}
+
+        \KeywordTok{let}\NormalTok{ surface }\OperatorTok{=} \PreprocessorTok{Surface::}\NormalTok{new(original)}\OperatorTok{;}
+        \CommentTok{// println!("original \{:?\}", original); // Compiler error, original was moved}
+        \PreprocessorTok{println!}\NormalTok{(}\StringTok{"in surface \{:?\}}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\OperatorTok{,}\NormalTok{ surface}\OperatorTok{.}\NormalTok{window)}\OperatorTok{;}
+
+        \KeywordTok{let}\NormalTok{ moved }\OperatorTok{=}\NormalTok{ surface}\OperatorTok{.}\NormalTok{destroy\_without\_window()}\OperatorTok{;}
+        \CommentTok{// println!("original \{:?\}", original); // Compiler error, original was moved}
+        \CommentTok{// println!("in surface \{:?\}", surface.window); // Compiler error, surface was moved}
+        \PreprocessorTok{println!}\NormalTok{(}\StringTok{"moved out \{:?\}}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\OperatorTok{,}\NormalTok{ moved)}\OperatorTok{;}
+    \OperatorTok{\}}
+
+    \PreprocessorTok{println!}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{\textgreater{}\textgreater{} Not moving out"}\NormalTok{)}\OperatorTok{;}
+    \OperatorTok{\{}
+        \KeywordTok{let}\NormalTok{ original }\OperatorTok{=} \PreprocessorTok{Window::}\NormalTok{new(}\DecValTok{2}\NormalTok{)}\OperatorTok{;}
+        \PreprocessorTok{println!}\NormalTok{(}\StringTok{"original \{:?\}}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\OperatorTok{,}\NormalTok{ original)}\OperatorTok{;}
+
+        \KeywordTok{let}\NormalTok{ surface }\OperatorTok{=} \PreprocessorTok{Surface::}\NormalTok{new(original)}\OperatorTok{;}
+        \PreprocessorTok{println!}\NormalTok{(}\StringTok{"in surface \{:?\}}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\OperatorTok{,}\NormalTok{ surface}\OperatorTok{.}\NormalTok{window)}\OperatorTok{;}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{Note: Full implementation of both these programs is available in
+the appendix.}
+
+In the Rust version, the compiler provides move semantics, protects us
+from ever using a value that was moved and the program behaves as
+expected. The \texttt{surface} is destroyed exacly when
+\texttt{destroy\_without\_window} is called.
+
+In contrast, the C++ version requires us to implement explicit move
+constructor. The moved value is nothing but an instance of the original
+class with some marker value inside that tells us not to really destroy
+it in the destructor, but it still runs destructors for all the moved
+instances. Additionally, the surface is not destroyed in the line that
+cleary says \texttt{destroy\_without\_window}, it is destroyed when it
+goes out of scope at the end of the block. All of this places great
+strain on the programmer, who is much more error prone, instead of the
+compiler.
+
+\hypertarget{object-lifetime-management}{%
+\section{Object lifetime management}\label{object-lifetime-management}}
+
+\begin{figure}
+\centering
+\includegraphics{assets/diagrams/object_dependency_graph.svg}
+\caption{Object Dependency Graph}
+\end{figure}
+
+Talk about how object lifetime is managed, maybe compare to tephra, talk
+about cargo features toggling
+
+\hypertarget{synchronization}{%
+\section{Synchronization}\label{synchronization}}
+
+Talk about how some objects are internally synchronized
+
+Talk about how GPU synchronization is left for future work
+
+\hypertarget{validations}{%
+\section{Validations}\label{validations}}
+
+Talk about how only implicit validation are guaranteed, but some
+explicit validations are implicitly handled by api design and type
+system
+
+\hypertarget{memory-management}{%
+\section{Memory management}\label{memory-management}}
+
+Talk about how device memory management is done through user-supplied
+memory allocator
+
+\hypertarget{windows}{%
+\section{Windows}\label{windows}}
+
+Talk about how windows are handle, what is a surface and a swapchain and
+how they are supported
+
+\hypertarget{implementation}{%
+\chapter{Implementation}\label{implementation}}
+
+\hypertarget{cargo-features}{%
+\section{Cargo features}\label{cargo-features}}
+
+Talk about what cargo features are available and why they are beneficial
+
+\hypertarget{vrc-vutex-etc.}{%
+\subsection{Vrc, Vutex etc.}\label{vrc-vutex-etc.}}
+
+Talk about Vrc and Vutex aliases
+
+\hypertarget{generics}{%
+\section{Generics}\label{generics}}
+
+Generics are a very powerful tool in programming. They help avoid a
+common problem in libraries: ``What if my object doesn't cover all
+usecases''. Generics provide a way for the library user to specify their
+own object with their own implementation and it only has to comform to
+some predefined bounds. In Rust, this is done by specifying trait
+bounds:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{trait}\NormalTok{ BoundTrait }\OperatorTok{\{}
+    \KeywordTok{fn}\NormalTok{ required\_method(}\OperatorTok{\&}\KeywordTok{self}\NormalTok{) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{u32}\OperatorTok{;}
+\OperatorTok{\}}
+
+\KeywordTok{fn}\NormalTok{ generic\_function}\OperatorTok{\textless{}}\NormalTok{P}\OperatorTok{:}\NormalTok{ BoundTrait}\OperatorTok{\textgreater{}}\NormalTok{(generic\_parameter}\OperatorTok{:}\NormalTok{ P) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{u32} \OperatorTok{\{}
+\NormalTok{    generic\_parameter}\OperatorTok{.}\NormalTok{required\_method()}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+In this code snippet, the \texttt{P} parameter of the
+\texttt{generic\_function} is generic. The user can then do this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{struct}\NormalTok{ Foo}\OperatorTok{;}
+\KeywordTok{impl}\NormalTok{ BoundTrait }\KeywordTok{for}\NormalTok{ Foo }\OperatorTok{\{}
+    \KeywordTok{fn}\NormalTok{ required\_method(}\OperatorTok{\&}\KeywordTok{self}\NormalTok{) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{u32} \OperatorTok{\{}
+        \DecValTok{0}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+
+\KeywordTok{struct}\NormalTok{ Bar(}\DataTypeTok{u32}\NormalTok{)}\OperatorTok{;}
+\KeywordTok{impl}\NormalTok{ BoundTrait }\KeywordTok{for}\NormalTok{ Foo }\OperatorTok{\{}
+    \KeywordTok{fn}\NormalTok{ required\_method(}\OperatorTok{\&}\KeywordTok{self}\NormalTok{) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{u32} \OperatorTok{\{}
+        \KeywordTok{self}\OperatorTok{.}\DecValTok{0}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Now both the \texttt{Foo} struct and the \texttt{Bar} implement the
+trait \texttt{BoundTrait} and can be used to call
+\texttt{generic\_function}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ foo }\OperatorTok{=}\NormalTok{ Foo}\OperatorTok{;}
+\NormalTok{generic\_function(foo)}\OperatorTok{;}
+
+\KeywordTok{let}\NormalTok{ bar }\OperatorTok{=}\NormalTok{ Bar(}\DecValTok{1}\NormalTok{)}\OperatorTok{;}
+\NormalTok{generic\_function(bar)}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+This usage is zero-cost because the functions are monomophised at the
+compile time for each calling type.
+
+\hypertarget{storing-generic-parameters}{%
+\subsection{Storing generic
+parameters}\label{storing-generic-parameters}}
+
+Using generic parameters is one thing, but storing them is harder.
+Generic parameters can have different sizes that are not known at the
+definition time:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{struct}\NormalTok{ Holder}\OperatorTok{\textless{}}\NormalTok{B}\OperatorTok{:}\NormalTok{ BoundTrait}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+\NormalTok{    item}\OperatorTok{:}\NormalTok{ B}
+\OperatorTok{\}}
+
+\KeywordTok{let}\NormalTok{ a }\OperatorTok{=}\NormalTok{ Holder }\OperatorTok{\{}\NormalTok{ item}\OperatorTok{:}\NormalTok{ Foo }\OperatorTok{\};}
+\KeywordTok{let}\NormalTok{ b }\OperatorTok{=}\NormalTok{ Holder }\OperatorTok{\{}\NormalTok{ item}\OperatorTok{:}\NormalTok{ Bar(}\DecValTok{1}\NormalTok{) }\OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+In this snippet, it is unknown at the definition time how big the
+\texttt{Holder} struct will be in memory. Instead, it is decided at the
+use time. That is, the variable \texttt{a} possibly takes less space on
+the stack than the variable \texttt{b}. The size of a type is a function
+of its fields, if the field is generic, it can't be known up front.
+
+Generic parameters are a part of the type. Two \texttt{Holder}s with
+different generic parameters cannot be stored together in an uniform
+collection (like \texttt{Vec}). The only way to achieve that is by using
+dynamic dispatch.
+
+\hypertarget{dynamic-generics}{%
+\subsection{Dynamic generics}\label{dynamic-generics}}
+
+Dynamically dispatched generics can be used to mix and match different
+implementations of traits in the same place. It works by taking a
+pointer to the generic parameter and then ``forgetting'' the type of
+that parameter, only remembering the bounds. In rust, this is handled by
+trait objects in the form of \texttt{dyn\ BoundTrait}. This is an
+unsized (size isn't known at compile time) type and it cannot be stored
+directly on the stack or in uniform collections either. It needs to be
+behind some kind of pointer, whether it be a reference, \texttt{Box},
+\texttt{Rc/Arc} or a raw pointer. This pointer will be a so-called
+``fat'' pointer.
+
+For example, to store any kind of \texttt{BoundTrait} implementor in a
+\texttt{Vec}, it can be written like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ a }\OperatorTok{=}\NormalTok{ Foo}\OperatorTok{;}
+\KeywordTok{let}\NormalTok{ b }\OperatorTok{=}\NormalTok{ Bar(}\DecValTok{1}\NormalTok{)}\OperatorTok{;}
+
+\KeywordTok{let}\NormalTok{ vec}\OperatorTok{:} \DataTypeTok{Vec}\OperatorTok{\textless{}}\DataTypeTok{Box}\OperatorTok{\textless{}}\KeywordTok{dyn}\NormalTok{ BoundTrait}\OperatorTok{\textgreater{}\textgreater{}} \OperatorTok{=} \PreprocessorTok{vec!}\NormalTok{[}
+    \DataTypeTok{Box}\PreprocessorTok{::}\NormalTok{new(a) }\KeywordTok{as} \DataTypeTok{Box}\OperatorTok{\textless{}}\KeywordTok{dyn}\NormalTok{ BoundTrait}\OperatorTok{\textgreater{},}
+    \DataTypeTok{Box}\PreprocessorTok{::}\NormalTok{new(b) }\KeywordTok{as} \DataTypeTok{Box}\OperatorTok{\textless{}}\KeywordTok{dyn}\NormalTok{ BoundTrait}\OperatorTok{\textgreater{}}
+\NormalTok{]}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+The downside of this is the access speed. Accessing methods on the
+object has to go through one more level of indirection than normally and
+also prevents certain powerful compiler optimizations. Thus is it
+undesirable to use dynamic dispatch when it is not necessary.
+
+\hypertarget{generics-in-vulkayes}{%
+\subsection{Generics in Vulkayes}\label{generics-in-vulkayes}}
+
+Generics are used in key places across Vulkayes. One example are device
+memory allocators, another would be image views. They are described in
+detail below.
+
+\hypertarget{device-memory-allocator-generics}{%
+\subsubsection{Device memory allocator
+generics}\label{device-memory-allocator-generics}}
+
+Device memory allocators have one of the biggest impact on performance
+of Vulkan. There is no default memory allocator in Vulkan. Instead,
+memory has to be allocated manually from the device. That operation,
+however, can be slow. That is why it is recommended by the Vulkan
+specification to allocate memory in bigger chunks (about 128 to 256 MB)
+at once and then distribute and reuse the memory as best as possible in
+the user code.
+
+For Vulkayes, this means it is required to support user-defined
+allocators. This is the perfect usecase for generics. An image, which
+needs some kind of memory backing to operate, has a simplified
+constructor like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{trait}\NormalTok{ DeviceMemoryAllocation }\OperatorTok{\{}
+    \CommentTok{// Allocation trait methods}
+\OperatorTok{\}}
+
+\KeywordTok{trait}\NormalTok{ DeviceMemoryAllocator }\OperatorTok{\{}
+    \KeywordTok{type}\NormalTok{ Allocation: DeviceMemoryAllocation}\OperatorTok{;}
+
+    \KeywordTok{fn}\NormalTok{ allocate(}\OperatorTok{\&}\KeywordTok{self}\NormalTok{) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{Self}\PreprocessorTok{::}\NormalTok{Allocation}\OperatorTok{;}
+\OperatorTok{\}}
+
+\KeywordTok{struct}\NormalTok{ Image }\OperatorTok{\{}
+    \CommentTok{// Image fields}
+\NormalTok{    memory}\OperatorTok{:} \OperatorTok{??}
+\OperatorTok{\}}
+\KeywordTok{impl}\NormalTok{ Image }\OperatorTok{\{}
+    \KeywordTok{pub} \KeywordTok{fn}\NormalTok{ new}\OperatorTok{\textless{}}\NormalTok{A}\OperatorTok{:}\NormalTok{ DeviceMemoryAllocator}\OperatorTok{\textgreater{}}\NormalTok{(}
+        \CommentTok{// Other fields}
+\NormalTok{        memory\_allocator}\OperatorTok{:} \OperatorTok{\&}\NormalTok{A}
+\NormalTok{    ) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{Self} \OperatorTok{\{}
+        \CommentTok{// Initialization code}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{memory\_allocator} parameter can be any user-defined type
+that implement the \texttt{DeviceMemoryAllocator} trait (and thus is
+capable of distributing memory given some requirements). However, given
+the requirements of Vulkan specification, we need to ensure that the
+memory outlives all usages of the image. This implies we need to store
+some kind of handle to the allocated memory, which can be any type
+implementing \texttt{DeviceMemoryAllocation} (as can be seen in the
+\texttt{DeviceMemoryAllocator} traits associated type
+\texttt{Allocation}).
+
+Storing this memory thus has the same implications as mentioned above.
+We could make the \texttt{Image} struct generic over the memory it
+stores. This would however mean that the memory generic parameter would
+have to be present on anything that can possibly store the image,
+including swapchain images, image views, command buffers and so on. This
+could prevent us in the future from creating a command buffer and
+recording into it operations on images with possibly different memory
+allocations (for example, because one is a sparse image and the other is
+fully-backed).
+
+Since this is very limiting, the memory inside an image can be stored
+using dynamic generics. So the \texttt{??} in the above code snippet
+would be replaced with
+\texttt{Box\textless{}dyn\ DeviceMemoryAllocation\textgreater{}}.
+
+This would be ideal for images, where the memory does not need to be
+accessed until it is to be deallocated (barring linearly tiled images).
+For buffers, however, this is a common use case. Buffers are often used
+as staging. Data is uploaded into a buffer from the host and then copied
+using device operations into an image backed by fast device-local
+memory. The upload of data is done my mapping the memory into host
+memory using Vulkan provided mechanism and then writing to it as if it
+was normal host memory.
+
+\hypertarget{mappable-memory-generics}{%
+\subsubsection{Mappable memory
+generics}\label{mappable-memory-generics}}
+
+Some use cases for mapped memory are performance-critical. For example,
+vertex animating data is done by continuously changing vertex buffer
+data according to the animation properties. This means the mapped memory
+has to be accessed every frame. This is where dynamic dispatch cost
+would be substantial, it is best to avoid it.
+
+One of the ways to avoid this cost is to simply push it back. There are
+only 3 places where the generics are truly needed:
+
+\begin{itemize}
+\tightlist
+\item
+  The memory map function
+\item
+  The memory unmap function
+\item
+  The cleanup function
+\end{itemize}
+
+No other place of the memory handling needs custom user coding. This
+means it is enough to store 3 generic user-provided functions. In Rust,
+this can be done using the \texttt{Fn} family of traits. For example,
+instead of
+\texttt{Box\textless{}dyn\ DeviceMemoryAllocation\textgreater{}} for the
+cleanup function we will use
+\texttt{Box\textless{}dyn\ FnOnce(\&Vrc\textless{}Device\textgreater{},\ vk::DeviceMemory,\ vk::DeviceSize,\ NonZeroU64)\textgreater{}}
+inside a concrete \texttt{struct\ DeviceMemoryAllocation}. The cleanup
+function can be simply \texttt{FnOnce}, which can only ever be called
+once, while the map and unmap functions might need to be called multiple
+times and have to be \texttt{FnMut}.
+
+\hypertarget{image-view-generics}{%
+\subsubsection{Image view generics}\label{image-view-generics}}
+
+Image views are another object in Vulkano that has to deal with
+generics. Image view can wrap any type that can ``act like'' an image
+and create a view into some kind of subrange. This can be expressed
+using the \texttt{ImageTrait} like so:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{struct}\NormalTok{ ImageView }\OperatorTok{\{}
+    \CommentTok{// Image view fields}
+\NormalTok{    image}\OperatorTok{:} \OperatorTok{??}
+\OperatorTok{\}}
+\KeywordTok{impl}\NormalTok{ ImageView }\OperatorTok{\{}
+    \KeywordTok{pub} \KeywordTok{fn}\NormalTok{ new}\OperatorTok{\textless{}}\NormalTok{I}\OperatorTok{:}\NormalTok{ ImageTrait}\OperatorTok{\textgreater{}}\NormalTok{(}
+\NormalTok{        image}\OperatorTok{:}\NormalTok{ I}
+\NormalTok{    ) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{Self} \OperatorTok{\{}
+        \CommentTok{// Initialization code}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+As mentioned above, this is very limiting because of the generic
+parameter. Unlike the above case, however, the image field needs to be
+accessed considerably more often.
+
+The following table shows a benchmark of so-called mixed dispatch, where
+an \texttt{enum} is used to provide common possible values for a given
+generic type and the last variant, which is the only one truly generic,
+is provided as a \texttt{Box\textless{}dyn\ Trait\textgreater{}} to
+allow using dynamic dispatch where the set of provided types is not
+extensive enough.
+
+\begin{longtable}[]{@{}lrr@{}}
+\toprule
+benchmark & avg. black box & avg. no black box\tabularnewline
+\midrule
+\endhead
+Enum::Foo & 499.01 ps & 251.31 ps\tabularnewline
+Enum::Bar & 499.47 ps & 252.67 ps\tabularnewline
+Enum::Dyn & 1.3018 ns & 1.2512 ns\tabularnewline
+Foo & 499.36 ps & 260.76 ps\tabularnewline
+Bar & 499.03 ps & 252.18 ps\tabularnewline
+Qux & 313.34 ps & 250.41 ps\tabularnewline
+dyn Qux & 1.5104 ns & 1.5028 ns\tabularnewline
+\bottomrule
+\end{longtable}
+
+As can be seen from the table, accessing a value through a dynamic
+dispatch is at least twice as slow as accessing it through static
+dispatch, and this is with optimizations prevented by using the concept
+of a black box from the Rust stdlib.
+
+Non-black boxed benchmarks show that the optimizations provided by the
+compiler for statically dispatched values can further reduce the
+overhead of static dispatch, while the dynamic dispatch stays mostly the
+same.
+
+// TODO: Reference to the benchmark code
+
+\hypertarget{deref}{%
+\subsection{Deref}\label{deref}}
+
+Talk about Deref trait usage
+
+\hypertarget{user-code-a.k.a.-dyn-fnmut}{%
+\subsection{\texorpdfstring{User code a.k.a.
+\texttt{dyn\ FnMut}}{User code a.k.a. dyn FnMut}}\label{user-code-a.k.a.-dyn-fnmut}}
+
+Talk about usage of \texttt{dyn}
+
+\hypertarget{swapchain-recreate}{%
+\section{Swapchain recreate}\label{swapchain-recreate}}
+
+Swapchain is an object in Vulkan that facilitates image presentation
+onto surfaces. Surfaces are an abstraction over regions of the physical
+display, intended mainly for windowing systems and compositors. A
+swapchain is created for a combination of a surface and a device.
+
+Requirement for our Swapchain object are:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Only one swapchain can exist for one surface.
+\item
+  Allow user to retrieve the surface when the swapchain is no longer in
+  use.
+\item
+  Allow user to recreate the swapchain, transferring the ownership of
+  the surface to the new instance, retiring the old swapchain.
+\item
+  Keep retired swapchain alive until all its acquired images are not
+  longer in use.
+\end{enumerate}
+
+Satisfying all three conditions as they are is not trivial, mainly
+because the the first two conditions lead to the requirement of dropping
+the swapchain once the surface is moved out of it, however, the fourth
+condition requires us to keep it alive. This can also create problems
+where for some reason the retired swapchain outlives the active one. In
+such cases, the surface can happen to be dropped before the retired
+swapchain, which is incorrect.
+
+To satisfy all 4 conditions, we first have to rewrite them into terms
+that can be expressed in the language.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The creation of a swapchain requires full ownership of the surface,
+  thus our constructor has to take surface by value.
+\item
+  The swapchain has to have a method that consumes the swapchain and
+  returns the surface by value.
+\item
+  The new, recreated swapchain has to take the old swapchain by value
+  and extract the surface from it using method from 2.
+\item
+  The swapchain has to be reference counted to outlive all its images.
+\end{enumerate}
+
+Now it is much clearer why these requirements are hard to satisfy - 4.
+requires that the swapchain reference counted and its lifetime is
+guarded dynamically, however, 2. and 3. require for the lifetime of the
+swapchain to end immediatelly rather than sometime in the future. We
+need to rewrite the requirements to work with reference counting.
+
+Adapting 2. is implementationally trivial. We must rely on the user to
+first drop all outstanding shared pointers except for one and then use
+that one to retrieve the swapchain back as an owned value.
+
+Adapting 3. however, is much harder to implement as we can't expect the
+user to wait until all outstanding operations on the current swapchain
+are done until creating a new one since that would limit the
+functionality too much. Instead, we need to make sure that the surface
+is alive for the longer of the two lifetimes. This is exactly what
+reference counting does. By reference counting the surface inside a
+swapchain but still requiring an owned value for swapchain creation, we
+can make sure that no two active swapchains are ever created for one
+surface while still leaving the possibility of retrieving the surface
+after all but one of the shared pointers are dropped.
+
+The resulting API thus looks like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pub} \KeywordTok{struct}\NormalTok{ Swapchain }\OperatorTok{\{}
+\NormalTok{    surface}\OperatorTok{:}\NormalTok{ Vrc}\OperatorTok{\textless{}}\NormalTok{Surface}\OperatorTok{\textgreater{},}
+    \CommentTok{// Other fields}
+\OperatorTok{\}}
+\KeywordTok{impl}\NormalTok{ Swapchain }\OperatorTok{\{}
+    \KeywordTok{pub} \KeywordTok{fn}\NormalTok{ new(}
+\NormalTok{        surface}\OperatorTok{:}\NormalTok{ Surface}\OperatorTok{,}
+        \CommentTok{// Other parameters}
+\NormalTok{    ) }\OperatorTok{{-}\textgreater{}}\NormalTok{ Vrc}\OperatorTok{\textless{}}\DataTypeTok{Self}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+        \PreprocessorTok{Vrc::}\NormalTok{new(}
+\NormalTok{            Swapchain }\OperatorTok{\{}
+\NormalTok{                surface}\OperatorTok{:} \PreprocessorTok{Vrc::}\NormalTok{new(surface)}\OperatorTok{,}
+                \CommentTok{// Other fields}
+            \OperatorTok{\}}
+\NormalTok{        )}
+    \OperatorTok{\}}
+
+    \KeywordTok{pub} \KeywordTok{fn}\NormalTok{ recreate(}
+        \KeywordTok{self}\OperatorTok{:} \OperatorTok{\&}\NormalTok{Vrc}\OperatorTok{\textless{}}\DataTypeTok{Self}\OperatorTok{\textgreater{},}
+        \CommentTok{// Other parameters}
+\NormalTok{    ) }\OperatorTok{{-}\textgreater{}}\NormalTok{ Vrc}\OperatorTok{\textless{}}\DataTypeTok{Self}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+        \PreprocessorTok{Vrc::}\NormalTok{new(}
+\NormalTok{            Swapchain }\OperatorTok{\{}
+\NormalTok{                surface}\OperatorTok{:} \KeywordTok{self}\OperatorTok{.}\NormalTok{surface}\OperatorTok{.}\NormalTok{clone()}\OperatorTok{,}
+                \CommentTok{// Other fields}
+            \OperatorTok{\}}
+\NormalTok{        )}
+    \OperatorTok{\}}
+
+    \KeywordTok{pub} \KeywordTok{fn}\NormalTok{ surface(}\OperatorTok{\&}\KeywordTok{self}\NormalTok{) }\OperatorTok{{-}\textgreater{}} \OperatorTok{\&}\NormalTok{Vrc}\OperatorTok{\textless{}}\DataTypeTok{Self}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+        \OperatorTok{\&}\KeywordTok{self}\OperatorTok{.}\NormalTok{surface}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+This satisfies all the rules:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  We cannot retrieve the surface back from the swapchain without
+  destroying the shared pointer, which dynamically ensures there are no
+  other instances.
+\item
+  The swapchain returns a reference to the reference counted surface,
+  which can be destroyed to gain the surface after dropping all
+  swapchains and swapchain images in the same way as above.
+\item
+  Both the new and the old swapchain contain a reference to the surface
+  and thus will keep it alive for as long as is needed.
+\item
+  Swapchain is reference counted and can be kept alive by the images.
+\end{enumerate}
+
+\hypertarget{evaluation}{%
+\chapter{Evaluation}\label{evaluation}}
+
+\hypertarget{user-code}{%
+\section{User code}\label{user-code}}
+
+One of the main concerns when designing a library is the user code. How
+the user code will look like, if it will be readable and comfortable to
+write.
+
+Original examples repository from \texttt{ash} crate has 1820 lines of
+Rust code. Current examples repository adapted to Vulkayes has 1485
+lines of Rust code. This is a difference of 335 lines of Rust code.
+
+Below is an example of the code with same functionality from the
+original examples and from the current ones. The code after is two times
+shorter than the original code while exposing the same functionality and
+providing static validation guarantees.
+
+// TODO: Revisit this after some benchmarks
+
+Before:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ vertex\_input\_buffer\_info }\OperatorTok{=} \PreprocessorTok{vk::}\NormalTok{BufferCreateInfo }\OperatorTok{\{}
+\NormalTok{    size}\OperatorTok{:} \PreprocessorTok{std::mem::}\NormalTok{size\_of\_val(}\OperatorTok{\&}\NormalTok{vertices) }\KeywordTok{as} \DataTypeTok{u64}\OperatorTok{,}
+\NormalTok{    usage}\OperatorTok{:} \PreprocessorTok{vk::BufferUsageFlags::}\NormalTok{VERTEX\_BUFFER}\OperatorTok{,}
+\NormalTok{    sharing\_mode}\OperatorTok{:} \PreprocessorTok{vk::SharingMode::}\NormalTok{EXCLUSIVE}\OperatorTok{,}
+    \OperatorTok{..}\BuiltInTok{Default}\PreprocessorTok{::}\KeywordTok{default}\NormalTok{()}
+\OperatorTok{\};}
+\KeywordTok{let}\NormalTok{ vertex\_input\_buffer }\OperatorTok{=}\NormalTok{ base}
+    \OperatorTok{.}\NormalTok{device}
+    \OperatorTok{.}\NormalTok{create\_buffer(}\OperatorTok{\&}\NormalTok{vertex\_input\_buffer\_info}\OperatorTok{,} \ConstantTok{None}\NormalTok{)}
+    \OperatorTok{.}\NormalTok{unwrap()}\OperatorTok{;}
+\KeywordTok{let}\NormalTok{ vertex\_input\_buffer\_memory\_req }\OperatorTok{=}\NormalTok{ base}
+    \OperatorTok{.}\NormalTok{device}
+    \OperatorTok{.}\NormalTok{get\_buffer\_memory\_requirements(vertex\_input\_buffer)}\OperatorTok{;}
+\KeywordTok{let}\NormalTok{ vertex\_input\_buffer\_memory\_index }\OperatorTok{=}\NormalTok{ find\_memorytype\_index(}
+    \OperatorTok{\&}\NormalTok{vertex\_input\_buffer\_memory\_req}\OperatorTok{,}
+    \OperatorTok{\&}\NormalTok{base}\OperatorTok{.}\NormalTok{device\_memory\_properties}\OperatorTok{,}
+    \PreprocessorTok{vk::MemoryPropertyFlags::}\NormalTok{HOST\_VISIBLE }\OperatorTok{|} \PreprocessorTok{vk::MemoryPropertyFlags::}\NormalTok{HOST\_COHERENT}\OperatorTok{,}
+\NormalTok{)}
+\OperatorTok{.}\NormalTok{expect(}\StringTok{"Unable to find suitable memorytype for the vertex buffer."}\NormalTok{)}\OperatorTok{;}
+
+\KeywordTok{let}\NormalTok{ vertex\_buffer\_allocate\_info }\OperatorTok{=} \PreprocessorTok{vk::}\NormalTok{MemoryAllocateInfo }\OperatorTok{\{}
+\NormalTok{    allocation\_size}\OperatorTok{:}\NormalTok{ vertex\_input\_buffer\_memory\_req}\OperatorTok{.}\NormalTok{size}\OperatorTok{,}
+\NormalTok{    memory\_type\_index}\OperatorTok{:}\NormalTok{ vertex\_input\_buffer\_memory\_index}\OperatorTok{,}
+    \OperatorTok{..}\BuiltInTok{Default}\PreprocessorTok{::}\KeywordTok{default}\NormalTok{()}
+\OperatorTok{\};}
+\KeywordTok{let}\NormalTok{ vertex\_input\_buffer\_memory }\OperatorTok{=}\NormalTok{ base}
+    \OperatorTok{.}\NormalTok{device}
+    \OperatorTok{.}\NormalTok{allocate\_memory(}\OperatorTok{\&}\NormalTok{vertex\_buffer\_allocate\_info}\OperatorTok{,} \ConstantTok{None}\NormalTok{)}
+    \OperatorTok{.}\NormalTok{unwrap()}\OperatorTok{;}
+
+\KeywordTok{let}\NormalTok{ vert\_ptr }\OperatorTok{=}\NormalTok{ base}
+    \OperatorTok{.}\NormalTok{device}
+    \OperatorTok{.}\NormalTok{map\_memory(}
+\NormalTok{        vertex\_input\_buffer\_memory}\OperatorTok{,}
+        \DecValTok{0}\OperatorTok{,}
+\NormalTok{        vertex\_input\_buffer\_memory\_req}\OperatorTok{.}\NormalTok{size}\OperatorTok{,}
+        \PreprocessorTok{vk::MemoryMapFlags::}\NormalTok{empty()}\OperatorTok{,}
+\NormalTok{    )}
+    \OperatorTok{.}\NormalTok{unwrap()}\OperatorTok{;}
+\KeywordTok{let} \KeywordTok{mut}\NormalTok{ slice }\OperatorTok{=} \PreprocessorTok{Align::}\NormalTok{new(}
+\NormalTok{    vert\_ptr}\OperatorTok{,}
+    \PreprocessorTok{align\_of::}\OperatorTok{\textless{}}\NormalTok{Vertex}\OperatorTok{\textgreater{}}\NormalTok{() }\KeywordTok{as} \DataTypeTok{u64}\OperatorTok{,}
+\NormalTok{    vertex\_input\_buffer\_memory\_req}\OperatorTok{.}\NormalTok{size}\OperatorTok{,}
+\NormalTok{)}\OperatorTok{;}
+\NormalTok{slice}\OperatorTok{.}\NormalTok{copy\_from\_slice(}\OperatorTok{\&}\NormalTok{vertices)}\OperatorTok{;}
+\NormalTok{base}\OperatorTok{.}\NormalTok{device}\OperatorTok{.}\NormalTok{unmap\_memory(vertex\_input\_buffer\_memory)}\OperatorTok{;}
+\NormalTok{base}\OperatorTok{.}\NormalTok{device}
+    \OperatorTok{.}\NormalTok{bind\_buffer\_memory(vertex\_input\_buffer}\OperatorTok{,}\NormalTok{ vertex\_input\_buffer\_memory}\OperatorTok{,} \DecValTok{0}\NormalTok{)}
+    \OperatorTok{.}\NormalTok{unwrap()}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+After:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ vertex\_buffer }\OperatorTok{=} \OperatorTok{\{}
+    \KeywordTok{let}\NormalTok{ buffer }\OperatorTok{=} \PreprocessorTok{Buffer::}\NormalTok{new(}
+\NormalTok{        base}\OperatorTok{.}\NormalTok{device}\OperatorTok{.}\NormalTok{clone()}\OperatorTok{,}
+        \PreprocessorTok{std::num::NonZeroU64::}\NormalTok{new(}\PreprocessorTok{std::mem::}\NormalTok{size\_of\_val(}\OperatorTok{\&}\NormalTok{vertices) }\KeywordTok{as} \DataTypeTok{u64}\NormalTok{)}\OperatorTok{.}\NormalTok{unwrap()}\OperatorTok{,}
+        \PreprocessorTok{vk::BufferUsageFlags::}\NormalTok{VERTEX\_BUFFER}\OperatorTok{,}
+\NormalTok{        base}\OperatorTok{.}\NormalTok{present\_queue}\OperatorTok{.}\NormalTok{deref()}\OperatorTok{.}\NormalTok{into()}\OperatorTok{,}
+        \PreprocessorTok{buffer::params::AllocatorParams::}\ConstantTok{Some} \OperatorTok{\{}
+\NormalTok{            allocator}\OperatorTok{:} \OperatorTok{\&}\NormalTok{base}\OperatorTok{.}\NormalTok{device\_memory\_allocator}\OperatorTok{,}
+\NormalTok{            requirements}\OperatorTok{:} \PreprocessorTok{vk::MemoryPropertyFlags::}\NormalTok{HOST\_VISIBLE}
+                \OperatorTok{|} \PreprocessorTok{vk::MemoryPropertyFlags::}\NormalTok{HOST\_COHERENT}
+        \OperatorTok{\},}
+        \BuiltInTok{Default}\PreprocessorTok{::}\KeywordTok{default}\NormalTok{()}
+\NormalTok{    )}
+    \OperatorTok{.}\NormalTok{expect(}\StringTok{"Could not create index buffer"}\NormalTok{)}\OperatorTok{;}
+
+    \KeywordTok{let}\NormalTok{ memory }\OperatorTok{=}\NormalTok{ buffer}\OperatorTok{.}\NormalTok{memory()}\OperatorTok{.}\NormalTok{unwrap()}\OperatorTok{;}
+\NormalTok{    memory}
+        \OperatorTok{.}\NormalTok{map\_memory\_with(}\OperatorTok{|}\KeywordTok{mut}\NormalTok{ access}\OperatorTok{|} \OperatorTok{\{}
+\NormalTok{            access}\OperatorTok{.}\NormalTok{write\_slice(}\OperatorTok{\&}\NormalTok{vertices}\OperatorTok{,} \DecValTok{0}\OperatorTok{,} \BuiltInTok{Default}\PreprocessorTok{::}\KeywordTok{default}\NormalTok{())}\OperatorTok{;}
+            \PreprocessorTok{MappingAccessResult::}\NormalTok{Unmap}
+        \OperatorTok{\}}\NormalTok{)}
+        \OperatorTok{.}\NormalTok{expect(}\StringTok{"could not map memory"}\NormalTok{)}\OperatorTok{;}
+
+\NormalTok{    buffer}
+\OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+Talk about benchmarks
+
+\hypertarget{scene-1}{%
+\section{Scene 1}\label{scene-1}}
+
+\hypertarget{scene-2}{%
+\section{Scene 2}\label{scene-2}}
+
+\hypertarget{scene-3}{%
+\section{Scene 3}\label{scene-3}}
+
+\hypertarget{conclusion}{%
+\chapter{Conclusion}\label{conclusion}}
+
+Conclude
+
+\hypertarget{bibliography}{%
+\chapter*{Bibliography}\label{bibliography}}
+\addcontentsline{toc}{chapter}{Bibliography}
+
+\hypertarget{refs}{}
+\begin{cslreferences}
+\leavevmode\hypertarget{ref-VulkanAPI}{}%
+{[}1{]} ``Vulkan® 1.2.136 - A Specification.'' {[}Online{]}. Available:
+\url{https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html}.
+{[}Accessed: 05-Apr-2020{]}
+
+\leavevmode\hypertarget{ref-RustDrop}{}%
+{[}2{]} ``Drop.'' {[}Online{]}. Available:
+\url{https://doc.rust-lang.org/std/ops/trait.Drop.html}. {[}Accessed:
+03-Mar-2020{]}
+
+\leavevmode\hypertarget{ref-RFC-1857}{}%
+{[}3{]} ``RFC-1857 Stabilize Drop Order.'' {[}Online{]}. Available:
+\url{https://github.com/rust-lang/rfcs/blob/master/text/1857-stabilize-drop-order.md}.
+{[}Accessed: 03-Mar-2020{]}
+
+\leavevmode\hypertarget{ref-RustManuallyDrop}{}%
+{[}4{]} ``ManuallyDrop.'' {[}Online{]}. Available:
+\url{https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html}.
+{[}Accessed: 03-Mar-2020{]}
+\end{cslreferences}
+
+\backmatter
+
+
+\end{document}
