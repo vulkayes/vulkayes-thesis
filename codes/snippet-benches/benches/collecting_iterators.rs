@@ -10,9 +10,9 @@ use bumpalo::{Bump, collections::Vec as BumpVec};
 
 macro_rules! bbc {
 	($e: expr) => {
-		// criterion::black_box(
+		criterion::black_box(
 			$e
-		// )
+		)
 	}
 }
 
@@ -56,10 +56,15 @@ fn collecting_iterators(crit: &mut Criterion) {
 						$strategy(
 							input, $iter, |collected| {
 								assert_eq!(collected.len(), $len);
+								if $len > 0 {
+									assert_eq!(collected[0], 0);
+									assert_eq!(collected[1], 1);
+									assert_eq!(collected[2], 2);
+								}
 							}
 						);
 					},
-					BatchSize::SmallInput
+					BatchSize::NumIterations(100)
 				)
 			);
 		}
@@ -121,7 +126,7 @@ fn collecting_iterators(crit: &mut Criterion) {
 		}
 	}
 	smallvec_strategy!(smallvec_0, 0);
-	smallvec_strategy!(smallvec_4, 4);
+	smallvec_strategy!(smallvec_8, 8);
 	smallvec_strategy!(smallvec_32, 32);
 	smallvec_strategy!(smallvec_128, 128);
 
@@ -133,23 +138,24 @@ fn collecting_iterators(crit: &mut Criterion) {
 			fn $name(memory: &mut ReusableMemory<usize>, iter: impl Iterator<Item = ItemType>, call_me: impl FnOnce(&[ItemType])) {
 				let mut borrow = memory.borrow_mut_as(
 					std::num::NonZeroUsize::new($count).unwrap()
-				).unwrap();
+				);
 
 				match borrow.push_from_iter(iter) {
 					Ok(_) => call_me(borrow.as_slice()),
 					Err(iter) => {
 						let v = borrow.drain(..).chain(iter).collect::<Vec<_>>();
+						
 						call_me(v.as_slice());
 					}
 				}
 			}
 			bench_strategy!(
-				stringify!($name), { ReusableMemory::<ItemType>::with_capacity($count).unwrap() }, $name
+				stringify!($name), { ReusableMemory::<ItemType>::with_capacity($count) }, $name
 			);
 		}
 	}
 	reusable_memory_strategy!(reusable_memory_1, 1);
-	reusable_memory_strategy!(reusable_memory_4, 4);
+	reusable_memory_strategy!(reusable_memory_8, 8);
 	reusable_memory_strategy!(reusable_memory_32, 32);
 	reusable_memory_strategy!(reusable_memory_128, 128);
 
@@ -171,14 +177,14 @@ fn collecting_iterators(crit: &mut Criterion) {
 		}
 	}
 	bumpalo_strategy!(bumpalo_0, 0);
-	bumpalo_strategy!(bumpalo_4, 4);
+	bumpalo_strategy!(bumpalo_8, 8);
 	bumpalo_strategy!(bumpalo_32, 32);
 	bumpalo_strategy!(bumpalo_128, 128);
 }
 
 criterion_group!(
 	name = benches;
-	config = Criterion::default().sample_size(200).warm_up_time(Duration::from_secs(10)).measurement_time(Duration::from_secs(10));
+	config = Criterion::default().sample_size(200).warm_up_time(Duration::from_secs(5)).measurement_time(Duration::from_secs(10));
 	targets = collecting_iterators
 );
 criterion_main!(benches);
