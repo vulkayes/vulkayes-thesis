@@ -77,19 +77,31 @@
 
 * The `pipeline` parameter in `vkDestroyPipeline`
 
+\valcombox
 * The `pipelineLayout` parameter in `vkDestroyPipelineLayout`
+	- \valcom Consequence of shared pointer usage
+
+\valcomboxend
 
 * The `sampler` parameter in `vkDestroySampler`
 
+\valcombox
 * The `descriptorSetLayout` parameter in `vkDestroyDescriptorSetLayout`
+	- \valcom Consequence of shared pointer usage
 
 * The `descriptorPool` parameter in `vkDestroyDescriptorPool`
+	- \valcom Consequence of shared pointer usage
 
 * The `descriptorPool` parameter in `vkResetDescriptorPool`
+	- \valcom Synchronized internally
 
 * The `descriptorPool` member of the `pAllocateInfo` parameter in `vkAllocateDescriptorSets`
+	- \valcom Synchronized internally
 
 * The `descriptorPool` parameter in `vkFreeDescriptorSets`
+	- \valcom Synchronized internally
+
+\valcomboxend
 
 * The `framebuffer` parameter in `vkDestroyFramebuffer`
 

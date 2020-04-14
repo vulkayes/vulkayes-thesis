@@ -340,6 +340,38 @@
 		["VkDescriptorSetLayoutBinding", "implicit", {
 			"0": ["comment", "Handled by API design"]
 		}],
+		["vkCreateDescriptorPool", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkDescriptorPoolCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"],
+			"4": ["comment", "Handled by API design (ash)"],
+			"5": ["comment", "Guaranteed by the type system"]
+		}],
+		["VkDescriptorPoolInlineUniformBlockCreateInfoEXT", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"]
+		}],
+		["vkAllocateDescriptorSets", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design (ash)"],
+			"3": ["comment", "Guaranteed by the type system"]
+		}],
+		["VkDescriptorSetAllocateInfo", "implciit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"],
+			"5": ["done", "Returns error"],
+			"6": ["done", "Returns error"]
+		}],
 
 		"Pipeline",
 		["vkCreatePipelineLayout", "implicit", {
@@ -347,6 +379,17 @@
 			"1": ["comment", "Handled by API design"],
 			"2": ["comment", "Handled by API design"],
 			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkPipelineLayoutCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design (ash)"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"]
+		}],
+		["VkPushConstantRange", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["done", "Returns error"]
 		}]
 	],
 	"creation_validations": [
@@ -476,9 +519,17 @@
 			"1": ["comment", "Handled by API design"],
 			"4": ["comment", "Handled by API design"]
 		}],
+		["VkDescriptorPoolCreateInfo", "explicit", {
+			"0": ["comment", "Guaranteed by the type system"]
+		}],
 
 		"Pipeline",
-		["vkCreatePipelineLayout", "explicit"]
+		["VkPipelineLayoutCreateInfo", "explicit", {}],
+		["VkPushConstantRange", "explicit", {
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Guaranteed by the type system"],
+			"3": ["comment", "Handled by API design"]
+		}]
 	],
 	"usage_validations": [
 		"Queue",
@@ -536,6 +587,9 @@
 			"0": ["comment", "Handled by API design"],
 			"1": ["comment", "Handled by API design"],
 			"2": ["comment", "Handled by API design"]
-		}]
+		}],
+
+		"Descriptor",
+		["VkDescriptorSetAllocateInfo", "explicit", {}]
 	]
 }

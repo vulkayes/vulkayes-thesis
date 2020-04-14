@@ -64,7 +64,7 @@ fn collecting_iterators(crit: &mut Criterion) {
 							}
 						);
 					},
-					BatchSize::NumIterations(100)
+					BatchSize::NumIterations(175)
 				)
 			);
 		}
@@ -140,7 +140,7 @@ fn collecting_iterators(crit: &mut Criterion) {
 					std::num::NonZeroUsize::new($count).unwrap()
 				);
 
-				match borrow.push_from_iter(iter) {
+				match borrow.push_from_iter_size_hint(iter) {
 					Ok(_) => call_me(borrow.as_slice()),
 					Err(iter) => {
 						let v = borrow.drain(..).chain(iter).collect::<Vec<_>>();

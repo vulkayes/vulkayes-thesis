@@ -24,7 +24,7 @@ Validations of correct unsage in other functions as dictated by the Vulkan speci
 
 Category |Statically solved|Dynamically solved|Left to user|Total
 ---------|-----------------|------------------|------------|-----
-Implicit |              198|                17|           0|  215
-Creation |               62|                 0|         141|  203
-Usage    |               22|                 1|          64|   87
-**Total**|              282|                18|         205|  505
+Implicit |              233|                18|           0|  251
+Creation |               71|                 0|         188|  259
+Usage    |               22|                 1|          66|   89
+**Total**|              326|                19|         254|  599

@@ -42,10 +42,10 @@ component [FrameBuffer] <<Vrc>> #FF6680
 component [ComputePipeline] <<Vrc>> #FF6680
 component [GraphicsPipeline] <<Vrc>> #FF6680
 
-component [DescriptorSetLayout] <<Vrc>> #66CDFF
-component [PipelineLayout] <<Vrc>> #FF6680
+component [DescriptorSetLayout] <<Vrc>> #66FF98
+component [PipelineLayout] <<Vrc>> #66FF98
 
-component [DescriptorPool] <<Vrc>> #FF6680
+component [DescriptorPool] <<Vrc>> #66FF98
 component [DescriptorSet] <<Vrc>> #FF6680
 
 component [Semaphore] <<Vrc>> #66FF98
@@ -83,7 +83,7 @@ component [Fence] <<Vrc>> #66FF98
 
 [RenderPass] <.. [FrameBuffer]
 [DescriptorSetLayout] <.. [DescriptorSet] : Copy?
-[DescriptorSetLayout] <.. [PipelineLayout] : Copy? + Device
+[DescriptorSetLayout] <-- [PipelineLayout]
 [PipelineLayout] <.. [ComputePipeline] : Copy?
 [PipelineLayout] <.. [GraphicsPipeline] : Copy?
 [DescriptorPool] <-- [DescriptorSet]

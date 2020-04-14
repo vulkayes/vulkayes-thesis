@@ -363,8 +363,9 @@ checksum = "7fe5bd57d1d7414c6b5ed48563a2c855d995ff777729dcd91c369ec7fea395ae"
 
 [[package]]
 name = "reusable-memory"
-version = "0.2.0"
-source = "git+https://github.com/TheEdward162/rs-reusable-memory.git#27be1b970fcf56459618024adcb403ab93850543"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "88e3db437c76d4ee15e64b9ae7990e8455ccd0fd39db5d82b12fae20082decd7"
 
 [[package]]
 name = "rustc_version"

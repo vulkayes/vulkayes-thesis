@@ -325,3 +325,15 @@ Validations for `VkMappedMemoryRange`:
 
 \valboxend
 
+### Descriptor
+
+Validations for `VkDescriptorSetAllocateInfo`:
+
+\valbox
+
+1. Each element of `pSetLayouts` must not have been created with `VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR` set
+
+2. If any element of `pSetLayouts` was created with the `VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT` bit set, `descriptorPool` must have been created with the `VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT` flag set
+
+\valboxend
+

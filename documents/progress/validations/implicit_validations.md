@@ -1227,6 +1227,93 @@ Validations for `VkDescriptorSetLayoutBinding`:
 
 \valboxend
 
+Validations for `vkCreateDescriptorPool`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pCreateInfo` must be a valid pointer to a valid `VkDescriptorPoolCreateInfo` structure
+	- \valcom Handled by API design (ash)
+
+3. If `pAllocator` is not `NULL`, `pAllocator` must be a valid pointer to a valid `VkAllocationCallbacks` structure
+	- \valcom Handled by API design
+
+4. `pDescriptorPool` must be a valid pointer to a `VkDescriptorPool` handle
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkDescriptorPoolCreateInfo`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO`
+	- \valcom Handled by API design (ash)
+
+2. `pNext` must be `NULL` or a pointer to a valid instance of `VkDescriptorPoolInlineUniformBlockCreateInfoEXT`
+	- \valcom Handled by API design (ash)
+
+3. The `sType` value of each struct in the `pNext` chain must be unique
+	- \valcom Handled by API design
+
+4. `flags` must be a valid combination of `VkDescriptorPoolCreateFlagBits` values
+	- \valcom Handled by API design (ash)
+
+5. `pPoolSizes` must be a valid pointer to an array of `poolSizeCount` valid `VkDescriptorPoolSize` structures
+	- \valcom Handled by API design (ash)
+
+6. `poolSizeCount` must be greater than `0`
+	- \valcom Guaranteed by the type system
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkDescriptorPoolInlineUniformBlockCreateInfoEXT`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO_EXT`
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+Validations for `vkAllocateDescriptorSets`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pAllocateInfo` must be a valid pointer to a valid `VkDescriptorSetAllocateInfo` structure
+	- \valcom Handled by API design
+
+3. `pDescriptorSets` must be a valid pointer to an array of `pAllocateInfo`::descriptorSetCount `VkDescriptorSet` handles
+	- \valcom Handled by API design (ash)
+
+4. The value referenced by `pAllocateInfo`::`descriptorSetCount` must be greater than `0`
+	- \valcom Guaranteed by the type system
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkDescriptorSetAllocateInfo`:
+
 ### Pipeline
 
 Validations for `vkCreatePipelineLayout`:
@@ -1248,6 +1335,51 @@ Validations for `vkCreatePipelineLayout`:
 	- \valcom Handled by API design (ash)
 
 \valcomboxend
+
+\valboxend
+
+Validations for `VkPipelineLayoutCreateInfo`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO`
+	- \valcom Handled by API design (ash)
+
+2. `pNext` must be `NULL`
+	- \valcom Handled by API design (ash)
+
+3. `flags` must be `0`
+	- \valcom Handled by API design (ash)
+
+4. If `setLayoutCount` is not `0`, `pSetLayouts` must be a valid pointer to an array of `setLayoutCount` valid `VkDescriptorSetLayout` handles
+	- \valcom Handled by API design
+
+5. If `pushConstantRangeCount` is not `0`, `pPushConstantRanges` must be a valid pointer to an array of `pushConstantRangeCount` valid `VkPushConstantRange` structures
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkPushConstantRange`:
+
+\valbox
+
+\valcombox
+
+1. `stageFlags` must be a valid combination of `VkShaderStageFlagBits` values
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valdonebox
+
+2. `stageFlags` must not be `0`
+	- \valdone Returns error
+
+\valdoneboxend
 
 \valboxend
 
