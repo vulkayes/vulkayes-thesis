@@ -738,6 +738,88 @@ Validations for `VkDescriptorPoolCreateInfo`:
 
 \valboxend
 
+Validations for `VkSamplerCreateInfo`:
+
+\valbox
+
+1. The absolute value of `mipLodBias` must be less than or equal to `VkPhysicalDeviceLimits`::`maxSamplerLodBias`
+
+2. `maxLod` must be greater than or equal to `minLod`
+
+\valcombox
+
+3. If the anisotropic sampling feature is not enabled, `anisotropyEnable` must be `VK_FALSE`
+	- \valcom Handled by API design
+
+\valcomboxend
+
+4. If `anisotropyEnable` is `VK_TRUE`, `maxAnisotropy` must be between `1.0` and `VkPhysicalDeviceLimits`::`maxSamplerAnisotropy`, inclusive
+
+5. If sampler Y′CBCRconversion is enabled and the sampler Y′CBCRconversion’s features do not support `VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_BIT`, `minFilter` and `magFilter` must be equal to the sampler Y′CC conversion’s `chromaFilter`
+
+\valcombox
+
+6. If `unnormalizedCoordinates` is `VK_TRUE`, `minFilter` and `magFilter` must be equal
+	- \valcom Handled by API design
+
+7. If `unnormalizedCoordinates` is `VK_TRUE`, `mipmapMode` must be `VK_SAMPLER_MIPMAP_MODE_NEAREST`
+	- \valcom Handled by API design
+
+8. If `unnormalizedCoordinates` is `VK_TRUE`, `minLod` and `maxLod` must be zero
+	- \valcom Handled by API design
+
+9. If `unnormalizedCoordinates` is `VK_TRUE`, `addressModeU` and `addressModeV` must each be either `VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE` or `VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER`
+	- \valcom Handled by API design
+
+10. If `unnormalizedCoordinates` is `VK_TRUE`, `anisotropyEnable` must be `VK_FALSE`
+	- \valcom Handled by API design
+
+11. If `unnormalizedCoordinates` is `VK_TRUE`, `compareEnable` must be `VK_FALSE`
+	- \valcom Handled by API design
+
+\valcomboxend
+
+12. If any of `addressModeU`, `addressModeV` or `addressModeW` are `VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER`, `borderColor` must be a valid `VkBorderColor` value
+
+13. If sampler Y′CBCRconversion is enabled, `addressModeU`, `addressModeV`, and `addressModeW` must be `VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE`, `anisotropyEnable` must be `VK_FALSE`, and `unnormalizedCoordinates` must be `VK_FALSE`
+
+14. The sampler reduction mode must be set to `VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE` if sampler Y′CBCRconversion is enabled
+
+15.     If `samplerMirrorClampToEdge` is not enabled, and if     the `VK_KHR_sampler_mirror_clamp_to_edge` extension is not enabled,     `addressModeU`, `addressModeV` and `addressModeW` must not     be `VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE`
+
+16. If `compareEnable` is `VK_TRUE`, `compareOp` must be a valid `VkCompareOp` value
+
+17. If either `magFilter` or `minFilter` is `VK_FILTER_CUBIC_EXT`, `anisotropyEnable` must be `VK_FALSE`
+
+18. If `compareEnable` is `VK_TRUE`, the `reductionMode` member of `VkSamplerReductionModeCreateInfo` must be `VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE`
+
+\valcombox
+
+19. If `flags` includes `VK_SAMPLER_CREATE_SUBSAMPLED_BIT_EXT`, then `minFilter` and `magFilter` must be equal.
+	- \valcom Handled by API design
+
+20. If `flags` includes `VK_SAMPLER_CREATE_SUBSAMPLED_BIT_EXT`, then `mipmapMode` must be `VK_SAMPLER_MIPMAP_MODE_NEAREST`.
+	- \valcom Handled by API design
+
+21. If `flags` includes `VK_SAMPLER_CREATE_SUBSAMPLED_BIT_EXT`, then `minLod` and `maxLod` must be zero.
+	- \valcom Handled by API design
+
+22. If `flags` includes `VK_SAMPLER_CREATE_SUBSAMPLED_BIT_EXT`, then `addressModeU` and `addressModeV` must each be either `VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE` or `VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER`.
+	- \valcom Handled by API design
+
+23. If `flags` includes `VK_SAMPLER_CREATE_SUBSAMPLED_BIT_EXT`, then `anisotropyEnable` must be `VK_FALSE`.
+	- \valcom Handled by API design
+
+24. If `flags` includes `VK_SAMPLER_CREATE_SUBSAMPLED_BIT_EXT`, then `compareEnable` must be `VK_FALSE`.
+	- \valcom Handled by API design
+
+25. If `flags` includes `VK_SAMPLER_CREATE_SUBSAMPLED_BIT_EXT`, then `unnormalizedCoordinates` must be `VK_FALSE`.
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
 ### Pipeline
 
 Validations for `VkPipelineLayoutCreateInfo`:

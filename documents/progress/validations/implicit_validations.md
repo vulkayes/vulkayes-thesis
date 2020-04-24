@@ -1314,6 +1314,224 @@ Validations for `vkAllocateDescriptorSets`:
 
 Validations for `VkDescriptorSetAllocateInfo`:
 
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO`
+	- \valcom Handled by API design (ash)
+
+2. `pNext` must be `NULL` or a pointer to a valid instance of `VkDescriptorSetVariableDescriptorCountAllocateInfo`
+	- \valcom Handled by API design (ash)
+
+3. The `sType` value of each struct in the `pNext` chain must be unique
+	- \valcom Handled by API design
+
+4. `descriptorPool` must be a valid `VkDescriptorPool` handle
+	- \valcom Handled by API design
+
+5. `pSetLayouts` must be a valid pointer to an array of `descriptorSetCount` valid `VkDescriptorSetLayout` handles
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valdonebox
+
+6. `descriptorSetCount` must be greater than `0`
+	- \valdone Returns error
+
+7. Both of `descriptorPool`, and the elements of `pSetLayouts` must have been created, allocated, or retrieved from the same `VkDevice`
+	- \valdone Returns error
+
+\valdoneboxend
+
+\valboxend
+
+Validations for `vkCreateSampler`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pCreateInfo` must be a valid pointer to a valid `VkSamplerCreateInfo` structure
+	- \valcom Handled by API design
+
+3. If `pAllocator` is not `NULL`, `pAllocator` must be a valid pointer to a valid `VkAllocationCallbacks` structure
+	- \valcom Handled by API design
+
+4. `pSampler` must be a valid pointer to a `VkSampler` handle
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkSamplerCreateInfo`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO`
+	- \valcom Handled by API design (ash)
+
+2. Each `pNext` member of any structure (including this one) in the `pNext` chain must be either `NULL` or a pointer to a valid instance of `VkSamplerReductionModeCreateInfo` or `VkSamplerYcbcrConversionInfo`
+	- \valcom Handled by API design (ash)
+
+3. The `sType` value of each struct in the `pNext` chain must be unique
+	- \valcom Handled by API design
+
+4. `flags` must be a valid combination of `VkSamplerCreateFlagBits` values
+	- \valcom Handled by API design
+
+5. `magFilter` must be a valid `VkFilter` value
+	- \valcom Handled by API design
+
+6. `minFilter` must be a valid `VkFilter` value
+	- \valcom Handled by API design
+
+7. `mipmapMode` must be a valid `VkSamplerMipmapMode` value
+	- \valcom Handled by API design
+
+8. `addressModeU` must be a valid `VkSamplerAddressMode` value
+	- \valcom Handled by API design
+
+9. `addressModeV` must be a valid `VkSamplerAddressMode` value
+	- \valcom Handled by API design
+
+10. `addressModeW` must be a valid `VkSamplerAddressMode` value
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkDescriptorBufferInfo`:
+
+\valbox
+
+\valcombox
+
+1. `buffer` must be a valid `VkBuffer` handle
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkDescriptorImageInfo`:
+
+\valbox
+
+\valdonebox
+
+1. Both of `imageView`, and `sampler` that are valid handles of non-ignored parameters must have been created, allocated, or retrieved from the same `VkDevice`
+	- \valdone Returns error
+
+\valdoneboxend
+
+\valboxend
+
+Validations for `VkWriteDescriptorSetInlineUniformBlockEXT`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK_EXT`
+	- \valcom Handled by API design (ash)
+
+2. `pData` must be a valid pointer to an array of `dataSize` bytes
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valdonebox
+
+3. `dataSize` must be greater than `0`
+	- \valdone Returns error
+
+\valdoneboxend
+
+\valboxend
+
+Validations for `VkWriteDescriptorSet`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET`
+	- \valcom Handled by API design (ash)
+
+2. Each `pNext` member of any structure (including this one) in the `pNext` chain must be either `NULL` or a pointer to a valid instance of `VkWriteDescriptorSetAccelerationStructureKHR` or `VkWriteDescriptorSetInlineUniformBlockEXT`
+	- \valcom Handled by API design (ash)
+
+3. The `sType` value of each struct in the `pNext` chain must be unique
+	- \valcom Handled by API design
+
+4. `descriptorType` must be a valid `VkDescriptorType` value
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valdonebox
+
+5. `descriptorCount` must be greater than `0`
+	- \valdone Returns error
+
+\valdoneboxend
+
+6. Both of `dstSet`, and the elements of `pTexelBufferView` that are valid handles of non-ignored parameters must have been created, allocated, or retrieved from the same `VkDevice`
+
+\valboxend
+
+Validations for `VkCopyDescriptorSet`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_COPY_DESCRIPTOR_SET`
+	- \valcom Handled by API design (ash)
+
+2. `pNext` must be `NULL`
+	- \valcom Handled by API design (ash)
+
+3. `srcSet` must be a valid `VkDescriptorSet` handle
+	- \valcom Handled by API design
+
+4. `dstSet` must be a valid `VkDescriptorSet` handle
+	- \valcom Handled by API design
+
+\valcomboxend
+
+5. Both of `dstSet`, and `srcSet` must have been created, allocated, or retrieved from the same `VkDevice`
+
+\valboxend
+
+Validations for `vkUpdateDescriptorSets`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. If `descriptorWriteCount` is not `0`, `pDescriptorWrites` must be a valid pointer to an array of `descriptorWriteCount` valid `VkWriteDescriptorSet` structures
+	- \valcom Handled by API design
+
+3. If `descriptorCopyCount` is not `0`, `pDescriptorCopies` must be a valid pointer to an array of `descriptorCopyCount` valid `VkCopyDescriptorSet` structures
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
 ### Pipeline
 
 Validations for `vkCreatePipelineLayout`:

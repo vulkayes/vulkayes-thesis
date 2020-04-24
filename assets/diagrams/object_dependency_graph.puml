@@ -30,6 +30,7 @@ component [DeviceMemory] #66FF98
 
 component [Image] <<Vrc>> #66FF98
 component [Buffer] <<Vrc>> #66FF98
+component [Sampler] <<Vrc>> #66FF98
 
 component [ImageView] <<Vrc>> #66FF98
 component [BufferView] <<Vrc>> #66FF98
@@ -46,7 +47,7 @@ component [DescriptorSetLayout] <<Vrc>> #66FF98
 component [PipelineLayout] <<Vrc>> #66FF98
 
 component [DescriptorPool] <<Vrc>> #66FF98
-component [DescriptorSet] <<Vrc>> #FF6680
+component [DescriptorSet] <<Vrc>> #66FF98
 
 component [Semaphore] <<Vrc>> #66FF98
 component [Fence] <<Vrc>> #66FF98
@@ -63,6 +64,7 @@ component [Fence] <<Vrc>> #66FF98
 [DeviceMemory] -> [Device]
 [Device] <-- [Image]
 [Device] <-- [Buffer]
+[Device] <-- [Sampler]
 [Device] <-- [CommandPool]
 [Device] <-- [RenderPass]
 [Device] <-- [DescriptorSetLayout]
@@ -82,7 +84,7 @@ component [Fence] <<Vrc>> #66FF98
 [CommandPool] <-- [CommandBuffer]
 
 [RenderPass] <.. [FrameBuffer]
-[DescriptorSetLayout] <.. [DescriptorSet] : Copy?
+[DescriptorSetLayout] <-- [DescriptorSet]
 [DescriptorSetLayout] <-- [PipelineLayout]
 [PipelineLayout] <.. [ComputePipeline] : Copy?
 [PipelineLayout] <.. [GraphicsPipeline] : Copy?

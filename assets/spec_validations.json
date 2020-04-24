@@ -363,7 +363,7 @@
 			"2": ["comment", "Handled by API design (ash)"],
 			"3": ["comment", "Guaranteed by the type system"]
 		}],
-		["VkDescriptorSetAllocateInfo", "implciit", {
+		["VkDescriptorSetAllocateInfo", "implicit", {
 			"0": ["comment", "Handled by API design (ash)"],
 			"1": ["comment", "Handled by API design (ash)"],
 			"2": ["comment", "Handled by API design"],
@@ -371,6 +371,57 @@
 			"4": ["comment", "Handled by API design"],
 			"5": ["done", "Returns error"],
 			"6": ["done", "Returns error"]
+		}],
+		["vkCreateSampler", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkSamplerCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"],
+			"5": ["comment", "Handled by API design"],
+			"6": ["comment", "Handled by API design"],
+			"7": ["comment", "Handled by API design"],
+			"8": ["comment", "Handled by API design"],
+			"9": ["comment", "Handled by API design"]
+		}],
+
+		
+		["VkDescriptorBufferInfo", "implicit", {
+			"0": ["comment", "Handled by API design"]
+		}],
+		["VkDescriptorImageInfo", "implicit", {
+			"0": ["done", "Returns error"]
+		}],
+		["VkWriteDescriptorSetInlineUniformBlockEXT", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["done", "Returns error"]
+		}],
+		["VkWriteDescriptorSet", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["done", "Returns error"],
+			"5": null
+		}],
+		["VkCopyDescriptorSet", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": null
+		}],
+		["vkUpdateDescriptorSets", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"]
 		}],
 
 		"Pipeline",
@@ -522,6 +573,24 @@
 		["VkDescriptorPoolCreateInfo", "explicit", {
 			"0": ["comment", "Guaranteed by the type system"]
 		}],
+		["VkSamplerCreateInfo", "explicit", {
+			"2": ["comment", "Handled by API design"],
+
+			"5": ["comment", "Handled by API design"],
+			"6": ["comment", "Handled by API design"],
+			"7": ["comment", "Handled by API design"],
+			"8": ["comment", "Handled by API design"],
+			"9": ["comment", "Handled by API design"],
+			"10": ["comment", "Handled by API design"],
+
+			"18": ["comment", "Handled by API design"],
+			"19": ["comment", "Handled by API design"],
+			"20": ["comment", "Handled by API design"],
+			"21": ["comment", "Handled by API design"],
+			"22": ["comment", "Handled by API design"],
+			"23": ["comment", "Handled by API design"],
+			"24": ["comment", "Handled by API design"]
+		}],
 
 		"Pipeline",
 		["VkPipelineLayoutCreateInfo", "explicit", {}],
@@ -537,10 +606,6 @@
 			"0": ["comment", "Handled by API design"],
 			"1": ["comment", "Handled by API design"],
 			"2": ["comment", "Handled by API design"]
-		}],
-		["vkGetDeviceQueue2", "explicit", {
-			"0": ["comment", "Handled by API design"],
-			"1": ["comment", "Handled by API design"]
 		}],
 		["vkQueueSubmit", "explicit", {
 			"11": ["done", "Returns error"]
@@ -590,6 +655,26 @@
 		}],
 
 		"Descriptor",
-		["VkDescriptorSetAllocateInfo", "explicit", {}]
+		["VkDescriptorSetAllocateInfo", "explicit", {}],
+		
+		["VkDescriptorBufferInfo", "explicit", {
+			"1": ["comment", "Guaranteed by the type system"]
+		}],
+		["VkDescriptorImageInfo", "explicit", {}],
+		["VkWriteDescriptorSetInlineUniformBlockEXT", "explicit", {
+			"0": ["done", "Returns error"]
+		}],
+		["VkWriteDescriptorSet", "explicit", {
+			"5": ["comment", "Handled by API design"],
+			"8": ["done", "Returns error"],
+			
+			"9": ["comment", "Handled by API design"],
+			"10": ["comment", "Handled by API design"],
+			"11": ["comment", "Handled by API design"],
+			"13": ["comment", "Handled by API design"],
+			"14": ["comment", "Handled by API design"]
+		}],
+		["VkCopyDescriptorSet", "explicit", {}],
+		["vkUpdateDescriptorSets", "explicit", {}]
 	]
 }

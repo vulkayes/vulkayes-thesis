@@ -81,11 +81,9 @@
 * The `pipelineLayout` parameter in `vkDestroyPipelineLayout`
 	- \valcom Consequence of shared pointer usage
 
-\valcomboxend
-
 * The `sampler` parameter in `vkDestroySampler`
+	- \valcom Consequence of shared pointer usage
 
-\valcombox
 * The `descriptorSetLayout` parameter in `vkDestroyDescriptorSetLayout`
 	- \valcom Consequence of shared pointer usage
 
