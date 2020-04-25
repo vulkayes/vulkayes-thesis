@@ -1532,6 +1532,242 @@ Validations for `vkUpdateDescriptorSets`:
 
 \valboxend
 
+### Render pass
+
+Validations for `vkCreateRenderPass`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pCreateInfo` must be a valid pointer to a valid `VkRenderPassCreateInfo` structure
+	- \valcom Handled by API design
+
+3. If `pAllocator` is not `NULL`, `pAllocator` must be a valid pointer to a valid `VkAllocationCallbacks` structure
+	- \valcom Handled by API design
+
+4. `pRenderPass` must be a valid pointer to a `VkRenderPass` handle
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkRenderPassCreateInfo`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO`
+	- \valcom Handled by API design (ash)
+
+2. Each `pNext` member of any structure (including this one) in the `pNext` chain must be either `NULL` or a pointer to a valid instance of `VkRenderPassFragmentDensityMapCreateInfoEXT`, `VkRenderPassInputAttachmentAspectCreateInfo`, or `VkRenderPassMultiviewCreateInfo`
+	- \valcom Handled by API design (ash)
+
+3. The `sType` value of each struct in the `pNext` chain must be unique
+	- \valcom Handled by API design
+
+4. `flags` must be a valid combination of `VkRenderPassCreateFlagBits` values
+	- \valcom Handled by API design
+
+5. If `attachmentCount` is not `0`, `pAttachments` must be a valid pointer to an array of `attachmentCount` valid `VkAttachmentDescription` structures
+	- \valcom Handled by API design
+
+6. `pSubpasses` must be a valid pointer to an array of `subpassCount` valid `VkSubpassDescription` structures
+	- \valcom Handled by API design
+
+7. If `dependencyCount` is not `0`, `pDependencies` must be a valid pointer to an array of `dependencyCount` valid `VkSubpassDependency` structures
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valdonebox
+
+8. `subpassCount` must be greater than `0`
+	- \valdone Returns error
+
+\valdoneboxend
+
+\valboxend
+
+Validations for `VkAttachmentDescription`:
+
+\valbox
+
+\valcombox
+
+1. `flags` must be a valid combination of `VkAttachmentDescriptionFlagBits` values
+	- \valcom Handled by API design
+
+2. `format` must be a valid `VkFormat` value
+	- \valcom Handled by API design (ash)
+
+3. `samples` must be a valid `VkSampleCountFlagBits` value
+	- \valcom Handled by API design (ash)
+
+4. `loadOp` must be a valid `VkAttachmentLoadOp` value
+	- \valcom Handled by API design (ash)
+
+5. `storeOp` must be a valid `VkAttachmentStoreOp` value
+	- \valcom Handled by API design (ash)
+
+6. `stencilLoadOp` must be a valid `VkAttachmentLoadOp` value
+	- \valcom Handled by API design (ash)
+
+7. `stencilStoreOp` must be a valid `VkAttachmentStoreOp` value
+	- \valcom Handled by API design (ash)
+
+8. `initialLayout` must be a valid `VkImageLayout` value
+	- \valcom Handled by API design (ash)
+
+9. `finalLayout` must be a valid `VkImageLayout` value
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkSubpassDescription`:
+
+\valbox
+
+\valcombox
+
+1. `flags` must be a valid combination of `VkSubpassDescriptionFlagBits` values
+	- \valcom Handled by API design
+
+2. `pipelineBindPoint` must be a valid `VkPipelineBindPoint` value
+	- \valcom Handled by API design (ash)
+
+3. If `inputAttachmentCount` is not `0`, `pInputAttachments` must be a valid pointer to an array of `inputAttachmentCount` valid `VkAttachmentReference` structures
+	- \valcom Handled by API design
+
+4. If `colorAttachmentCount` is not `0`, `pColorAttachments` must be a valid pointer to an array of `colorAttachmentCount` valid `VkAttachmentReference` structures
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valdonebox
+
+5. If `colorAttachmentCount` is not `0`, and `pResolveAttachments` is not `NULL`, `pResolveAttachments` must be a valid pointer to an array of `colorAttachmentCount` valid `VkAttachmentReference` structures
+	- \valdone Returns error
+
+\valdoneboxend
+
+\valcombox
+
+6. If `pDepthStencilAttachment` is not `NULL`, `pDepthStencilAttachment` must be a valid pointer to a valid `VkAttachmentReference` structure
+	- \valcom Handled by API design
+
+7. If `preserveAttachmentCount` is not `0`, `pPreserveAttachments` must be a valid pointer to an array of `preserveAttachmentCount` `uint32_t` values
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkSubpassDependency`:
+
+\valbox
+
+\valcombox
+
+1. `srcStageMask` must be a valid combination of `VkPipelineStageFlagBits` values
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valdonebox
+
+2. `srcStageMask` must not be `0`
+	- \valdone Returns error
+
+\valdoneboxend
+
+\valcombox
+
+3. `dstStageMask` must be a valid combination of `VkPipelineStageFlagBits` values
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valdonebox
+
+4. `dstStageMask` must not be `0`
+	- \valdone Returns error
+
+\valdoneboxend
+
+\valcombox
+
+5. `srcAccessMask` must be a valid combination of `VkAccessFlagBits` values
+	- \valcom Handled by API design (ash)
+
+6. `dstAccessMask` must be a valid combination of `VkAccessFlagBits` values
+	- \valcom Handled by API design (ash)
+
+7. `dependencyFlags` must be a valid combination of `VkDependencyFlagBits` values
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+### Framebuffer
+
+Validations for `vkCreateFramebuffer`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pCreateInfo` must be a valid pointer to a valid `VkFramebufferCreateInfo` structure
+	- \valcom Handled by API design (ash)
+
+3. If `pAllocator` is not `NULL`, `pAllocator` must be a valid pointer to a valid `VkAllocationCallbacks` structure
+	- \valcom Handled by API design
+
+4. `pFramebuffer` must be a valid pointer to a `VkFramebuffer` handle
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkFramebufferCreateInfo`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO`
+	- \valcom Handled by API design (ash)
+
+2. `pNext` must be `NULL` or a pointer to a valid instance of `VkFramebufferAttachmentsCreateInfo`
+	- \valcom Handled by API design (ash)
+
+3. The `sType` value of each struct in the `pNext` chain must be unique
+	- \valcom Handled by API design
+
+4. `flags` must be a valid combination of `VkFramebufferCreateFlagBits` values
+	- \valcom Handled by API design
+
+5. `renderPass` must be a valid `VkRenderPass` handle
+	- \valcom Handled by API design
+
+\valcomboxend
+
+6. Both of `renderPass`, and the elements of `pAttachments` that are valid handles of non-ignored parameters must have been created, allocated, or retrieved from the same `VkDevice`
+
+\valboxend
+
 ### Pipeline
 
 Validations for `vkCreatePipelineLayout`:

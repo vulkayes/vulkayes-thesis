@@ -424,6 +424,69 @@
 			"2": ["comment", "Handled by API design"]
 		}],
 
+		"Render pass",
+		["vkCreateRenderPass", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkRenderPassCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"],
+			"5": ["comment", "Handled by API design"],
+			"6": ["comment", "Handled by API design"],
+			"7": ["done", "Returns error"]
+		}],
+		["VkAttachmentDescription", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design (ash)"],
+			"3": ["comment", "Handled by API design (ash)"],
+			"4": ["comment", "Handled by API design (ash)"],
+			"5": ["comment", "Handled by API design (ash)"],
+			"6": ["comment", "Handled by API design (ash)"],
+			"7": ["comment", "Handled by API design (ash)"],
+			"8": ["comment", "Handled by API design"]
+		}],
+		["VkSubpassDescription", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["done", "Returns error"],
+			"5": ["comment", "Handled by API design"],
+			"6": ["comment", "Handled by API design"]
+		}],
+		["VkSubpassDependency", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["done", "Returns error"],
+			"2": ["comment", "Handled by API design (ash)"],
+			"3": ["done", "Returns error"],
+			"4": ["comment", "Handled by API design (ash)"],
+			"5": ["comment", "Handled by API design (ash)"],
+			"6": ["comment", "Handled by API design (ash)"]
+		}],
+
+		"Framebuffer",
+		["vkCreateFramebuffer", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkFramebufferCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design"],
+			"4": ["comment", "Handled by API design"],
+			"5": null
+		}],
+
 		"Pipeline",
 		["vkCreatePipelineLayout", "implicit", {
 			"0": ["comment", "Handled by API design"],
@@ -590,6 +653,24 @@
 			"22": ["comment", "Handled by API design"],
 			"23": ["comment", "Handled by API design"],
 			"24": ["comment", "Handled by API design"]
+		}],
+
+		"Render pass",
+		["VkRenderPassCreateInfo", "explicit", {}],
+		["VkAttachmentDescription", "explicit", {
+			"0": ["comment", "Guaranteed by the type system"]
+		}],
+		["VkSubpassDescription", "explicit", {
+			"1": ["comment", "Handled by API design"]
+		}],
+		["VkSubpassDependency", "explicit", {}],
+
+		"Framebuffer",
+		["vkCreateFramebuffer", "explicit", {}],
+		["VkFramebufferCreateInfo", "explicit", {
+			"18": ["comment", "Guaranteed by the type system"],
+			"20": ["comment", "Guaranteed by the type system"],
+			"22": ["comment", "Guaranteed by the type system"]
 		}],
 
 		"Pipeline",

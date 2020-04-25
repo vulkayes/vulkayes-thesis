@@ -99,13 +99,12 @@
 * The `descriptorPool` parameter in `vkFreeDescriptorSets`
 	- \valcom Synchronized internally
 
-\valcomboxend
-
 * The `framebuffer` parameter in `vkDestroyFramebuffer`
+	- \valcom Consequence of shared pointer usage
 
 * The `renderPass` parameter in `vkDestroyRenderPass`
+	- \valcom Consequence of shared pointer usage
 
-\valcombox
 * The `commandPool` parameter in `vkDestroyCommandPool`
 	- \valcom Consequence of shared pointer usage
 

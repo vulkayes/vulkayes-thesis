@@ -38,8 +38,8 @@ component [BufferView] <<Vrc>> #66FF98
 component [CommandPool] <<Vrc>> #66FF98
 component [CommandBuffer] <<Vrc>> #66CDFF
 
-component [RenderPass] <<Vrc>> #FF6680
-component [FrameBuffer] <<Vrc>> #FF6680
+component [RenderPass] <<Vrc>> #66FF98
+component [FrameBuffer] <<Vrc>> #66FF98
 component [ComputePipeline] <<Vrc>> #FF6680
 component [GraphicsPipeline] <<Vrc>> #FF6680
 
