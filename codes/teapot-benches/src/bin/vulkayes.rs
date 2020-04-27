@@ -912,13 +912,14 @@ fn main() {
 
             mark_state.finish();
             loop_iterations += 1;
-            if !window.is_open() {
+            if !window.is_open() ||  loop_iterations >= mark::MAX_LOOPS {
                 break;
             }
         }
 
         time_before_cleanup = Instant::now();
         // CLEANUP // (out of scope drops)
+        device.wait_idle().expect("Could not wait for device");
     }
 
     // SUMMARY //

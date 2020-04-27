@@ -1,5 +1,7 @@
 use std::time::{Duration, Instant};
 
+pub const MAX_LOOPS: usize = 100_000;
+
 static mut MARK_BUFFER: Vec<LoopMarkState> = Vec::new();
 const MARK_BUFFER_FLUSH_LIMIT: usize = 1000;
 

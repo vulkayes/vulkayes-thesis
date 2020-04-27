@@ -1292,7 +1292,7 @@ fn main() {
 
         mark_state.finish();
         loop_iterations += 1;
-        if !window.is_open() {
+        if !window.is_open() || loop_iterations >= mark::MAX_LOOPS {
             break;
         }
     }
@@ -1366,9 +1366,6 @@ fn main() {
         swapchain_loader.destroy_swapchain(swapchain, None);
 
         // Device
-        device
-            .device_wait_idle()
-            .expect("Could not wait for device");
         device.destroy_device(None);
 
         // surface
