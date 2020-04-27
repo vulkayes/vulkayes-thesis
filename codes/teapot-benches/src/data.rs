@@ -1,28 +1,90 @@
+use nalgebra::{geometry::Perspective3, Isometry3, Matrix4, Point3, UnitQuaternion, Vector3};
+
 pub const Z_FAR: f32 = 100.0;
 pub const Z_NEAR: f32 = 1.0;
+pub const NUMBER_OF_TEAPOTS: usize = 25;
 
 #[repr(C)]
 #[derive(Debug, Copy, Clone, Default)]
 pub struct UniformData {
-    pub world_matrix: [[f32; 4]; 4],
     pub view_matrix: [[f32; 4]; 4],
     pub projection_matrix: [[f32; 4]; 4],
+}
+impl UniformData {
+    pub fn for_frame(_elapsed: f32, surface_size: [std::num::NonZeroU32; 2]) -> Self {
+        let eye = Point3::new(0.0f32, 10.0, 0.0);
+        let target = Point3::new(0.0, 20.0, 20.0);
+        let up = Vector3::new(0.0, -1.0, 0.0);
+        let view_matrix = Matrix4::face_towards(&eye, &target, &up);
+
+        let projection_matrix = Perspective3::new(
+            surface_size[0].get() as f32 / surface_size[1].get() as f32,
+            75.0 / 180.0 * std::f32::consts::PI,
+            Z_NEAR,
+            Z_FAR,
+        )
+        .to_homogeneous();
+
+        UniformData {
+            view_matrix: view_matrix.into(),
+            projection_matrix: projection_matrix.into(),
+        }
+    }
+}
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Default)]
+pub struct PushData {
+    pub world_matrix: [[f32; 4]; 4],
     pub color: [f32; 4],
+}
+impl PushData {
+    pub fn for_object(elapsed: f32, index: usize) -> Self {
+        const GRID_WIDTH: usize = 5;
+        const GRID_START: [f32; 3] = [-30.0, -5.0, -30.0];
+        const GRID_STEP: [f32; 3] = [15.0, 0.0, -15.0];
+
+        let sin_time = elapsed.sin() * 2.0;
+        let harmonic_time = if index % 2 == 0 { sin_time } else { -sin_time };
+
+        let mod_time = elapsed % std::f32::consts::PI * 2.0;
+
+        let t_x = GRID_START[0] + GRID_STEP[0] * (index % GRID_WIDTH) as f32;
+        let t_y = harmonic_time + GRID_START[1];
+        let t_z = GRID_START[2] + GRID_STEP[2] * (index / GRID_WIDTH) as f32;
+        let translation = Vector3::new(t_x, t_y, t_z);
+
+        let world_matrix = Isometry3::from_parts(
+            translation.into(),
+            UnitQuaternion::new(Vector3::new(0.0, mod_time, 0.0)),
+        )
+        .to_homogeneous()
+            * Matrix4::new_scaling(0.1);
+
+        let color = if harmonic_time >= 0.0 {
+            [harmonic_time, 0.0, 0.0, 1.0]
+        } else {
+            [0.0, 0.0, -harmonic_time, 1.0]
+        };
+
+        PushData {
+            world_matrix: world_matrix.into(),
+            color,
+        }
+    }
 }
 
 pub fn vertex_shader() -> Vec<u32> {
-    let path = std::env::var("VY_TEAPOT_VERT_SHADER").unwrap_or(String::from("src/assets/vert.spv"));
+    let path =
+        std::env::var("VY_TEAPOT_VERT_SHADER").unwrap_or(String::from("src/assets/vert.spv"));
     let mut file = std::fs::File::open(path).expect("Could not open vertex shader file");
-    vulkayes_core::ash::util::read_spv(
-        &mut file
-    ).unwrap()
+    vulkayes_core::ash::util::read_spv(&mut file).unwrap()
 }
 pub fn fragment_shader() -> Vec<u32> {
-    let path = std::env::var("VY_TEAPOT_FRAG_SHADER").unwrap_or(String::from("src/assets/frag.spv"));
+    let path =
+        std::env::var("VY_TEAPOT_FRAG_SHADER").unwrap_or(String::from("src/assets/frag.spv"));
     let mut file = std::fs::File::open(path).expect("Could not open fragment shader file");
-    vulkayes_core::ash::util::read_spv(
-        &mut file
-    ).unwrap()
+    vulkayes_core::ash::util::read_spv(&mut file).unwrap()
 }
 
 pub type Vertex = [f32; 3];

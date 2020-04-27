@@ -1,7 +1,5 @@
 use std::{ffi::CStr, num::NonZeroU32, time::Instant};
 
-use nalgebra::{geometry::Perspective3, Matrix4, Point3, Vector3, Isometry3, UnitQuaternion};
-
 use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
 
 use vulkayes_core::ash::{self, vk};
@@ -196,8 +194,13 @@ fn main() {
     // Swapchain
     let (swapchain, swapchain_loader, surface_format, surface_size) = {
         let surface_format = unsafe {
-            surface_loader.get_physical_device_surface_formats(physical_device, surface).unwrap()
-                .into_iter().inspect(|v| vulkayes_core::log::trace!("surface format {:?}", v)).next().unwrap()
+            surface_loader
+                .get_physical_device_surface_formats(physical_device, surface)
+                .unwrap()
+                .into_iter()
+                .inspect(|v| vulkayes_core::log::trace!("surface format {:?}", v))
+                .next()
+                .unwrap()
         };
 
         let surface_capabilities = unsafe {
@@ -798,8 +801,15 @@ fn main() {
     // Pipeline layout
     let pipeline_layout = {
         let descriptor_layouts = [descriptor_layout];
-        let layout_create_info =
-            vk::PipelineLayoutCreateInfo::builder().set_layouts(&descriptor_layouts);
+        let push_ranges = [vk::PushConstantRange::builder()
+            .offset(0)
+            .size(std::mem::size_of::<data::PushData>() as u32)
+            .stage_flags(vk::ShaderStageFlags::VERTEX)
+            .build()];
+
+        let layout_create_info = vk::PipelineLayoutCreateInfo::builder()
+            .set_layouts(&descriptor_layouts)
+            .push_constant_ranges(&push_ranges);
         unsafe {
             device
                 .create_pipeline_layout(&layout_create_info, None)
@@ -842,12 +852,10 @@ fn main() {
             .depth_compare_op(vk::CompareOp::LESS)
             .depth_bounds_test_enable(false);
 
-        let color_blend_attachment_states = [
-            vk::PipelineColorBlendAttachmentState::builder()
+        let color_blend_attachment_states = [vk::PipelineColorBlendAttachmentState::builder()
             .blend_enable(false)
             .color_write_mask(vk::ColorComponentFlags::all())
-            .build()
-        ];
+            .build()];
         let color_blend_state = vk::PipelineColorBlendStateCreateInfo::builder()
             .logic_op_enable(false)
             .attachments(&color_blend_attachment_states);
@@ -1086,14 +1094,7 @@ fn main() {
         let elapsed = Instant::now()
             .duration_since(time_before_loop)
             .as_secs_f32();
-        let sin_time = elapsed.sin() * 1.0;
-
-        let color = if sin_time >= 0.0 {
-            [sin_time, 0.0, 0.0, 1.0]
-        } else {
-            [0.0, 0.0, -sin_time, 1.0]
-        };
-        vulkayes_core::log::trace!("[#{:0>4}] Elapsed: {}s Color: {:?}", loop_iterations, elapsed, color);
+        let frame_state = data::UniformData::for_frame(elapsed, surface_size);
 
         mark_state.before_acquire();
         // acquire present image
@@ -1111,33 +1112,8 @@ fn main() {
         mark_state.before_uniform();
         // update uniform data
         {
-            let world_matrix = Isometry3::from_parts(
-                Vector3::new(0.0, sin_time, -20.0).into(),
-                UnitQuaternion::new(Vector3::new(0.0f32, elapsed % 6.2830f32, 0.0))
-            ).to_homogeneous() * Matrix4::new_scaling(0.1);
-
-            let eye = Point3::new(0.0f32, 10.0, 0.0);
-            let target = Point3::new(0.0, 20.0, 20.0);
-            let up = Vector3::new(0.0, -1.0, 0.0);
-            let view_matrix = Matrix4::face_towards(
-                &eye, &target, &up
-            );
-
-            let projection_matrix = Perspective3::new(
-                surface_size[0].get() as f32 / surface_size[1].get() as f32,
-                75.0 / 180.0 * 3.1415926f32,
-                data::Z_NEAR, data::Z_FAR
-            ).to_homogeneous();
-
-            let uniform_data = data::UniformData {
-                world_matrix: world_matrix.into(),
-                view_matrix: view_matrix.into(),
-                projection_matrix: projection_matrix.into(),
-                color,
-                .. Default::default()
-            };
             unsafe {
-                *uniform_buffer_memory_ptr = uniform_data;
+                *uniform_buffer_memory_ptr = frame_state;
             }
             let flush_ranges = [vk::MappedMemoryRange::builder()
                 .memory(uniform_buffer_memory)
@@ -1213,7 +1189,28 @@ fn main() {
                         0,
                         vk::IndexType::UINT16,
                     );
-                    device.cmd_draw_indexed(command_buffer, data::INDICES.len() as u32, 1, 0, 0, 1);
+
+                    for index in 0..data::NUMBER_OF_TEAPOTS {
+                        let object_data = data::PushData::for_object(elapsed, index);
+                        device.cmd_push_constants(
+                            command_buffer,
+                            pipeline_layout,
+                            vk::ShaderStageFlags::VERTEX,
+                            0,
+                            std::slice::from_raw_parts(
+                                &object_data as *const _ as *const u8,
+                                std::mem::size_of::<data::PushData>(),
+                            ),
+                        );
+                        device.cmd_draw_indexed(
+                            command_buffer,
+                            data::INDICES.len() as u32,
+                            1,
+                            0,
+                            0,
+                            1,
+                        );
+                    }
 
                     device.cmd_end_render_pass(command_buffer);
                 }

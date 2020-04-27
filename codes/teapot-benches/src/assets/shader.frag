@@ -11,7 +11,7 @@ const vec3 WHITE = vec3(1.0, 1.0, 1.0);
 void main() {
     float brightness = dot(
         normalize(normal),
-        LIGHT_DIRECTION
+        normalize(LIGHT_DIRECTION)
     ) / 4.0;
 
     out_color = vec4(

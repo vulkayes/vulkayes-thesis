@@ -28,7 +28,7 @@ pub struct LoopMarkState {
     pub present: Option<Instant>,
     pub wait: Option<Instant>,
     pub update: Option<Instant>,
-    pub finish: Option<Instant>
+    pub finish: Option<Instant>,
 }
 impl LoopMarkState {
     pub fn start() -> Self {
