@@ -9,13 +9,13 @@ const vec3 LIGHT_DIRECTION = vec3(1.0, -1.0, 1.0);
 const vec3 WHITE = vec3(1.0, 1.0, 1.0);
 
 void main() {
-    float brightness = dot(
-        normalize(normal),
-        normalize(LIGHT_DIRECTION)
-    ) / 4.0;
+	float brightness = dot(
+		normalize(normal),
+		normalize(LIGHT_DIRECTION)
+	) / 4.0;
 
-    out_color = vec4(
-        mix(color.rgb, WHITE, brightness),
-        color.a
-    );
+	out_color = vec4(
+		mix(color.rgb, WHITE, brightness),
+		color.a
+	);
 }

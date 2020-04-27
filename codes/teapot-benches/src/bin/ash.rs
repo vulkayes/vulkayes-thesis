@@ -70,9 +70,14 @@ fn main() {
             .api_version(vk::make_version(1, 2, 0));
 
         let enabled_layer_names: Vec<_> = {
+            #[allow(unused_variables)]
             let layers: [&'static CStr; 1] =
                 [CStr::from_bytes_with_nul(b"VK_LAYER_KHRONOS_validation\0").unwrap()];
-            layers.iter().copied().map(CStr::as_ptr).collect()
+
+            sub_in_release! {
+                debug = layers.iter().copied().map(CStr::as_ptr).collect();
+                release = Vec::new();
+            }
         };
         let enabled_extension_names: Vec<_> = {
             let extensions: [&'static CStr; 2] =
@@ -147,7 +152,7 @@ fn main() {
                 .enumerate()
                 .find(|(index, info)| {
                     let supports_graphics = info.queue_flags.contains(vk::QueueFlags::GRAPHICS);
-                    let support_surface = surface_loader
+                    let supports_surface = surface_loader
                         .get_physical_device_surface_support(
                             physical_device,
                             *index as u32,
@@ -155,7 +160,7 @@ fn main() {
                         )
                         .unwrap();
 
-                    supports_graphics && support_surface
+                    supports_graphics && supports_surface
                 })
                 .expect("Could not find fitting queue family")
                 .0 as u32
@@ -188,6 +193,8 @@ fn main() {
 
         (physical_device, device, queue, queue_family_index)
     };
+
+    // Device memory
     let device_memory_properties =
         unsafe { instance.get_physical_device_memory_properties(physical_device) };
 
@@ -323,7 +330,11 @@ fn main() {
             .usage(vk::ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT)
             .sharing_mode(vk::SharingMode::EXCLUSIVE);
 
-        let depth_image = unsafe { device.create_image(&depth_image_create_info, None).unwrap() };
+        let depth_image = unsafe {
+            device
+                .create_image(&depth_image_create_info, None)
+                .expect("Could not create depth image")
+        };
 
         let depth_image_memory = {
             let depth_image_memory_req =
@@ -467,9 +478,12 @@ fn main() {
 
         let dependencies = [vk::SubpassDependency {
             src_subpass: vk::SUBPASS_EXTERNAL,
-            src_stage_mask: vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT,
+            src_stage_mask: vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT
+                | vk::PipelineStageFlags::HOST,
+            src_access_mask: vk::AccessFlags::HOST_WRITE,
             dst_access_mask: vk::AccessFlags::COLOR_ATTACHMENT_READ
-                | vk::AccessFlags::COLOR_ATTACHMENT_WRITE,
+                | vk::AccessFlags::COLOR_ATTACHMENT_WRITE
+                | vk::AccessFlags::MEMORY_READ,
             dst_stage_mask: vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT,
             ..Default::default()
         }];
@@ -749,18 +763,16 @@ fn main() {
 
         let entry_name: &'static CStr = CStr::from_bytes_with_nul(b"main\0").unwrap();
         let shader_stage_create_infos = [
-            vk::PipelineShaderStageCreateInfo {
-                module: vertex_shader,
-                p_name: entry_name.as_ptr(),
-                stage: vk::ShaderStageFlags::VERTEX,
-                ..Default::default()
-            },
-            vk::PipelineShaderStageCreateInfo {
-                module: fragment_shader,
-                p_name: entry_name.as_ptr(),
-                stage: vk::ShaderStageFlags::FRAGMENT,
-                ..Default::default()
-            },
+            vk::PipelineShaderStageCreateInfo::builder()
+                .module(vertex_shader.handle())
+                .name(entry_name)
+                .stage(vk::ShaderStageFlags::VERTEX)
+                .build(),
+            vk::PipelineShaderStageCreateInfo::builder()
+                .module(fragment_shader.handle())
+                .name(entry_name)
+                .stage(vk::ShaderStageFlags::FRAGMENT)
+                .build(),
         ];
         let vertex_input_binding_descriptions = [
             vk::VertexInputBindingDescription {
@@ -1238,7 +1250,7 @@ fn main() {
             unsafe {
                 device
                     .queue_submit(queue, &[submit_info.build()], submit_fence)
-                    .expect("Queue submit failed");
+                    .expect("Could not submit frame");
             }
         }
 

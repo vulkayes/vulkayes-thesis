@@ -97,19 +97,19 @@ impl std::fmt::Debug for LoopMarkState {
         let finish = self.finish.unwrap();
 
         write!(
-            f,
-            "{{ preinit = {}, acquire = {}, uniform = {}, command = {}, submit = {}, present = {}, wait = {}, update = {}, total = {} }}",
-            acquire.duration_since(start).as_nanos(),
-            uniform.duration_since(acquire).as_nanos(),
-            command.duration_since(uniform).as_nanos(),
-            submit.duration_since(command).as_nanos(),
-            present.duration_since(submit).as_nanos(),
-            wait.duration_since(present).as_nanos(),
-            update.duration_since(wait).as_nanos(),
-            finish.duration_since(update).as_nanos(),
+			f,
+			"{{ preinit = {}, acquire = {}, uniform = {}, command = {}, submit = {}, present = {}, wait = {}, update = {}, total = {} }}",
+			acquire.duration_since(start).as_nanos(),
+			uniform.duration_since(acquire).as_nanos(),
+			command.duration_since(uniform).as_nanos(),
+			submit.duration_since(command).as_nanos(),
+			present.duration_since(submit).as_nanos(),
+			wait.duration_since(present).as_nanos(),
+			update.duration_since(wait).as_nanos(),
+			finish.duration_since(update).as_nanos(),
 
-            finish.duration_since(start).as_nanos()
-        )
+			finish.duration_since(start).as_nanos()
+		)
     }
 }
 

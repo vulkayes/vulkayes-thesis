@@ -34,6 +34,7 @@ impl UniformData {
 
 #[repr(C)]
 #[derive(Debug, Copy, Clone, Default)]
+#[repr(align(4))] // Not really needed, but ensures the data size is a multiple of 4
 pub struct PushData {
     pub world_matrix: [[f32; 4]; 4],
     pub color: [f32; 4],
