@@ -20,7 +20,7 @@ features = [
 path = "../../../vulkayes-core"
 default-features = false
 features = [
-    "insecure_hash",
     "naive_device_allocator",
-    "log_release_max_level_off"
+    "log_release_max_level_off",
+	# "multi_thread"
 ]
