@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# for macos
+export DYLD_FALLBACK_LIBRARY_PATH="$VULKAN_SDK/lib:${DYLD_FALLBACK_LIBRARY_PATH:-}"
+
 PLATFORM=${1:-"PLATFORM"}
 DEVICE_INDEX=${2:-0}
 
