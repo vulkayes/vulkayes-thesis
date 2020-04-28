@@ -1214,3 +1214,32 @@ Validations for `VkPushConstantRange`:
 
 \valboxend
 
+### Shader
+
+Validations for `VkShaderModuleCreateInfo`:
+
+\valbox
+
+1. `codeSize` must be greater than 0
+
+\valcombox
+
+2. If `pCode` is a pointer to SPIR-V code, `codeSize` must be a multiple of 4
+	- \valcom Guaranteed by the type system
+
+\valcomboxend
+
+3. `pCode` must point to either valid SPIR-V code, formatted and packed as described by the Khronos SPIR-V Specification or valid GLSL code which must be written to the `GL_KHR_vulkan_glsl` extension specification
+
+4. If `pCode` is a pointer to SPIR-V code, that code must adhere to the validation rules described by the Validation Rules within a Module section of the SPIR-V Environment appendix
+
+5. If `pCode` is a pointer to GLSL code, it must be valid GLSL code written to the `GL_KHR_vulkan_glsl` GLSL extension specification
+
+6. `pCode` must declare the `Shader` capability for SPIR-V code
+
+7. `pCode` must not declare any capability that is not supported by the API, as described by the `Capabilities` section of the SPIR-V Environment appendix
+
+8. If `pCode` declares any of the capabilities listed as optional in the SPIR-V Environment appendix, the corresponding feature(s) must be enabled.
+
+\valboxend
+

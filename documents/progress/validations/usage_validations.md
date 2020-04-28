@@ -522,3 +522,29 @@ Validations for `vkUpdateDescriptorSets`:
 
 \valboxend
 
+### Shader
+
+Validations for `VkVertexInputBindingDescription`:
+
+\valbox
+
+1. `binding` must be less than `VkPhysicalDeviceLimits`::`maxVertexInputBindings`
+
+2. `stride` must be less than or equal to `VkPhysicalDeviceLimits`::`maxVertexInputBindingStride`
+
+\valboxend
+
+Validations for `VkVertexInputAttributeDescription`:
+
+\valbox
+
+1. `location` must be less than `VkPhysicalDeviceLimits`::`maxVertexInputAttributes`
+
+2. `binding` must be less than `VkPhysicalDeviceLimits`::`maxVertexInputBindings`
+
+3. `offset` must be less than or equal to `VkPhysicalDeviceLimits`::`maxVertexInputAttributeOffset`
+
+4. `format` must be allowed as a vertex buffer format, as specified by the `VK_FORMAT_FEATURE_VERTEX_BUFFER_BIT` flag in `VkFormatProperties`::`bufferFeatures` returned by `vkGetPhysicalDeviceFormatProperties`
+
+\valboxend
+

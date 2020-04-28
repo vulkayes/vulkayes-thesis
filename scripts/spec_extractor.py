@@ -107,7 +107,8 @@ def extract_usage(stream, soup, name, type, comments, stats):
 		
 		line_buffer = line_buffer.replace("\n", " ")
 		# spec fix, shouldn't have to be here
-		line_buffer = line_buffer.replace("\\(\\lceil", "$\\lceil").replace("\\rceil\\)", "\\rceil$")
+		# line_buffer = line_buffer.replace("\\(\\lceil", "$\\lceil").replace("\\rceil\\)", "\\rceil$")
+		line_buffer = line_buffer.replace("\\(", "$").replace("\\)", "$")
 
 		if comments is not None:
 			running_block = handle_comment(stream, line_buffer, running_block, comments, str(index), stats)

@@ -487,6 +487,27 @@
 			"5": null
 		}],
 
+		"Shader",
+		["vkCreateShaderModule", "implicit", {
+			"0": ["comment", "Handled by API design"],
+			"1": ["comment", "Handled by API design"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkShaderModuleCreateInfo", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"],
+			"1": ["comment", "Handled by API design (ash)"],
+			"2": ["comment", "Handled by API design"],
+			"3": ["comment", "Handled by API design (ash)"],
+			"4": ["comment", "Handled by API design"]
+		}],
+		["VkVertexInputBindingDescription", "implicit", {
+			"0": ["comment", "Handled by API design (ash)"]
+		}],
+		["VkVertexInputAttributeDescription", "implicit", {
+			"0": ["comment", "Handled by API design"]
+		}],
+
 		"Pipeline",
 		["vkCreatePipelineLayout", "implicit", {
 			"0": ["comment", "Handled by API design"],
@@ -679,6 +700,11 @@
 			"1": ["comment", "Handled by API design"],
 			"2": ["comment", "Guaranteed by the type system"],
 			"3": ["comment", "Handled by API design"]
+		}],
+
+		"Shader",
+		["VkShaderModuleCreateInfo", "explicit", {
+			"1": ["comment", "Guaranteed by the type system"]
 		}]
 	],
 	"usage_validations": [
@@ -756,6 +782,10 @@
 			"14": ["comment", "Handled by API design"]
 		}],
 		["VkCopyDescriptorSet", "explicit", {}],
-		["vkUpdateDescriptorSets", "explicit", {}]
+		["vkUpdateDescriptorSets", "explicit", {}],
+
+		"Shader",
+		["VkVertexInputBindingDescription", "explicit", {}],
+		["VkVertexInputAttributeDescription", "explicit", {}]
 	]
 }

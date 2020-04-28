@@ -1768,6 +1768,81 @@ Validations for `VkFramebufferCreateInfo`:
 
 \valboxend
 
+### Shader
+
+Validations for `vkCreateShaderModule`:
+
+\valbox
+
+\valcombox
+
+1. `device` must be a valid `VkDevice` handle
+	- \valcom Handled by API design
+
+2. `pCreateInfo` must be a valid pointer to a valid `VkShaderModuleCreateInfo` structure
+	- \valcom Handled by API design
+
+3. If `pAllocator` is not `NULL`, `pAllocator` must be a valid pointer to a valid `VkAllocationCallbacks` structure
+	- \valcom Handled by API design
+
+4. `pShaderModule` must be a valid pointer to a `VkShaderModule` handle
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkShaderModuleCreateInfo`:
+
+\valbox
+
+\valcombox
+
+1. `sType` must be `VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO`
+	- \valcom Handled by API design (ash)
+
+2. `pNext` must be `NULL` or a pointer to a valid instance of `VkShaderModuleValidationCacheCreateInfoEXT`
+	- \valcom Handled by API design (ash)
+
+3. The `sType` value of each struct in the `pNext` chain must be unique
+	- \valcom Handled by API design
+
+4. `flags` must be `0`
+	- \valcom Handled by API design (ash)
+
+5. `pCode` must be a valid pointer to an array of $\textrm{codeSize} \over 4$ `uint32_t` values
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkVertexInputBindingDescription`:
+
+\valbox
+
+\valcombox
+
+1. `inputRate` must be a valid `VkVertexInputRate` value
+	- \valcom Handled by API design (ash)
+
+\valcomboxend
+
+\valboxend
+
+Validations for `VkVertexInputAttributeDescription`:
+
+\valbox
+
+\valcombox
+
+1. `format` must be a valid `VkFormat` value
+	- \valcom Handled by API design
+
+\valcomboxend
+
+\valboxend
+
 ### Pipeline
 
 Validations for `vkCreatePipelineLayout`:
