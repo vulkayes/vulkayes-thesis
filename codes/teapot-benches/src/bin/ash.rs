@@ -764,12 +764,12 @@ fn main() {
         let entry_name: &'static CStr = CStr::from_bytes_with_nul(b"main\0").unwrap();
         let shader_stage_create_infos = [
             vk::PipelineShaderStageCreateInfo::builder()
-                .module(vertex_shader.handle())
+                .module(vertex_shader)
                 .name(entry_name)
                 .stage(vk::ShaderStageFlags::VERTEX)
                 .build(),
             vk::PipelineShaderStageCreateInfo::builder()
-                .module(fragment_shader.handle())
+                .module(fragment_shader)
                 .name(entry_name)
                 .stage(vk::ShaderStageFlags::FRAGMENT)
                 .build(),
