@@ -30,15 +30,49 @@ STAGE_LABELS = [
 	"total"
 ]
 
+COLOR_ALPHA = "D0"
 COLORS = [
-	"#FE6F5EB0",
-	"#5EFEBFB0",
-	# "#9dfe5e"
+	f"#FE6F5E{COLOR_ALPHA}",
+	f"#5EFEBF{COLOR_ALPHA}",
+	f"#5E9DFE{COLOR_ALPHA}",
+	f"#5EEDFE{COLOR_ALPHA}"
+]
+INPUT_NAMES = [
+	"ash",
+	"vy_ST",
+	"vy_MT"
 ]
 
 WORK_FOLDER = "mac"
 if len(sys.argv) > 1:
 	WORK_FOLDER = sys.argv[1]
+
+OUTLIERS_DEVIATIONS = 2.0
+
+class StageData:
+	data = []
+	mean = 0
+	median = 0
+	std_dev = 0
+
+	def __init__(self, data):
+		self.data = data
+		self.mean = np.mean(data)
+		self.median = np.median(data)
+		self.std_dev = np.std(data)
+
+	def reject_outliers(self):
+		indices = np.abs(
+			self.data - self.median
+		) <= self.std_dev * OUTLIERS_DEVIATIONS
+		
+		return self.data[indices]
+
+	def outlier_bounds(self):
+		return (
+			self.median - self.std_dev * OUTLIERS_DEVIATIONS,
+			self.median + self.std_dev * OUTLIERS_DEVIATIONS
+		)
 
 ## PARSING ##
 def parse_bench_point(span):
@@ -96,8 +130,8 @@ def compute_averages(data_points):
 	
 	return counter / len(data_points)
 
-def reject_outliers(data, m = 2.5):
-	return data[abs(data - np.mean(data)) < m * np.std(data)]
+def reject_outliers(data):
+	return data[abs(data - np.median(data)) < OUTLIERS_DEVIATIONS * np.std(data)]
 
 ## PLOTTING ##
 def format_time(nano_seconds):
@@ -117,8 +151,9 @@ def format_time(nano_seconds):
 def plot_averages(averages, names, colors, title = None):
 	print(f"Plotting averages {title}", file = sys.stderr)
 
-	x = np.arange(STAGE_COUNT)
-	bar_width = 0.4
+	bar_width = 0.7
+	group_width = bar_width * (len(averages) + 2)
+	x = np.arange(STAGE_COUNT * group_width, step = group_width)
 
 	fig, ax = plt.subplots()
 	base_offset = -(len(averages) - 1) * bar_width / 2
@@ -151,56 +186,75 @@ def plot_averages(averages, names, colors, title = None):
 	ax.set_xticklabels(STAGE_LABELS)
 	ax.legend()
 
-	plt.savefig(f"{WORK_FOLDER}/bars.png")
+	plt.savefig(f"{WORK_FOLDER}/graphs/bars.png")
 
-def plot_histograms(datas, names, colors, title = None, bins = 100):
+def plot_histograms(stages, names, colors, title = None, bins = 100):
 	print(f"Plotting histogram {title}", file = sys.stderr)
 
 	fig, ax = plt.subplots()
 
-	for index in range(len(datas)):
+	for index in range(len(stages)):
 		ax.hist(
-			datas[index],
+			stages[index].reject_outliers(),
 			bins = bins,
 			label = names[index],
 			color = colors[index]
 		)
 
+		ax.axvline(
+			x = stages[index].median,
+			color = colors[index][:-2],
+			linestyle = "--"
+		)
+		# ax.axvline(
+		# 	x = stages[index].mean,
+		# 	color = colors[index][:-2]
+		# )
+
+		# ax.axvline(
+		# 	x = stages[index].outlier_bounds()[0],
+		# 	color = colors[index][:-2],
+		# 	linestyle = ":"
+		# )
+		# ax.axvline(
+		# 	x = stages[index].outlier_bounds()[1],
+		# 	color = colors[index][:-2],
+		# 	linestyle = ":"
+		# )
+
 	ax.set_title(title)
-	ax.set_ylabel("Time")
+	ax.set_xlabel("Time (ns)")
+	ax.set_ylabel("Number of samples")
 	ax.legend()
 
-	plt.savefig(f"{WORK_FOLDER}/{title}_hist.png")
+	plt.savefig(f"{WORK_FOLDER}/graphs/{title}_hist.png")
 	# plt.show()
 
 def plot_histograms_helper(datas, index):
 	plot_histograms(
-		list(
-			map(
-				lambda dat: reject_outliers(dat[:, index]),
-				datas
-			)
-		),
-		["ash", "vy_ST"],
+		[StageData(dat[:, index]) for dat in datas],
+		INPUT_NAMES,
 		COLORS,
-		title = f"Histogram of {STAGE_LABELS[index]} samples"
+		title = f"{STAGE_LABELS[index]} samples"
 	)
 
 def main():
 	ash_datas = read_input(f"{WORK_FOLDER}/raw_ash.txt")
 	vy_ST_datas = read_input(f"{WORK_FOLDER}/raw_vulkayes_ST.txt")
+	vy_MT_datas = read_input(f"{WORK_FOLDER}/raw_vulkayes_MT.txt")
 
 	ash_averages = compute_averages(ash_datas[1000:])
 	vy_ST_averages = compute_averages(vy_ST_datas[1000:])
+	vy_MT_averages = compute_averages(vy_MT_datas[1000:])
 
 	plot_averages(
-		[ash_averages, vy_ST_averages],
-		["ash", "vy_ST"],
+		[ash_averages, vy_ST_averages, vy_MT_averages],
+		INPUT_NAMES,
 		COLORS,
 		title = "Average time per stage"
 	)
 
 	for index in range(STAGE_COUNT):
-		plot_histograms_helper([ash_datas, vy_ST_datas], index)
+		plot_histograms_helper([ash_datas, vy_ST_datas, vy_MT_datas], index)
 
 main()
