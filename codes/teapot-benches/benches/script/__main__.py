@@ -81,10 +81,10 @@ class InputInfo:
 
 INPUTS = [
 	InputInfo("raw_ash", "ash", "#FE6F5E"),
-	InputInfo("raw_ash_RHA_broken", "ash_RHA_broken", "#B3AAA9"),
+	# InputInfo("raw_ash_RHA_broken", "ash_RHA_broken", "#B3AAA9"),
 	# InputInfo("raw_ash_RHA", "ash_RHA", "#5EFEBF"),
-	# InputInfo("raw_vulkayes_ST", "vy_ST", "#5E9DFE"),
-	# InputInfo("raw_vulkayes_MT", "vy_MT", "#5EEDFE")
+	InputInfo("raw_vulkayes_ST", "vy_ST", "#5E9DFE"),
+	InputInfo("raw_vulkayes_MT", "vy_MT", "#5EEDFE")
 ]
 
 ## IO ##

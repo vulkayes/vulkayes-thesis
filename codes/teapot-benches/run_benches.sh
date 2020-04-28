@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PLATFORM=$1
+PLATFORM=${1:-"PLATFORM"}
 DEVICE_INDEX=${2:-0}
 
 rm Cargo.toml
