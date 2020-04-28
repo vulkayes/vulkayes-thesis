@@ -1,9 +1,10 @@
 import sys
-from dataclasses import dataclass
+import time
 
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 
 STAGE_FILTER = [
 	True,
@@ -135,9 +136,9 @@ def reject_outliers(data):
 
 ## PLOTTING ##
 def format_time(nano_seconds):
-	nanos = round(nano_seconds % 1**3)
-	micros = round(nano_seconds / 10**3 % 10**6)
-	millis = round(nano_seconds / 10**6 % 10**9)
+	nanos = round(nano_seconds) % 1**3
+	micros = round(nano_seconds / 10**3) % 10**3
+	millis = round(nano_seconds / 10**6) % 10**3
 	seconds = round(nano_seconds / 10**9)
 
 	if seconds > 0:
@@ -186,6 +187,13 @@ def plot_averages(averages, names, colors, title = None):
 	ax.set_xticklabels(STAGE_LABELS)
 	ax.legend()
 
+	plt.setp(
+		ax.xaxis.get_majorticklabels(),
+		rotation = -25,
+		ha = "left",
+		rotation_mode = "anchor"
+	)
+
 	plt.savefig(f"{WORK_FOLDER}/graphs/bars.png")
 
 def plot_histograms(stages, names, colors, title = None, bins = 100):
@@ -223,9 +231,21 @@ def plot_histograms(stages, names, colors, title = None, bins = 100):
 		# )
 
 	ax.set_title(title)
-	ax.set_xlabel("Time (ns)")
+	ax.set_xlabel("Times")
 	ax.set_ylabel("Number of samples")
 	ax.legend()
+
+	ax.xaxis.set_major_formatter(
+		ticker.FuncFormatter(
+			lambda x, pos: format_time(x)
+		)
+	)
+	plt.setp(
+		ax.xaxis.get_majorticklabels(),
+		rotation = -25,
+		ha = "left",
+		rotation_mode = "anchor"
+	)
 
 	plt.savefig(f"{WORK_FOLDER}/graphs/{title}_hist.png")
 	# plt.show()
@@ -239,9 +259,13 @@ def plot_histograms_helper(datas, index):
 	)
 
 def main():
+	before_load = time.perf_counter()
 	ash_datas = read_input(f"{WORK_FOLDER}/raw_ash.txt")
 	vy_ST_datas = read_input(f"{WORK_FOLDER}/raw_vulkayes_ST.txt")
 	vy_MT_datas = read_input(f"{WORK_FOLDER}/raw_vulkayes_MT.txt")
+	after_load = time.perf_counter()
+
+	print(f"Loading took {after_load - before_load:.3f}s\n", file = sys.stderr)
 
 	ash_averages = compute_averages(ash_datas[1000:])
 	vy_ST_averages = compute_averages(vy_ST_datas[1000:])
