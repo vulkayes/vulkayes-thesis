@@ -63,7 +63,7 @@ fn main() {
                 },
                 enabled_layer_names,
                 enabled_extension_names,
-                Default::default(),
+                HostMemoryAllocator::Rust(),
                 debug_callback,
             )
             .expect("Could not create instance")

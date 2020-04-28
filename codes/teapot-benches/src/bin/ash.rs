@@ -5,6 +5,7 @@ use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
 use vulkayes_core::ash::{self, vk};
 
 use teapot_benches::{config, data, mark, sub_in_release};
+use vulkayes_core::prelude::HostMemoryAllocator;
 
 mod memory {
     use vulkayes_core::ash::vk;
@@ -58,6 +59,8 @@ fn main() {
     let time_before_init = Instant::now();
     let entry = ash::Entry::new().expect("Could not create entry");
 
+    let host_allocator = HostMemoryAllocator::Rust();
+
     // Instance
     let (instance, debug_report) = {
         let application_name = CStr::from_bytes_with_nul(b"Teapot - ash\0").unwrap();
@@ -95,7 +98,7 @@ fn main() {
 
         let instance = unsafe {
             entry
-                .create_instance(&create_info, None)
+                .create_instance(&create_info, host_allocator.as_ref())
                 .expect("Could not create Instance")
         };
 
@@ -1376,7 +1379,7 @@ fn main() {
             debug.0.destroy_debug_report_callback(debug.1, None);
         }
 
-        instance.destroy_instance(None);
+        instance.destroy_instance(host_allocator.as_ref());
     }
 
     // SUMMARY //

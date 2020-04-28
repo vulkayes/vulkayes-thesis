@@ -6,6 +6,18 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
+## STAGES ##
+_STAGE_LABELS = [
+	"preinit",
+	"acquire",
+	"uniform",
+	"command",
+	"submit",
+	"present",
+	"wait",
+	"update",
+	"total"
+]
 STAGE_FILTER = [
 	True,
 	True,
@@ -17,39 +29,13 @@ STAGE_FILTER = [
 	True,
 	True
 ]
-STAGE_COUNT = len(list(filter(lambda x: x, STAGE_FILTER)))
-
 STAGE_LABELS = [
-	"preinit",
-	"acquire",
-	"uniform",
-	"command",
-	"submit",
-	"present",
-	"wait",
-	"update",
-	"total"
+	_STAGE_LABELS[index] for index in range(len(STAGE_FILTER)) if STAGE_FILTER[index]
 ]
+STAGE_COUNT = len(STAGE_LABELS)
 
-COLOR_ALPHA = "D0"
-COLORS = [
-	f"#FE6F5E{COLOR_ALPHA}",
-	f"#5EFEBF{COLOR_ALPHA}",
-	f"#5E9DFE{COLOR_ALPHA}",
-	f"#5EEDFE{COLOR_ALPHA}"
-]
-INPUT_NAMES = [
-	"ash",
-	"vy_ST",
-	"vy_MT"
-]
-
-WORK_FOLDER = "mac"
-if len(sys.argv) > 1:
-	WORK_FOLDER = sys.argv[1]
-
+INPUT_IGNORE_FIRST_SAMPLES = 1000
 OUTLIERS_DEVIATIONS = 2.0
-
 class StageData:
 	data = []
 	mean = 0
@@ -57,7 +43,7 @@ class StageData:
 	std_dev = 0
 
 	def __init__(self, data):
-		self.data = data
+		self.data = data[INPUT_IGNORE_FIRST_SAMPLES:]
 		self.mean = np.mean(data)
 		self.median = np.median(data)
 		self.std_dev = np.std(data)
@@ -74,6 +60,53 @@ class StageData:
 			self.median - self.std_dev * OUTLIERS_DEVIATIONS,
 			self.median + self.std_dev * OUTLIERS_DEVIATIONS
 		)
+
+## INPUTS AND COLORS ##
+COLOR_ALPHA = "D0"
+class InputInfo:
+	path = None
+	name = None
+	color = f"#000000{COLOR_ALPHA}"
+	stages = None
+
+	def __init__(self, path, name, color):
+		self.path = f"{path}.txt"
+		self.name = name
+		self.color = f"{color}{COLOR_ALPHA}"
+
+	def set_data(self, data):
+		self.stages = [
+			StageData(data[:, index]) for index in range(STAGE_COUNT)
+		]
+
+INPUTS = [
+	InputInfo("raw_ash", "ash", "#FE6F5E"),
+	InputInfo("raw_ash_RHA_broken", "ash_RHA_broken", "#B3AAA9"),
+	# InputInfo("raw_ash_RHA", "ash_RHA", "#5EFEBF"),
+	# InputInfo("raw_vulkayes_ST", "vy_ST", "#5E9DFE"),
+	# InputInfo("raw_vulkayes_MT", "vy_MT", "#5EEDFE")
+]
+
+## IO ##
+OUTPUT_FORMAT = "png"
+WORK_FOLDER = "mac"
+if len(sys.argv) > 1:
+	WORK_FOLDER = sys.argv[1]
+
+def format_time(nanos):
+	if nanos >= 10**9:
+		seconds = round(nanos / 10**9, 2)
+		return f"{seconds} s"
+	
+	if nanos >= 10**6:
+		millis = round(nanos / 10**6, 2)
+		return f"{millis} ms"
+
+	if nanos >= 10**3:
+		micros = round(nanos / 10**3, 2)
+		return f"{micros} us"
+	
+	return f"{nanos} ns"
 
 ## PARSING ##
 def parse_bench_point(span):
@@ -114,59 +147,40 @@ def parse_line(line):
 def read_input(path):
 	data_points = []
 
-	print(f"Loading file {path}", file = sys.stderr)
+	print(f"Loading file {path}.. ", file = sys.stderr, end = "", flush = True)
+	before_load = time.perf_counter()
+
 	with open(path, "r") as file:
 		for line in file:
 			parsed = parse_line(line)
 			if parsed is not None:
 				data_points += parsed
+
+	after_load = time.perf_counter()
+	print(f"took {after_load - before_load:.3f}s", file = sys.stderr)
 	
 	return np.array(data_points, dtype = np.int64)
 
-## PROCESSING ##
-def compute_averages(data_points):
-	counter = np.zeros(shape = (STAGE_COUNT,), dtype = np.int64)
-	for point in data_points:
-		counter += point
-	
-	return counter / len(data_points)
-
-def reject_outliers(data):
-	return data[abs(data - np.median(data)) < OUTLIERS_DEVIATIONS * np.std(data)]
-
 ## PLOTTING ##
-def format_time(nano_seconds):
-	nanos = round(nano_seconds) % 1**3
-	micros = round(nano_seconds / 10**3) % 10**3
-	millis = round(nano_seconds / 10**6) % 10**3
-	seconds = round(nano_seconds / 10**9)
-
-	if seconds > 0:
-		return f"{seconds:.0f}.{millis:0>3.0f} s"
-	if millis > 0:
-		return f"{millis:.0f}.{micros:0>3.0f} ms"
-	if micros > 0:
-		return f"{micros:.0f}.{nanos:0>3.0f} us"
-	return f"{nanos:.2f} ns"
-
-def plot_averages(averages, names, colors, title = None):
-	print(f"Plotting averages {title}", file = sys.stderr)
+def plot_averages(inputs, title):
+	print(f"Plotting averages: {title}.. ", file = sys.stderr, end = "", flush = True)
 
 	bar_width = 0.7
-	group_width = bar_width * (len(averages) + 2)
+	group_width = bar_width * (len(inputs) + 2)
 	x = np.arange(STAGE_COUNT * group_width, step = group_width)
 
 	fig, ax = plt.subplots()
-	base_offset = -(len(averages) - 1) * bar_width / 2
+	base_offset = -(len(inputs) - 1) * bar_width / 2
 	
 	all_bars = []
-	for index in range(len(averages)):
+	for index in range(len(inputs)):
+		inp = inputs[index]
 		bars = ax.bar(
-			(x + base_offset + index * bar_width),
-			averages[index],
+			x + base_offset + index * bar_width,
+			[stage.median for stage in inp.stages],
 			bar_width,
-			label = names[index],
-			color = colors[index]
+			label = inp.name,
+			color = inp.color
 		)
 
 		for rect in bars:
@@ -194,44 +208,37 @@ def plot_averages(averages, names, colors, title = None):
 		rotation_mode = "anchor"
 	)
 
-	plt.savefig(f"{WORK_FOLDER}/graphs/bars.png")
+	save_path = f"{WORK_FOLDER}/graphs/bars.{OUTPUT_FORMAT}"
+	plt.savefig(
+		save_path,
+		pad_inches = 1,
+		dpi = 200
+	)
 
-def plot_histograms(stages, names, colors, title = None, bins = 100):
-	print(f"Plotting histogram {title}", file = sys.stderr)
+	print(f"saved to {save_path}", file = sys.stderr)
+
+def plot_histograms(inputs, stage_index, title, bins = 100):
+	print(f"Plotting histogram: {title}.. ", file = sys.stderr, end = "", flush = True)
 
 	fig, ax = plt.subplots()
 
-	for index in range(len(stages)):
+	for inp in inputs:
+		stage = inp.stages[stage_index]
 		ax.hist(
-			stages[index].reject_outliers(),
+			stage.reject_outliers(),
 			bins = bins,
-			label = names[index],
-			color = colors[index]
+			label = inp.name,
+			color = inp.color
 		)
 
 		ax.axvline(
-			x = stages[index].median,
-			color = colors[index][:-2],
+			x = stage.median,
+			color = inp.color[:-2],
 			linestyle = "--"
 		)
-		# ax.axvline(
-		# 	x = stages[index].mean,
-		# 	color = colors[index][:-2]
-		# )
-
-		# ax.axvline(
-		# 	x = stages[index].outlier_bounds()[0],
-		# 	color = colors[index][:-2],
-		# 	linestyle = ":"
-		# )
-		# ax.axvline(
-		# 	x = stages[index].outlier_bounds()[1],
-		# 	color = colors[index][:-2],
-		# 	linestyle = ":"
-		# )
 
 	ax.set_title(title)
-	ax.set_xlabel("Times")
+	ax.set_xlabel("Time")
 	ax.set_ylabel("Number of samples")
 	ax.legend()
 
@@ -247,38 +254,26 @@ def plot_histograms(stages, names, colors, title = None, bins = 100):
 		rotation_mode = "anchor"
 	)
 
-	plt.savefig(f"{WORK_FOLDER}/graphs/{title}_hist.png")
-	# plt.show()
+	save_path = f"{WORK_FOLDER}/graphs/{title}_hist.{OUTPUT_FORMAT}"
+	plt.savefig(save_path)
 
-def plot_histograms_helper(datas, index):
-	plot_histograms(
-		[StageData(dat[:, index]) for dat in datas],
-		INPUT_NAMES,
-		COLORS,
-		title = f"{STAGE_LABELS[index]} samples"
-	)
+	print(f"saved to {save_path}", file = sys.stderr)
 
 def main():
-	before_load = time.perf_counter()
-	ash_datas = read_input(f"{WORK_FOLDER}/raw_ash.txt")
-	vy_ST_datas = read_input(f"{WORK_FOLDER}/raw_vulkayes_ST.txt")
-	vy_MT_datas = read_input(f"{WORK_FOLDER}/raw_vulkayes_MT.txt")
-	after_load = time.perf_counter()
-
-	print(f"Loading took {after_load - before_load:.3f}s\n", file = sys.stderr)
-
-	ash_averages = compute_averages(ash_datas[1000:])
-	vy_ST_averages = compute_averages(vy_ST_datas[1000:])
-	vy_MT_averages = compute_averages(vy_MT_datas[1000:])
+	for inp in INPUTS:
+		data = read_input(f"{WORK_FOLDER}/{inp.path}")
+		inp.set_data(data)
 
 	plot_averages(
-		[ash_averages, vy_ST_averages, vy_MT_averages],
-		INPUT_NAMES,
-		COLORS,
-		title = "Average time per stage"
+		INPUTS,
+		"median time"
 	)
 
 	for index in range(STAGE_COUNT):
-		plot_histograms_helper([ash_datas, vy_ST_datas, vy_MT_datas], index)
+		plot_histograms(
+			INPUTS,
+			index,
+			f"{STAGE_LABELS[index]} samples"
+		)
 
 main()
