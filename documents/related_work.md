@@ -24,8 +24,23 @@ Vulkayes originally started as a fork of Vulkano, however, over time, it grew in
 
 ## Tephra
 
-TODO: How to correctly cite this?
-
-Tephra is a very recent work with very similar aims to Vulkayes. It can the though of as a C++ version of Vulkayes. It takes a fresh look at the existing solutions and comes up with a transparent and flexible API for handling Vulkan.
+Tephra[@Tephra] is a very recent work with very similar aims to Vulkayes. It can the though of as a C++ version of Vulkayes. It takes a fresh look at the existing solutions and comes up with a transparent and flexible API for handling Vulkan.
 
 However, many of the design considerations taken in Tephra revolve around safety and sanity of C++ language itself. This is of questionable importance and puts unnecessary strain on the library designer. Overall, most of the well designed concepts in Tephra have to be weighted againts the unfriendliness of the language.
+
+### Summary
+
+Library |Status   |Language|Goals
+--------|---------|--------|----------------------------------------------
+V-EZ    |Abandoned| C++    | Usability over performance
+gfx-hal |Active   | Rust   | Hardware abstractions
+Vulkano |Abandoned| Rust   | Safety over performance
+Tephra  |Unknown  | C++    | Performance and usability
+        |         |        | 
+Vulkayes|Active   | Rust   | Performance, usability and increased safety
+
+Table: Related work summary
+
+In summary, many projects aiming at simplifying the Vulkan API have been either abandoned or are too broad in scope to consider them production-ready. In the end, Tephra comes out as the closest and most practically usable work. However, the C++ language is itself a complex and hard to master system that places many requirements on the user of the library.
+
+In contrast, Rust, and by extension Vulkayes, aims to offload as much off the user as possible without unnecessary and performance-reducing restrictions.

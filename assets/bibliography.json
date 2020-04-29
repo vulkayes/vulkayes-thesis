@@ -7,6 +7,35 @@
 		"accessed": "2020-04-05"
 	},
 	{
+		"id": "VulkanAPIRegistry",
+		"type": "Webpage",
+		"title": "Vulkan API Registry",
+		"URL": "https://github.com/KhronosGroup/Vulkan-Docs/blob/master/xml/vk.xml",
+		"accessed": "2020-04-29"
+	},
+	{
+		"id": "VulkanAPIRelease",
+		"type": "Webpage",
+		"title": "Khronos Releases Vulkan 1.0 Specification",
+		"URL": "https://www.khronos.org/news/press/khronos-releases-vulkan-1-0-specification",
+		"accessed": "2020-04-29"
+	},
+	{
+		"id": "VulkanAPIRelease12",
+		"type": "Webpage",
+		"title": "Khronos Releases Vulkan 1.2 Specification",
+		"URL": "https://www.khronos.org/news/press/khronos-group-releases-vulkan-1.2",
+		"accessed": "2020-04-29"
+	},
+
+	{
+		"id": "ash",
+		"type": "Webpage",
+		"title": "ash",
+		"URL": "https://github.com/MaikKlein/ash",
+		"accessed": "2020-04-29"
+	},
+	{
 		"id": "V-EZ",
 		"type": "Webpage",
 		"title": "V-EZ",
@@ -28,7 +57,15 @@
 		"accessed": "2020-04-10"
 	},
 	{
-		"id": "Tephra"
+		"id": "Tephra",
+		"type": "thesis",
+		"title": "Designing a modern high-level graphics API",
+		"author": {
+			"family": "Galajda",
+			"given": "Roman"
+		},
+		"issued": "2020-01-28",
+		"publisher": "Czech Technical University in Prague. Computing and Information Centre."
 	},
 
 	{

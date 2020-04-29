@@ -274,7 +274,7 @@
 			"2": ["comment", "Handled by API design"],
 			"3": ["comment", "Handled by API design"],
 			"4": ["comment", "Handled by API design"],
-			"5": ["done", "Return error"],
+			"5": ["done", "Returns error"],
 			"6": ["comment", "Handled by API design"]
 		}],
 		["vkBindBufferMemory", "implicit", {
@@ -484,7 +484,7 @@
 			"2": ["comment", "Handled by API design"],
 			"3": ["comment", "Handled by API design"],
 			"4": ["comment", "Handled by API design"],
-			"5": null
+			"5": ["done", "Returns error"]
 		}],
 
 		"Shader",
