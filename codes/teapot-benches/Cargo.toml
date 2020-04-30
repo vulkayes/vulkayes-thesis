@@ -1,1 +1,26 @@
-MT-Cargo.toml
+[package]
+name = "teapot-benches"
+version = "0.1.0"
+authors = ["Eduard Lavuš <lavusedu@fel.cvut.cz>"]
+edition = "2018"
+
+[dependencies]
+nalgebra = "0.21"
+
+edwardium_logger = "1.1"
+
+[dependencies.vulkayes-window]
+git = "https://github.com/vulkayes/vulkayes-window"
+default-features = false
+features = [
+    "minifb_window"
+]
+
+[dependencies.vulkayes-core]
+git = "https://github.com/vulkayes/vulkayes-core"
+default-features = false
+features = [
+    "naive_device_allocator",
+    "log_release_max_level_off",
+	# "multi_thread"
+]
