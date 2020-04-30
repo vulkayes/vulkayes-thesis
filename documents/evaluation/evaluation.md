@@ -2,10 +2,6 @@
 
 ![](evaluation/user_code.md)
 
-Talk about benchmarks
+## Benchmark
 
-## Scene 1
-
-## Scene 2
-
-## Scene 3
+A benchmark of ash vs Vulkayes was designed to compare the speed of Vulkayes against a "control sample" of `ash`.

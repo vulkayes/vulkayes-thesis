@@ -27,6 +27,13 @@
 		"URL": "https://www.khronos.org/news/press/khronos-group-releases-vulkan-1.2",
 		"accessed": "2020-04-29"
 	},
+	{
+		"id": "VMA",
+		"type": "Webpage",
+		"title": "Vulkan Memory Allocator",
+		"URL": "https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator",
+		"accessed": "2020-04-30"
+	},
 
 	{
 		"id": "ash",
@@ -76,6 +83,13 @@
 		"accessed": "2020-04-10"
 	},
 	
+	{
+		"id": "Cargo",
+		"type": "Webpage",
+		"title": "The Cargo Book",
+		"URL": "https://doc.rust-lang.org/cargo/",
+		"accessed": "2020-04-30"
+	},
 	{
 		"id": "RFC-1857",
 		"type": "Webpage",

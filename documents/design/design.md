@@ -42,6 +42,14 @@ The implementation of the Rust standard library has empirically proven that the 
 
 All of this is done at compile time and thus has no runtime cost. All code is as fast as the same C++ code would be, but safe.
 
+### Cargo {#sec:design-cargo}
+
+Cargo[@Cargo] is Rusts package manager. It takes care of indexing and retrieving dependencies, compiling them and publishing your own libraries and binaries to the registry. Cargo also takes care of project configuration. In C/C++ codebases it is common to either invoke the compiler directly, or to use build tools such as make or CMake. Cargo is similar to those build tools, but it's a component of Rust ecosystem and is targeted at Rust only.
+
+Being a part of Rust itself, cargo is able to provide lots of useful abstraction over the rust compiler. The configuration file `Cargo.toml` is filled with useful project information such as the project name, author and short description. The file also contains technical information, such as the targeted language edition, compiler and optimization flags, all of the dependencies (and how/where to look for them) and project features. Platform-specific configuration is also possible.
+
+Features defined in `Cargo.toml` are project-unique strings. These strings can then be used from within the codebase to conditionally compile part of the code, similar to C preprocessor `#ifdef` statements. Contrary to the C preprocessor, however, these strings are defined in one central place and can even define dependency chains, so that certain features might require other features or additional dependencies. This is often used when developing on top of platform-dependent code to provide uniform interface to the user.
+
 ## Object lifetime management
 
 ![Object Dependency Graph](assets/diagrams/object_dependency_graph.svg)

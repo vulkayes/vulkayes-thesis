@@ -179,7 +179,7 @@ fn main() {
 						image_size: surface_size,
 						image_usage: vk::ImageUsageFlags::COLOR_ATTACHMENT
 					},
-					sharing_mode: SharingMode::from(&*queue),
+					sharing_mode: SharingMode::from(queue.as_ref()),
 					pre_transform,
 					composite_alpha: vk::CompositeAlphaFlagsKHR::OPAQUE,
 					present_mode,
@@ -223,7 +223,7 @@ fn main() {
 				ImageSizeInfo::General(surface_size.into()),
 				ImageTilingAndLayout::OptimalUndefined(),
 				vk::ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT,
-				SharingMode::from(&*queue),
+				SharingMode::from(queue.as_ref()),
 				ImageAllocatorParams::Some {
 					allocator: &device_memory_allocator,
 					requirements: vk::MemoryPropertyFlags::DEVICE_LOCAL
@@ -352,7 +352,7 @@ fn main() {
 				device.clone(),
 				std::num::NonZeroU64::new(std::mem::size_of_val(&data::INDICES) as u64).unwrap(),
 				vk::BufferUsageFlags::INDEX_BUFFER,
-				(&*queue).into(),
+				SharingMode::from(queue.as_ref()),
 				BufferAllocatorParams::Some {
 					allocator: &device_memory_allocator,
 					requirements: vk::MemoryPropertyFlags::HOST_VISIBLE
@@ -369,7 +369,7 @@ fn main() {
 				device.clone(),
 				std::num::NonZeroU64::new(std::mem::size_of_val(&data::VERTICES) as u64).unwrap(),
 				vk::BufferUsageFlags::VERTEX_BUFFER,
-				(&*queue).into(),
+				SharingMode::from(queue.as_ref()),
 				BufferAllocatorParams::Some {
 					allocator: &device_memory_allocator,
 					requirements: vk::MemoryPropertyFlags::HOST_VISIBLE
@@ -386,7 +386,7 @@ fn main() {
 				device.clone(),
 				std::num::NonZeroU64::new(std::mem::size_of_val(&data::NORMALS) as u64).unwrap(),
 				vk::BufferUsageFlags::VERTEX_BUFFER,
-				(&*queue).into(),
+				SharingMode::from(queue.as_ref()),
 				BufferAllocatorParams::Some {
 					allocator: &device_memory_allocator,
 					requirements: vk::MemoryPropertyFlags::HOST_VISIBLE
@@ -403,7 +403,7 @@ fn main() {
 				device.clone(),
 				std::num::NonZeroU64::new(std::mem::size_of::<data::UniformData>() as u64).unwrap(),
 				vk::BufferUsageFlags::UNIFORM_BUFFER,
-				(&*queue).into(),
+				SharingMode::from(queue.as_ref()),
 				BufferAllocatorParams::Some {
 					allocator: &device_memory_allocator,
 					requirements: vk::MemoryPropertyFlags::HOST_VISIBLE

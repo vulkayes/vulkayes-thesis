@@ -50,3 +50,12 @@ Khronos Group, the industry consortium responsible for Vulkan API, has been cont
 
 Conclude
 
+
+Category |Statically solved|Dynamically solved|Left to user|Total
+---------|-----------------|------------------|------------|-----
+Implicit |              317|                28|           2|  347
+Creation |               91|                 0|         314|  405
+Usage    |               29|                 3|         122|  154
+**Total**|              437|                30|         439|  906
+
+Table: Vulkan API validations status in the project {#tbl:validation-stats}

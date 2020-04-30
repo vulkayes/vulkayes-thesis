@@ -2,7 +2,8 @@
 \usepackage[most,breakable]{tcolorbox}
 \usepackage{pdfpages}
 \usepackage{titlesec}
-\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+% \usepackage[utf8]{inputenc}
 
 \definecolor{inline-code}{HTML}{264357}
 
@@ -13,6 +14,7 @@
 \definecolor{validation-done-box}{HTML}{00B372}
 
 \definecolor{CTU-blue}{cmyk}{1, 0.43, 0, 0}
+\definecolor{CTU-lightblue}{cmyk}{0.3, 0.13, 0, 0}
 
 % % color boxes
 % \let\oldtexttt\texttt
@@ -31,6 +33,14 @@
 % \newtcolorbox{validation-done-box}{breakable,colback=validation-box,colframe=validation-done-box,size=fbox,left*=0pt,leftrule=10pt,extrude left by=5pt}
 % \newcommand{\valdonebox}{\begin{validation-done-box}}
 % \newcommand{\valdoneboxend}{\end{validation-done-box}}
+
+\newcommand{\codeColumnsBegin}[1]{
+	\begin{multicols}{#1}
+	\scriptsize
+	\setlength{\columnseprule}{1pt}
+	\def\columnseprulecolor{\color{CTU-lightblue}}
+}
+\newcommand{\codeColumnsEnd}{\end{multicols}\normalsize}
 
 \newcommand{\projectType}{Bachelor's Thesis}
 \newcommand{\universityName}{Czech Technical University in Prague}
