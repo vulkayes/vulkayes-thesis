@@ -1,4 +1,4 @@
-## User code
+## User code {#sec:user-code}
 
 One of the main concerns when designing a library is the user code. How the user code will look like, if it will be readable and comfortable to write.
 
@@ -114,4 +114,4 @@ uniform_buffer
 
 \codeColumnsEnd
 
-The ash code is twice as long and in some cases possibly even unsafe. Vulkayes API guarantees proper locking and borrowing, provides simplified way to flush the memory and prevents unaligned writes which on some platforms might cause hard errors and abort the process.
+The ash code is twice as long and in some cases possibly even unsafe. Vulkayes API guarantees proper locking and borrowing, provides simplified way to flush the memory and prevents unaligned writes which on some platforms might cause hard errors and abort the process. The checking for correctness, however, does have some runtime cost. One of the guarantees of safe Rust is memory safety and Vulkayes is targeting safe Rust. That is why the `mem.write_slice` method call above does more than just write to a pointer. There is logic to check the align of the pointer and make sure all writes are either properly aligned, or an unaligned instruction is used.

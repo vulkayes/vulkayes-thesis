@@ -27,7 +27,7 @@ STAGE_FILTER = [
 	True,
 	True,
 	True,
-	True
+	False
 ]
 STAGE_LABELS = [
 	_STAGE_LABELS[index] for index in range(len(STAGE_FILTER)) if STAGE_FILTER[index]
@@ -92,6 +92,8 @@ OUTPUT_FORMAT = "png"
 WORK_FOLDER = "mac"
 if len(sys.argv) > 1:
 	WORK_FOLDER = sys.argv[1]
+if len(sys.argv) > 2:
+	OUTPUT_FORMAT = sys.argv[2]
 
 def format_time(nanos):
 	if nanos >= 10**9:
@@ -107,6 +109,36 @@ def format_time(nanos):
 		return f"{micros} us"
 	
 	return f"{nanos} ns"
+
+def output_table_averages(base_input, inputs):
+	print()
+	print(
+		"Stage|{}|{}".format(
+			base_input.name,
+			"|".join(inp.name for inp in inputs)
+		)
+	)
+	print(
+		"-----|{}|{}".format(
+			"-" * len(base_input.name),
+			"|".join("-" * len(inp.name) for inp in inputs)
+		)
+	)
+	for index in range(STAGE_COUNT):
+		print(
+			"{}|{}|{}".format(
+				STAGE_LABELS[index],
+				format_time(base_input.stages[index].median),
+				"|".join(
+					[
+						"{} ({:.0f}%)".format(
+							format_time(inp.stages[index].median),
+							inp.stages[index].median / base_input.stages[index].median * 100
+						) for inp in inputs
+					]
+				)
+			)
+		)
 
 ## PARSING ##
 def parse_bench_point(span):
@@ -196,7 +228,7 @@ def plot_averages(inputs, title):
 		all_bars.append(bars)
 	
 	ax.set_title(title)
-	ax.set_ylabel("Time")
+	# ax.set_ylabel("Time")
 	ax.set_xticks(x)
 	ax.set_xticklabels(STAGE_LABELS)
 	ax.legend()
@@ -211,7 +243,6 @@ def plot_averages(inputs, title):
 	save_path = f"{WORK_FOLDER}/graphs/bars.{OUTPUT_FORMAT}"
 	plt.savefig(
 		save_path,
-		pad_inches = 1,
 		dpi = 200
 	)
 
@@ -238,7 +269,7 @@ def plot_histograms(inputs, stage_index, title, bins = 100):
 		)
 
 	ax.set_title(title)
-	ax.set_xlabel("Time")
+	# ax.set_xlabel("Time")
 	ax.set_ylabel("Number of samples")
 	ax.legend()
 
@@ -255,7 +286,10 @@ def plot_histograms(inputs, stage_index, title, bins = 100):
 	)
 
 	save_path = f"{WORK_FOLDER}/graphs/{title}_hist.{OUTPUT_FORMAT}"
-	plt.savefig(save_path)
+	plt.savefig(
+		save_path,
+		dpi = 200
+	)
 
 	print(f"saved to {save_path}", file = sys.stderr)
 
@@ -264,16 +298,19 @@ def main():
 		data = read_input(f"{WORK_FOLDER}/{inp.path}")
 		inp.set_data(data)
 
-	plot_averages(
-		INPUTS,
-		"median time"
+	# plot_averages(
+	# 	INPUTS,
+	# 	"median time"
+	# )
+	output_table_averages(
+		INPUTS[0], INPUTS[1:]
 	)
 
-	for index in range(STAGE_COUNT):
-		plot_histograms(
-			INPUTS,
-			index,
-			f"{STAGE_LABELS[index]} samples"
-		)
+	# for index in range(STAGE_COUNT):
+	# 	plot_histograms(
+	# 		INPUTS,
+	# 		index,
+	# 		f"{STAGE_LABELS[index]} samples"
+	# 	)
 
 main()
