@@ -401,7 +401,9 @@ fn main() {
 		let uniform_buffer = {
 			Buffer::new(
 				device.clone(),
-				std::num::NonZeroU64::new(std::mem::size_of::<data::UniformData>() as u64).unwrap(),
+				std::num::NonZeroU64::new(
+					(std::mem::size_of::<data::UniformData>() * data::NUMBER_OF_UNIFORM_DATA) as u64
+				).unwrap(),
 				vk::BufferUsageFlags::UNIFORM_BUFFER,
 				SharingMode::from(queue.as_ref()),
 				BufferAllocatorParams::Some {
@@ -770,11 +772,12 @@ fn main() {
 			mark_state.before_uniform();
 			// update uniform data
 			{
+				let uniform_data = [frame_state; data::NUMBER_OF_UNIFORM_DATA];
 				uniform_buffer
 					.memory()
 					.unwrap()
 					.map_memory_with(|mut mem| {
-						mem.write_slice(&[frame_state], 0, Default::default());
+						mem.write_slice(&uniform_data, 0, Default::default());
 
 						mem.flush().expect("Could not flush uniform data memory");
 

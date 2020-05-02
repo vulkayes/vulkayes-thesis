@@ -4,6 +4,8 @@ pub const Z_FAR: f32 = 100.0;
 pub const Z_NEAR: f32 = 1.0;
 pub const NUMBER_OF_TEAPOTS: usize = 25;
 
+pub const NUMBER_OF_UNIFORM_DATA: usize = 1;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, Default)]
 pub struct UniformData {

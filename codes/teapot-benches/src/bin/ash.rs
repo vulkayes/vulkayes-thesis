@@ -656,7 +656,7 @@ fn main() {
 	// Uniform buffer
 	let (uniform_buffer, uniform_buffer_memory, uniform_buffer_memory_ptr) = {
 		let create_info = vk::BufferCreateInfo {
-			size: std::mem::size_of::<data::UniformData>() as vk::DeviceSize,
+			size: (std::mem::size_of::<data::UniformData>() * data::NUMBER_OF_UNIFORM_DATA) as vk::DeviceSize,
 			usage: vk::BufferUsageFlags::UNIFORM_BUFFER,
 			sharing_mode: vk::SharingMode::EXCLUSIVE,
 			..Default::default()
@@ -696,7 +696,7 @@ fn main() {
 				.map_memory(
 					memory,
 					0,
-					std::mem::size_of::<data::UniformData>() as vk::DeviceSize,
+					(std::mem::size_of::<data::UniformData>() * data::NUMBER_OF_UNIFORM_DATA) as vk::DeviceSize,
 					vk::MemoryMapFlags::empty()
 				)
 				.unwrap()
@@ -1129,8 +1129,11 @@ fn main() {
 		mark_state.before_uniform();
 		// update uniform data
 		{
-			unsafe {
-				*uniform_buffer_memory_ptr = frame_state;
+			let uniform_data = [frame_state; data::NUMBER_OF_UNIFORM_DATA];
+			for index in 0 .. data::NUMBER_OF_UNIFORM_DATA {
+				unsafe {
+					std::ptr::write_unaligned(uniform_buffer_memory_ptr.add(index), uniform_data[index]);
+				}
 			}
 			let flush_ranges = [vk::MappedMemoryRange::builder()
 				.memory(uniform_buffer_memory)

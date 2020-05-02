@@ -43,6 +43,8 @@ pub fn setup_logger() {
 		std::time::Instant::now()
 	);
 	logger.init_boxed().expect("Could not initialize logger");
+
+	vulkayes_core::util::fmt::log_vulkayes_debug_info();
 }
 
 // pub fn setup_winit(
