@@ -19,14 +19,14 @@ _STAGE_LABELS = [
 	"total"
 ]
 STAGE_FILTER = [
+	False,
+	False,
 	True,
 	True,
 	True,
 	True,
-	True,
-	True,
-	True,
-	True,
+	False,
+	False,
 	False
 ]
 STAGE_LABELS = [
@@ -34,7 +34,7 @@ STAGE_LABELS = [
 ]
 STAGE_COUNT = len(STAGE_LABELS)
 
-INPUT_IGNORE_FIRST_SAMPLES = 1000
+INPUT_IGNORE_FIRST_SAMPLES = 0
 OUTLIERS_DEVIATIONS = 2.0
 class StageData:
 	data = []
@@ -48,12 +48,13 @@ class StageData:
 		self.median = np.median(data)
 		self.std_dev = np.std(data)
 
-	def reject_outliers(self):
-		indices = np.abs(
+	def outlier_mask(self):
+		return np.abs(
 			self.data - self.median
 		) <= self.std_dev * OUTLIERS_DEVIATIONS
-		
-		return self.data[indices]
+
+	def reject_outliers(self):
+		return self.data[self.outlier_mask()]
 
 	def outlier_bounds(self):
 		return (
@@ -68,6 +69,7 @@ class InputInfo:
 	name = None
 	color = f"#000000{COLOR_ALPHA}"
 	stages = None
+	stages_outlier_mask = None
 
 	def __init__(self, path, name, color):
 		self.path = f"{path}.txt"
@@ -78,13 +80,20 @@ class InputInfo:
 		self.stages = [
 			StageData(data[:, index]) for index in range(STAGE_COUNT)
 		]
+		self.stages_outlier_mask = self.stages[0].outlier_mask()
+		for stage in self.stages[1:]:
+			self.stages_outlier_mask &= stage.outlier_mask()
 
 INPUTS = [
-	InputInfo("raw_ash", "ash", "#FE6F5E"),
-	# InputInfo("raw_ash_RHA_broken", "ash_RHA_broken", "#B3AAA9"),
 	# InputInfo("raw_ash_RHA", "ash_RHA", "#5EFEBF"),
+
+	InputInfo("raw_ash", "ash", "#FE6F5E"),
 	InputInfo("raw_vulkayes_ST", "vy_ST", "#5E9DFE"),
-	InputInfo("raw_vulkayes_MT", "vy_MT", "#5EEDFE")
+	InputInfo("raw_vulkayes_MT", "vy_MT", "#5EEDFE"),
+
+	# InputInfo("raw_ash_uniform1000", "ash_u1000", "#FE6F5E"),
+	# InputInfo("raw_vulkayes_ST_uniform1000", "vy_ST_u1000", "#5E9DFE"),
+	# InputInfo("raw_vulkayes_MT_uniform1000", "vy_MT_u1000", "#5EEDFE"),
 ]
 
 ## IO ##
@@ -256,7 +265,7 @@ def plot_histograms(inputs, stage_index, title, bins = 100):
 	for inp in inputs:
 		stage = inp.stages[stage_index]
 		ax.hist(
-			stage.reject_outliers(),
+			stage.data[inp.stages_outlier_mask],
 			bins = bins,
 			label = inp.name,
 			color = inp.color
@@ -293,24 +302,74 @@ def plot_histograms(inputs, stage_index, title, bins = 100):
 
 	print(f"saved to {save_path}", file = sys.stderr)
 
+def plot_linear(inp, title):
+	print(f"Plotting histogram: {title}.. ", file = sys.stderr, end = "", flush = True)
+
+	fig, ax = plt.subplots()
+	x = np.arange(0, len(inp.stages[0].data), 1)
+	y = np.zeros(shape = x.shape, dtype = np.int64)
+
+	stage_datas = np.zeros(
+		shape = (STAGE_COUNT, len(x))
+	)
+
+	stage_datas[0] = inp.stages[0].data
+	for index in range(1, STAGE_COUNT):
+		stage_datas[index] = stage_datas[index - 1] + inp.stages[index].data
+
+	for index in range(STAGE_COUNT):
+		ax.plot(
+			x[inp.stages_outlier_mask],
+			stage_datas[index][inp.stages_outlier_mask],
+			label = STAGE_LABELS[index],
+			marker = "|",
+			linestyle = " "
+		)
+
+	ax.set_title(title)
+	ax.set_xlabel("Sample")
+	ax.legend()
+
+	ax.yaxis.set_major_formatter(
+		ticker.FuncFormatter(
+			lambda x, pos: format_time(x)
+		)
+	)
+
+	# plt.show()
+	save_path = f"{WORK_FOLDER}/graphs/{title}_line.{OUTPUT_FORMAT}"
+	plt.savefig(
+		save_path,
+		dpi = 200
+	)
+
+	print(f"saved to {save_path}", file = sys.stderr)
+
 def main():
 	for inp in INPUTS:
 		data = read_input(f"{WORK_FOLDER}/{inp.path}")
 		inp.set_data(data)
 
-	# plot_averages(
-	# 	INPUTS,
-	# 	"median time"
-	# )
+	plot_averages(
+		INPUTS,
+		"median time"
+	)
 	output_table_averages(
 		INPUTS[0], INPUTS[1:]
 	)
 
-	# for index in range(STAGE_COUNT):
-	# 	plot_histograms(
-	# 		INPUTS,
-	# 		index,
-	# 		f"{STAGE_LABELS[index]} samples"
-	# 	)
+	for index in range(STAGE_COUNT):
+		plot_histograms(
+			INPUTS,
+			index,
+			f"{STAGE_LABELS[index]} samples"
+		)
+
+	if OUTPUT_FORMAT != "svg":
+		for inp in INPUTS:
+			plot_linear(
+				inp,
+				f"{inp.name} sample time"
+			)
 
 main()

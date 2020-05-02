@@ -48,14 +48,6 @@ Khronos Group, the industry consortium responsible for Vulkan API, has been cont
 
 # Conclusion
 
-Conclude
+The core Vulkayes library is successful at reducing the complexity of creating and using Vulkan types, as well as correctly destroying them at appropriate times and checking basic safety requirements. Benchmarks show that this added complexity is mostly compile-time and scales well into the runtime where applicable. Additionaly, safety is guaranteed at a certain level that should provide the user of the API with certain amount of confidence that their application will not sefault. Overall, the Vulkayes project is a good step towards a flexible and transparent Vulkan API in the Rust ecosystem.
 
-
-Category |Statically solved|Dynamically solved|Left to user|Total
----------|-----------------|------------------|------------|-----
-Implicit |              317|                28|           2|  347
-Creation |               91|                 0|         314|  405
-Usage    |               29|                 3|         122|  154
-**Total**|              437|                30|         439|  906
-
-Table: Vulkan API validations status in the project {#tbl:validation-stats}
+However, there still remains a lot of work to be done to create an API with a application design advantage as well. Designing synchronization in Vulkan by hand is error prone due to high complexity and Vulkayes should be extended with user-friendly API that is capable of lifting the burden off the user onto the implementation. This and other improvements to Vulkayes are left for future work.

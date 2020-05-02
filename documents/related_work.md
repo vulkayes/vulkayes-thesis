@@ -39,7 +39,7 @@ Tephra  |Unknown  | C++    | Performance and usability
         |         |        | 
 Vulkayes|Active   | Rust   | Performance, usability and increased safety
 
-Table: Related work summary
+Table: _Related work summary_
 
 In summary, many projects aiming at simplifying the Vulkan API have been either abandoned or are too broad in scope to consider them production-ready. In the end, Tephra comes out as the closest and most practically usable work. However, the C++ language is itself a complex and hard to master system that places many requirements on the user of the library.
 
