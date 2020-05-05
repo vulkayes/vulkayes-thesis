@@ -4,9 +4,9 @@
 
 Vulkan API is an interface specified in the C programming language. C language is the de-facto standard in cross-language APIs. This means the system of bindings is available in almost any practical language, including Rust. Vulkayes relies on the ash[@ash] crate to provide these binding and some syntactic sugar on top. This library uses the Vulkan API Registry, canonical machine-readable definition of the API, to generate bindings from Rust to C automatically.
 
-## Cargo features
+## Cargo features {#sec:impl_cargo}
 
-An important part of any flexible project is to give the user as much control as possible, so the library will fit their usecase. One way to achieve this in Rust are cargo features already mentioned in [@sec:design-cargo].
+An important part of any flexible project is to give the user as much control as possible, so the library will fit their usecase. One way to achieve this in Rust are cargo features already mentioned in [@sec:design_cargo].
 
 The most important features defined and exposed in Vulkayes are described below.
 
@@ -14,7 +14,7 @@ The most important features defined and exposed in Vulkayes are described below.
 
 This feature conditionally compiles a very naive device memory allocator into the project. Device memory allocation is a complex topic and applications are required to provide their own allocators to fit their own needs. One popular allocator is the Vulkan Memory Allocator[@VMA], but it is a big dependency that might not be easily accessible for certain usecases. Vulkayes supports integration with VMA (and other allocators) seamlessly, but also provides the naive allocator as a simple no-dependecy alterative for quick prototyping and debugging.
 
-#### **multi_thread**
+#### **multi_thread** {#sec:multi_thread_feature}
 
 One of the biggest selling points of Vulkan are its multi-threading capabilities. Since the user is in charge of synchronizing the resources, they can design their application to fit their needs. Single-threaded applications require no synchronization, while multi-threaded applications should allow for the full power of multi-threading to be leveraged.
 
@@ -30,13 +30,21 @@ Vulkayes aims to increase safety of Vulkan calls as much as possible without any
 
 This proved to not be always possible, so a small portion ([@tbl:validation-stats]) of implicit validations requires some runtime checking to ensure their fulfillment. These validation, producing runtime overhead, are conditionaly compiled using this feature to ensure that the user can always opt-out to achieve greater performance.
 
-## Details
+## Abstraction
 
-### Vrc, Vutex etc.
+### Reference counting
 
-Talk about Vrc and Vutex aliases
+Reference counting is used 
 
-![](implementation/generics.md)
+### Type aliases {#sec:v_aliases}
+
+Vulkayes makes use of project-wide type aliases to make transitioning some of the cargo features seamless.
+
+#### `Vrc`
+
+One of the most important type aliases which resolves to either `type Vrc<T> = Arc<T>` or `type Vrc<T> = Rc<T>` depending on whether the multi-threaded feature is enabled or not. This type alias is used practically everywhere, since most types (as seen in [@fig:object_dependnency_graph]) are wrapped in reference counter pointer types.
+
+![](generics.md)
 
 ### Deref
 
@@ -46,4 +54,18 @@ Talk about Deref trait usage
 
 Talk about usage of `dyn`
 
-![](implementation/swapchain_recreate.md)
+![](swapchain_recreate.md)
+
+## Windowing
+
+Vulkan handles windowing by providing abstraction over native windows on different platforms using extensions. Each supported platform has a specific extension that can be used to construct a Vulkan handle to a surface, which an object abstracting over the native surface. Some platforms, notably macOS and iOS, have additional requirements on the creation process of the window.
+
+Vulkayes provides abstraction over this in a separate crate called `vulkayes-window`. This crate contains three tiers of code. First tier is raw Vulkan creation method for each platform. This code is platform specific and highly unsafe. Second tier are implementation specific creation methods, which abstract over platform differences using the windowing library implementation, but still require unsafe code for the ash objects.
+
+The third and most important tier are the implementation specific Vulkayes creation methods. These methods are _safe_ and provide full abstraction over the platform and ash, returning Vulkayes wrapper types ready to be used safely. These methods are the main point of the `vulkayes-window` crate, but the other tiers are provided for flexibility and transparency reasons.
+
+Currently supported implementations are:
+
+* `winit` - The most popular fully-featured windowing library in Rust ecosystem. Provides almost full abstraction over platform windows.
+* `minifb` - One of the simplest and easiest to use windowing libraries. Provides the minimal needed abstraction to quicky and easily create a draw on windows.
+* `raw_window_handle` - A library providing common types intended for all Rust windowing libraries. Both `winit` and `minifb` use this library and `vulkayes-window` theoretically supports all libraries that can be glued through this library.

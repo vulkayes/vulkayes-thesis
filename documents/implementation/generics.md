@@ -1,6 +1,6 @@
 ## Generics
 
-Generics are a very powerful tool in programming. They help avoid a common problem in libraries: "What if my object doesn't cover all usecases". Generics provide a way for the library user to specify their own object with their own implementation and it only has to comform to some predefined bounds. In Rust, this is done by specifying trait bounds:
+Generics are a very powerful tool in programming. They help avoid a common problem in libraries: "What if my object doesn't cover all usecases". Generics provide a way for the library user to specify their own object with their own implementation and it only has to conform to some predefined bounds. In Rust, this is done by specifying trait bounds:
 
 ```rust
 trait BoundTrait {
@@ -81,7 +81,7 @@ The downside of this is the access speed. Accessing methods on the object has to
 
 Generics are used in key places across Vulkayes. One example are device memory allocators, another would be image views. They are described in detail below.
 
-#### Device memory allocator generics
+#### Device memory allocator generics {#sec:device_memory_allocator_generics}
 
 Device memory allocators have one of the biggest impact on performance of Vulkan. There is no default memory allocator in Vulkan. Instead, memory has to be allocated manually from the device. That operation, however, can be slow. That is why it is recommended by the Vulkan specification to allocate memory in bigger chunks (about 128 to 256 MB) at once and then distribute and reuse the memory as best as possible in the user code.
 
@@ -118,7 +118,7 @@ Storing this memory thus has the same implications as mentioned above. We could 
 
 Since this is very limiting, the memory inside an image can be stored using dynamic generics. So the `??` in the above code snippet would be replaced with `Box<dyn DeviceMemoryAllocation>`.
 
-This would be ideal for images, where the memory does not need to be accessed until it is to be deallocated (barring linearly tiled images). For buffers, however, this is a common use case. Buffers are often used as staging. Data is uploaded into a buffer from the host and then copied using device operations into an image backed by fast device-local memory. The upload of data is done my mapping the memory into host memory using Vulkan provided mechanism and then writing to it as if it was normal host memory.
+This would be ideal for images, where the memory does not need to be accessed until it is to be deallocated (barring linearly tiled images). For buffers, however, this is a common use case. Buffers are often used as staging or uniform. Data is uploaded into a buffer from the host and then copied using device operations into an image backed by fast device-local memory. The upload of data is done my mapping the memory into host memory using Vulkan provided mechanism and then writing to it as if it was normal host memory.
 
 #### Mappable memory generics
 
@@ -131,6 +131,8 @@ One of the ways to avoid this cost is to simply push it back. There are only 3 p
 * The cleanup function
 
 No other place of the memory handling needs custom user coding. This means it is enough to store 3 generic user-provided functions. In Rust, this can be done using the `Fn` family of traits. For example, instead of `Box<dyn DeviceMemoryAllocation>` for the cleanup function we will use `Box<dyn FnOnce(&Vrc<Device>, vk::DeviceMemory, vk::DeviceSize, NonZeroU64)>` inside a concrete `struct DeviceMemoryAllocation`. The cleanup function can be simply `FnOnce`, which can only ever be called once, while the map and unmap functions might need to be called multiple times and have to be `FnMut`.
+
+The performance of this solution is measured in more detail in [@sec:device_memory_allocator_generics].
 
 #### Image view generics
 
@@ -164,8 +166,10 @@ Bar       | 499.03 ps    | 252.18 ps
 Qux       | 313.34 ps    | 250.41 ps
 dyn Qux   | 1.5104 ns    | 1.5028 ns
 
+Table: Benchmark of so-called mixed dispatch enums, where enum variants house common types and the last variant houses a boxed dynamically dispatched one to cover other usecases.
+
 As can be seen from the table, accessing a value through a dynamic dispatch is at least twice as slow as accessing it through static dispatch, and this is with optimizations prevented by using the concept of a black box from the Rust stdlib.
 
 Non-black boxed benchmarks show that the optimizations provided by the compiler for statically dispatched values can further reduce the overhead of static dispatch, while the dynamic dispatch stays mostly the same.
 
-// TODO: Reference to the benchmark code
+This plays nicely as an alternative to normal generic to avoid generic parameter plague and was chosen as an acceptable way to treat image type dispatch in Vulkayes.

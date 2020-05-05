@@ -4,4 +4,4 @@ Most parameters in Vulkan require external synchronization. Synchronization is p
 
 ## Externally Synchronized Parameters
 
-![](progress/synchronization/external_synchronization.md)
+![](external_synchronization.md)

@@ -8,11 +8,11 @@ skinparam {
 	ComponentBorderThickness 1
 }
 
-note left of [Window]
-	<color 66FF98>Green</color> = done
-	<color 66CDFF>Blue</color> = in-progress
-	<color FF6680>Red</color> = planned
-end note
+' note left of [Window]
+' 	<color 66FF98>Green</color> = done
+' 	<color 66CDFF>Blue</color> = in-progress
+' 	<color FF6680>Red</color> = planned
+' end note
 
 component [Instance] <<Vrc>> #66FF98
 component [Window] #66FF98

@@ -4,7 +4,7 @@ The API was designed to fullfil three goals:
 
 1. Be transparent - The API must allow falling back to pure Vulkan if a certain feature is not supported or implemented in the API.
 2. Be fast - The API must carefully manage abstraction costs and minimize overhead.
-3. Be flexible - The API must be easy to use in different contexts. It must not force the user unreasonably to change their code to fit the API.
+3. Be flexible - The API must be easy to use in different contexts. It must not force the user to unreasonably change their code to fit the API.
 
 ## Rust
 
@@ -18,21 +18,23 @@ The Rust programming language became a natural choice for this project because g
 
 #### Ownership 
 
-Rust implements a very simple but powerful ownership model. Values are always moveable. You cannot prevent the compiler from moving your value. However, the language is smart about this. Moving a value does not just create a bitwise copy, it also moves the ownership. Ownership has serious consequences: the owner has to clean up. Values that have non-trivial destructors should run those destructors at some point.
+Rust implements a very simple but powerful ownership model. You cannot prevent the compiler from moving your value. However, the language is smart about this. Moving a value does not just create a bitwise copy, it also moves the ownership which has serious consequences: the owner has to clean up. Values that have non-trivial destructors should run those destructors at some point. Indeed, the memory move semantics in Rust are a only an implementation detail of its higher-level abstraction of movement of ownership.
 
-In C++ the only difference between a copy and a move is that the new value has a chance to take apart the old value. For example, for heap allocated types, this means the new value will take the heap memory (pointer) from the old value. The destructor, however, is still run for both the values, as it if was simply copied.
+In C++ the only difference between a copy and a move is that the new value has a chance to take apart the old value. For example, for heap allocated types, this means the new value will take the heap memory (pointer) from the old value. The destructor, however, is still run for both the values, as it if was simply copied. Ownership in C++ is only conceptual, the language itself does not understand it nor enforce it. This moves the burden of reasoning on the the user.
 
-In contrast, Rust statically prevents use of moved-out variables. Once you move a value out of a variable, that variable now acts as if it was uninitialized, it cannot be used anymore and its destructor is not called. The destructor is only called for the "new" value once it goes out of scope. Moreover, this move is often optimizable by the compiler and thus is almost or entirely free.
+In contrast, Rust statically prevents use of moved-out variables. Once you move a value out of a variable (moving the ownership somewhere else), that variable now acts as if it was uninitialized, it cannot be used anymore and its destructor is not called. The destructor is only called for the "new" value once it goes out of scope, it's the responsibility of the new owner to clean up. Moreover, this move is often optimizable by the compiler and thus is almost or entirely free.
 
 #### Borrow checker
 
-The Rust borrow checker tracks borrowed values. A value is borrowed when a reference to it is created. A reference can either be immutable or mutable. There can only ever be one mutable reference and it also cannot coexist with any immutable references. This completely prevents all read-write race conditions _statically_.
+The Rust borrow checker tracks borrowed values. A value is borrowed when a reference to it is created. A reference can either be immutable or mutable. There can only ever be one mutable reference and it cannot coexist with any immutable references. This completely prevents all read-write race conditions _statically_.
 
-Borrow checking also prevents problems such as use-after-free or iterator invalidation. These problems can be considered single-thread rade conditions. A reference is created, then the original referred value is destroyed and then the reference is used (to read or write). Such a reference is called dangling. Rust statically prevents the existence of dangling references. When a value is borrowed, it must outlive any references taked from it. This is done using lifetimes.
+Borrow checking also prevents problems such as use-after-free or iterator invalidation. These problems can be considered single-thread race conditions. A reference is created, then the original referred value is destroyed or moved and then the reference is used (to read or write). Such a reference is called dangling. Rust statically prevents the existence of dangling references. When a value is borrowed, it must outlive any references taken from it. That is, an owner can lend the value to someone, but it must then keep the value in its place for as long as the borrow is valid, it cannot be moved to a new location nor dropped. This is done using lifetimes.
 
 #### Lifetimes
 
-Lifetimes are how Rust tracks borrows. Each borrow (a reference) has a lifetime associated with it. The borrow cannot be used for longer than that. For example, if a value is created in a certain scope then a reference to it cannot escape that scope since it could lead to use after free. Additionally, programmers can use these lifetimes too, as generic arguments, to express concepts like borrowing subfields or narrowing array views.
+Lifetimes are how Rust tracks borrows. Each borrow (a reference) has a lifetime associated with it. The borrow cannot be used for longer than that. For example, if a value is created in a certain scope then a reference to it cannot escape that scope since it could lead to use-after-free. Additionally, programmers can use these lifetimes too, as generic arguments, to express concepts like borrowing subfields or narrowing array views.
+
+There is one lifetime that is always available, the `'static` lifetime. This lifetime is special in that it expresses the concept of "always valid". References with this lifetime can be used anywhere in the program, at any time, because they are known to always outlive the program itself. For example, taking a reference to static data (data compiled into the binary executable) creates a static reference that can be then freely used inside the application.
 
 ### Safety and speed
 
@@ -42,34 +44,34 @@ The implementation of the Rust standard library has empirically proven that the 
 
 All of this is done at compile time and thus has no runtime cost. All code is as fast as the same C++ code would be, but safe.
 
-### Cargo {#sec:design-cargo}
+### Cargo {#sec:design_cargo}
 
-Cargo[@Cargo] is Rusts package manager. It takes care of indexing and retrieving dependencies, compiling them and publishing your own libraries and binaries to the registry. Cargo also takes care of project configuration. In C/C++ codebases it is common to either invoke the compiler directly, or to use build tools such as make or CMake. Cargo is similar to those build tools, but it's a component of Rust ecosystem and is targeted at Rust only.
+Cargo[@Cargo] is Rusts package manager. It takes care of indexing and retrieving dependencies, compiling them and publishing libraries and binaries to the registry. Cargo also takes care of project configuration. In C/C++ codebases it is common to either invoke the compiler directly, or to use build tools such as make or CMake. Cargo is similar to those build tools, but it's a component of Rust ecosystem and is targeted at Rust only.
 
 Being a part of Rust itself, cargo is able to provide lots of useful abstraction over the rust compiler. The configuration file `Cargo.toml` is filled with useful project information such as the project name, author and short description. The file also contains technical information, such as the targeted language edition, compiler and optimization flags, all of the dependencies (and how/where to look for them) and project features. Platform-specific configuration is also possible.
 
-Features defined in `Cargo.toml` are project-unique strings. These strings can then be used from within the codebase to conditionally compile part of the code, similar to C preprocessor `#ifdef` statements. Contrary to the C preprocessor, however, these strings are defined in one central place and can even define dependency chains, so that certain features might require other features or additional dependencies. This is often used when developing on top of platform-dependent code to provide uniform interface to the user.
+Features defined in `Cargo.toml` are project-unique strings. These strings can then be used from within the codebase to conditionally compile part of the code, similar to C preprocessor `#ifdef` statements. Contrary to the C preprocessor, however, these strings are defined in one central place and can even define dependency chains, so that certain features might require other features or additional dependencies. This is often used when developing on top of platform-dependent code to provide uniform interface to the user. It is also used in Vulkayes, as mentioned in [@sec:impl_cargo].
 
 ## Object lifetime management
 
-![Object Dependency Graph](assets/diagrams/object_dependency_graph.svg)
+![Object Dependency Graph of Vulkayes](assets/diagrams/object_dependency_graph.svg){#fig:object_dependnency_graph}
 
-Objects in Vulkan have certain lifetime dependencies - some objects must outlive others - displayed in the diagram[TODO Figure number thing]. Some dependencies are simpler and always apply, others are more complex and conditional. Most of these dependencies in Vulkayes are handled using reference counting. Reference counting is a programming concept where data is shared among multiple actors using some kind of reference (pointer). The pointed-to memory, apart from storing the data object itself, also stores a count of existing references to that memory. This provides an easy way to clean up resources when they are no longer used, all automatically at runtime, with overhead only during the creation and destruction of the resource itself, not during usage. The Rust safety system also prevents the pointed-to memory to be freed or otherwise deinitialized, ensuring safety.
+Objects in Vulkan have certain lifetime dependencies - some objects must outlive others - displayed in [@fig:object_dependnency_graph]. Some dependencies are simpler and always apply, others are more complex and conditional. Most of these dependencies in Vulkayes are handled using reference counting. Reference counting is a programming concept where data is shared among multiple actors using some kind of reference (pointer). The pointed-to memory, apart from storing the data object itself, also stores a count of existing references to that memory. This provides an easy way to clean up resources when they are no longer used, all automatically at runtime, with overhead only during the creation and destruction of the resource itself, not during usage. The Rust safety system also prevents the pointed-to memory to be freed or otherwise deinitialized, ensuring safety.
+
+Rust also differentiates between normal reference counted value and atomically counted reference counted value. The former is called `Rc` while the latter is called `Arc`. This is used in Vulkayes, as described in more detail in the [@sec:v_aliases].
 
 ## Memory management
 
-Talk about how device memory management is done through user-supplied memory allocator
+There are two types of memory in Vulkan. Host memory - the memory accesible only to the CPU, and device memory - the memory accesible to the device. Device memory might be host-mappable, meaning it can be accessed by the CPU if it is explicitely mapped, similar to the C `mmap` function.
 
-## Synchronization
+Host memory in Vulkan is managed by the implementation, but Vulkan exposes a way to intercept this process by allowing the application to provide its own allocation callbacks. These callbacks are called whenever the Vulkan implementation wishes to allocate, reallocate or free memory and can be used to handle allocation in a custom manner. Vulkan specification recommends using these callbacks only for debugging purposes or in specific cases, not in general, as they would not impact the performance in any meaningful way.
 
-Talk about how some objects are internally synchronized
+Device memory, however, is a bigger topic in Vulkan. Applications are expected to allocate and manage memory themselves. Vulkan only recommends that allocation should happen in 128 to 256MB chunks at a time to reduce the overhead. This means Vulkayes needs to provide its own way to integrate user-defined device memory allocation, as described in more detail in the [@sec:device_memory_allocator_generics].
 
-Talk about how GPU synchronization is left for future work
+## Synchronization and validations
 
-## Validations
+Vulkan leaves almost all CPU synchronization to the user. Explicit synchronization requirements are described in the specification and Vulkan functions are not reentrant. The user application has to take care of all the synchronization requirements as to not cause a data race. Vulkayes solves this in two ways. When used normally, no synchronization is done and everything is as performant as it can be. Secondly, it provides a multi-thread feature ([@sec:multi_thread_feature]) where mutexes are used and proper synchronization is ensured.
 
-Talk about how only implicit validation are guaranteed, but some explicit validations are implicitly handled by api design and type system
+Validations in Vulkan are generalization of synchronization requirements. Validations specify not only how to prevent data races, but also how to prevent other undefined behaviors. Vulkan validation requirements tend to be very long, dense and hard to parse, leading to an increased chance of not breaking them. Vulkayes aims to alleviate this somewhat by guaranteeing at least the most common and statically solvable validations are guaranteed to be fulfilled.
 
-## Windows
-
-Talk about how windows are handle, what is a surface and a swapchain and how they are supported
+Last topic of synchronization is GPU synchronization. This encompasses synchronization of resource usage in command buffers executed on the GPU queues as well as the synchronization between CPU and GPU. This kind of synchronization is very important, but it is a complex topic on its own and is left to be added to Vulkayes as a separate project.

@@ -16,27 +16,27 @@ $if(CJKmainfont)$
 $endif$
 %
 \documentclass[
-$if(fontsize)$
-  $fontsize$,
-$endif$
-$if(lang)$
-  $babel-lang$,
-$endif$
-$if(papersize)$
-  $papersize$paper,
-$endif$
-$if(beamer)$
-  ignorenonframetext,
-$if(handout)$
-  handout,
-$endif$
-$if(aspectratio)$
-  aspectratio=$aspectratio$,
-$endif$
-$endif$
-$for(classoption)$
-  $classoption$$sep$,
-$endfor$
+  $if(fontsize)$
+    $fontsize$,
+  $endif$
+  $if(lang)$
+    $babel-lang$,
+  $endif$
+  $if(papersize)$
+    $papersize$paper,
+  $endif$
+  $if(beamer)$
+    ignorenonframetext,
+  $if(handout)$
+    handout,
+  $endif$
+  $if(aspectratio)$
+    aspectratio=$aspectratio$,
+  $endif$
+  $endif$
+  $for(classoption)$
+    $classoption$$sep$,
+  $endfor$
 ]{$documentclass$}
 $if(beamer)$
 $if(background-image)$
@@ -423,41 +423,43 @@ $endif$
 \mainmatter
 $body$
 
-\backmatter
-$if(natbib)$
-$if(bibliography)$
-$if(biblio-title)$
-$if(has-chapters)$
-\renewcommand\bibname{$biblio-title$}
-$else$
-\renewcommand\refname{$biblio-title$}
-$endif$
-$endif$
-$if(beamer)$
-\begin{frame}[allowframebreaks]{$biblio-title$}
-  \bibliographytrue
-$endif$
-  \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
-$if(beamer)$
-\end{frame}
-$endif$
+% \backmatter
+% $if(natbib)$
+%   $if(bibliography)$
+%     $if(biblio-title)$
+%       $if(has-chapters)$
+%         \renewcommand\bibname{$biblio-title$}
+%       $else$
+%         \renewcommand\refname{$biblio-title$}
+%       $endif$
+%     $endif$
+  
+%     $if(beamer)$
+%       \begin{frame}[allowframebreaks]{$biblio-title$}
+%       \bibliographytrue
+%     $endif$
+  
+%     \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+    
+%     $if(beamer)$
+%       \end{frame}
+%     $endif$
+%   $endif$
+% $endif$
 
-$endif$
-$endif$
-$if(biblatex)$
-$if(beamer)$
-\begin{frame}[allowframebreaks]{$biblio-title$}
-  \bibliographytrue
-  \printbibliography[heading=none]
-\end{frame}
-$else$
-\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-$endif$
-
-$endif$
+% $if(biblatex)$
+%   $if(beamer)$
+%     \begin{frame}[allowframebreaks]{$biblio-title$}
+%     \bibliographytrue
+%     \printbibliography[heading=none]
+%     \end{frame}
+%   $else$
+%     \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+%   $endif$
+% $endif$
 
 $for(include-after)$
-$include-after$
+  $include-after$
 $endfor$
 
 \end{document}

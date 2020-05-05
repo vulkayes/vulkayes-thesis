@@ -992,7 +992,7 @@ Validations for `VkBufferCreateInfo`:
 \valdonebox
 
 6. `usage` must not be `0`
-	- \valdone Return error
+	- \valdone Returns error
 
 \valdoneboxend
 
@@ -1764,7 +1764,12 @@ Validations for `VkFramebufferCreateInfo`:
 
 \valcomboxend
 
+\valdonebox
+
 6. Both of `renderPass`, and the elements of `pAttachments` that are valid handles of non-ignored parameters must have been created, allocated, or retrieved from the same `VkDevice`
+	- \valdone Returns error
+
+\valdoneboxend
 
 \valboxend
 

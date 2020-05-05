@@ -1,7 +1,7 @@
 # Evaluation
 
-![](evaluation/user_code.md)
+![](user_code.md)
 
-![](evaluation/benchmark.md)
+![](benchmark.md)
 
-![](evaluation/safety.md)
+![](safety.md)

@@ -34,6 +34,13 @@
 		"URL": "https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator",
 		"accessed": "2020-04-30"
 	},
+	{
+		"id": "VulkanDota2",
+		"type": "Webpage",
+		"title": "Dota 2 Update - May 23rd 2016",
+		"URL": "https://store.steampowered.com/news/22000/",
+		"accessed": "2020-05-05"
+	},
 
 	{
 		"id": "ash",

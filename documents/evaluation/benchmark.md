@@ -36,6 +36,8 @@ In this stage the application waits on the presentation fence. This ensures that
 
 In this stage the update function is called on the window and all outstanding windowing events are handled. This stage represents the update of the windowing system events and a window redraw request and is not being benchmarked.
 
+### Results {#sec:benchmark_results}
+
 The benchmarks were run on three hardware and software configurations, note that only the relevant stages are present:
 
 Stage|ash|vy_ST|vy_MT
@@ -54,7 +56,7 @@ command|39.37 us|40.03 us (102%)|39.78 us (101%)
 submit|39.57 us|37.36 us (94%)|38.64 us (98%)
 present|25.34 us|26.07 us (103%)|26.45 us (104%)
 
-Table: _Average median time (n = 99000): Linux 5.4.35_1, Intel i5-7300HQ, TODO_
+Table: _Average median time (n = 99000): Linux 5.4.35_1, Intel i5-7300HQ, Vulkan v1.2.137_
 
 Stage|ash|vy_ST|vy_MT
 -----|---|-----|-----

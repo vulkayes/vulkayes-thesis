@@ -6,19 +6,19 @@ External validations resolved statically are enclosed in blue boxes below. Valid
 
 ## Implicit validations
 
-![](progress/validations/implicit_validations.md)
+![](implicit_validations.md)
 
 ## Creation validation
 
 Validations of correct usage in create functions as dictated by the Vulkan specification.
 
-![](progress/validations/creation_validations.md)
+![](creation_validations.md)
 
 ## Usage validations
 
 Validations of correct unsage in other functions as dictated by the Vulkan specification.
 
-![](progress/validations/usage_validations.md)
+![](usage_validations.md)
 
 ## Statistics
 

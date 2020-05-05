@@ -8,14 +8,15 @@ bibliography:
 	- assets/bibliography.json
 csl: assets/ieee-with-url.csl
 link-citations: true
-reference-section-title: Bibliography
+# reference-section-title: Bibliography
 
 documentclass: book
+papersize: a4
+geometry: margin=2cm
 fontsize: 12pt
 mainfont: Charter
 mathfont: Fira Code
-papersize: a4
-geometry: margin=2cm
+
 urlcolor: blue
 secnumdepth: 2
 ---
@@ -30,11 +31,13 @@ This project aims to design a flexible, usable and performant wrapper on top of 
 
 Vulkan API, originally released in 2016[@VulkanAPIRelease], is a specification of a an open API for high-efficiency, cross-platform access to graphics and compute on modern GPUs.
 
-It is designed to minimize the overhead between the user application and the hardware device. Vulkan achieves this by staying low level a explicitly requiring all releavant state to be reference by the user application, minimizing required lookups and orchestration on the driver side. This allows the user application to optimize for their specific usecase instead of relying on the driver to guess the correct strategy.
+It is designed to minimize the overhead between the user application and the hardware device. Vulkan achieves this by staying low level and explicitly requiring all releavant state to be reference by the user application, minimizing required lookups and orchestration on the driver side. This allows the user application to optimize for their specific usecase instead of relying on the driver to guess the correct strategy. However, it requires much more complexity from the user application and is much harder to master than OpenGL.
 
-One of the reasons for Vulkans popularity is that it was designed in an intense collaboration between leading hardware, game engine and platform vendors[@VulkanAPIRelease]. This resulted in a lot of vendors having zero-day support for the specification in their drivers and software and it being immediatelly adopted as a native rendering platform on many platforms.
+One of the reasons for Vulkans popularity is that it was designed in an intense collaboration between leading hardware, game engine and platform vendors[@VulkanAPIRelease]. This resulted in a lot of vendors having zero-day support for the specification in their drivers and software and it being immediatelly adopted as a native rendering solution on many platforms.
 
 The openness of Vulkan also goes hand-in-hand its cross-platform capabilities. Vulkan is available on all three major desktop platforms (Linux, macOS, Windows) and both major smartphone platforms (Android, iOS), but also on many smaller and embedded platforms. This allows applications to easily target multiple platforms with minimal variance in the rendering code. It also prevents vendor locks as seen with DirectX or Metal APIs. Lastly, it allows the community of both professionals and hobbyists to participate in the standard itself and improve it.
+
+One of the first mainstream games supporting Vulkan was Dota 2[@VulkanDota2] developed by Valve, the founding company behind LunarG. LunarG is a company that specializes in developing Vulkan SDK and increasing Vulkan support. Support has also quickly been added to game engines such as Unity, Unreal or Godot, allowing its power to be presented to bigger and bigger audiences.
 
 Khronos Group, the industry consortium responsible for Vulkan API, has been continuously improving the API and releasing updates. The API is currently on version 1.2[@VulkanAPIRelease12], which brough important updates that have been requested by the community. This proves that Vulkan aims to improve alongside the industry and provide support and improvements into the forseeable future.
 
@@ -48,6 +51,11 @@ Khronos Group, the industry consortium responsible for Vulkan API, has been cont
 
 # Conclusion
 
-The core Vulkayes library is successful at reducing the complexity of creating and using Vulkan types, as well as correctly destroying them at appropriate times and checking basic safety requirements. Benchmarks show that this added complexity is mostly compile-time and scales well into the runtime where applicable. Additionaly, safety is guaranteed at a certain level that should provide the user of the API with certain amount of confidence that their application will not sefault. Overall, the Vulkayes project is a good step towards a flexible and transparent Vulkan API in the Rust ecosystem.
+The core Vulkayes library is successful at reducing the complexity of creating and using Vulkan types, as well as correctly destroying them at appropriate times and checking basic safety requirements. Benchmarks show that this added complexity is mostly compile-time and scales well into the runtime where applicable. Additionaly, safety is guaranteed at a certain level that should provide the user of the API with certain amount of confidence that their application will not sefault. Overall, the Vulkayes project is a good step towards a flexible and transparent Vulkan API in the Rust ecosystem, learning from previous mistakes and designs.
 
-However, there still remains a lot of work to be done to create an API with a application design advantage as well. Designing synchronization in Vulkan by hand is error prone due to high complexity and Vulkayes should be extended with user-friendly API that is capable of lifting the burden off the user onto the implementation. This and other improvements to Vulkayes are left for future work.
+However, there still remains a lot of work to be done to create an API with a application design advantage as well. Designing synchronization in Vulkan by hand is error prone due to high complexity and Vulkayes should be extended with user-friendly API that is capable of lifting the burden off the user onto the implementation, prefferably mostly at compile time. Declarative synchronization definition API and other improvements to Vulkayes are left for future work.
+
+
+\backmatter
+
+# Bibliography
