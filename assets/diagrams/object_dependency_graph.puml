@@ -83,7 +83,7 @@ component [Fence] <<Vrc>> #66FF98
 
 [CommandPool] <-- [CommandBuffer]
 
-[RenderPass] <.. [FrameBuffer]
+[RenderPass] <-- [FrameBuffer]
 [DescriptorSetLayout] <-- [DescriptorSet]
 [DescriptorSetLayout] <-- [PipelineLayout]
 ' [PipelineLayout] <.. [ComputePipeline]

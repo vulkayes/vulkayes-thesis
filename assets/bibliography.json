@@ -41,6 +41,13 @@
 		"URL": "https://store.steampowered.com/news/22000/",
 		"accessed": "2020-05-05"
 	},
+	{
+		"id": "LunarG",
+		"type": "Webpage",
+		"title": "LunarG",
+		"URL": "https://www.lunarg.com/",
+		"accessed": "2020-05-06"
+	},
 
 	{
 		"id": "ash",

@@ -9,7 +9,7 @@ Requirement for our Swapchain object are:
 3. Allow user to recreate the swapchain, transferring the ownership of the surface to the new instance, retiring the old swapchain.
 4. Keep retired swapchain alive until all its acquired images are not longer in use.
 
-Satisfying all three conditions as they are is not trivial, mainly because the the first two conditions lead to the requirement of dropping the swapchain once the surface is moved out of it, however, the fourth condition requires us to keep it alive. This can also create problems where for some reason the retired swapchain outlives the active one. In such cases, the surface can happen to be dropped before the retired swapchain, which is incorrect.
+Satisfying all the conditions as they are is not trivial, mainly because the the first two conditions lead to the requirement of dropping the swapchain once the surface is moved out of it, however, the fourth condition requires us to keep it alive. This can also create problems where for some reason the retired swapchain outlives the active one. In such cases, the surface can happen to be dropped before the retired swapchain, which is incorrect.
 
 To satisfy all 4 conditions, we first have to rewrite them into terms that can be expressed in the language.
 
@@ -29,29 +29,29 @@ The resulting API thus looks like this:
 ```rust
 pub struct Swapchain {
 	surface: Vrc<Surface>,
-	// Other fields
+	// fields omitted
 }
 impl Swapchain {
 	pub fn new(
 		surface: Surface,
-		// Other parameters
+		// parameters omitted
 	) -> Vrc<Self> {
 		Vrc::new(
 			Swapchain {
 				surface: Vrc::new(surface),
-				// Other fields
+				// fields omitted
 			}
 		)
 	}
 
 	pub fn recreate(
 		self: &Vrc<Self>,
-		// Other parameters
+		// fields omitted
 	) -> Vrc<Self> {
 		Vrc::new(
 			Swapchain {
 				surface: self.surface.clone(),
-				// Other fields
+				// fields omitted
 			}
 		)
 	}

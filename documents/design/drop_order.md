@@ -181,7 +181,7 @@ fn main() {
 }
 ```
 
-*Note: Full implementation of both these programs is available in the appendix.*
+*Note: Full implementation of both these programs is available on the included CD.*
 
 In the Rust version, the compiler provides move semantics, protects us from ever using a value that was moved and the program behaves as expected. The `surface` is destroyed exacly when `destroy_without_window` is called.
 

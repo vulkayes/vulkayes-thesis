@@ -56,7 +56,7 @@ command|39.37 us|40.03 us (102%)|39.78 us (101%)
 submit|39.57 us|37.36 us (94%)|38.64 us (98%)
 present|25.34 us|26.07 us (103%)|26.45 us (104%)
 
-Table: _Average median time (n = 99000): Linux 5.4.35_1, Intel i5-7300HQ, Vulkan v1.2.137_
+Table: _Average median time (n = 99000): Linux 5.4.35_1, Intel i5-7300HQ,  Intel HD Graphics 630, Vulkan v1.2.137_
 
 Stage|ash|vy_ST|vy_MT
 -----|---|-----|-----
@@ -76,7 +76,7 @@ The present stage, similaliry, does not exhibit any noticeable slowdown. The rea
 Finally, the uniform stage exhibits the most interesting results. The accesses performed in Vulkayes are 1.5 to 2 times as slow as when performed by ash. This seems like a lot, but it is important to mention that the absolute difference between the median points is in range of 1 micro second and the overhead is of constant nature.
 
 ![
-	_Histogram of uniform stage of the benchmarks (n = 99000). It's clear that ash is faster than both single- and multi-threaded Vulkayes. However, the overhead is constant._
+	_Histogram of uniform stage of the benchmarks (n = 99000). It is clear that ash is faster than both single- and multi-threaded Vulkayes. However, the overhead is constant._
 ](assets/images/uniform_mac_hist.svg)
 
 Furthermore, [@tbl:macos_uniform_1000] demonstrates doing 1000 writes into the mapped memory instead of 1 each frame. In fact, Vulkayes is even sligtly faster in this case because it decides on the most efficient strategy for the write, which becomes efficient with larger number of writes.

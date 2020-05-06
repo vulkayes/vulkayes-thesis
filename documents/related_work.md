@@ -20,7 +20,7 @@ In contrast, Vulkayes aims to provide a _transparent_ abstraction over Vulkan AP
 
 Vulkano[@Vulkano] aims to provide complete validation and synchronization guarantees for the user. This proved to be too limiting and the original developer eventually left the project. Since then, not much work has been done.
 
-Vulkayes originally started as a fork of Vulkano, however, over time, it grew into a rewrite because of many questionale design choices taken in Vulkano. Vulkano makes havy use of dynamic dispatch, which impacts performance. Its API also promises thorough validation checks, however at the expense of API flexibility, which makes it less likely to be widely adopted. For example, it is still impossible to upload mipmaps to Vulkano's `ImmutableImage` (which is intended as one-time write image abstraction, e.g. for textures in games).
+Vulkayes originally started as a fork of Vulkano, however, over time, it grew into a rewrite because of many questionale design choices taken in Vulkano. Vulkano makes havy use of dynamic dispatch, which impacts performance. Its API also promises thorough validation checks, however at the expense of API flexibility, which makes it less likely to be widely adopted. For example, it is still impossible to upload mipmaps to Vulkanos `ImmutableImage` (which is intended as one-time write image abstraction, e.g. for textures in games).
 
 ## Tephra
 

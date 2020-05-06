@@ -1,89 +1,10 @@
 ## Generics
 
-Generics are a very powerful tool in programming. They help avoid a common problem in libraries: "What if my object doesn't cover all usecases". Generics provide a way for the library user to specify their own object with their own implementation and it only has to conform to some predefined bounds. In Rust, this is done by specifying trait bounds:
-
-```rust
-trait BoundTrait {
-	fn required_method(&self) -> u32;
-}
-
-fn generic_function<P: BoundTrait>(generic_parameter: P) -> u32 {
-	generic_parameter.required_method()
-}
-```
-
-In this code snippet, the `P` parameter of the `generic_function` is generic. The user can then do this:
-
-```rust
-struct Foo;
-impl BoundTrait for Foo {
-	fn required_method(&self) -> u32 {
-		0
-	}
-}
-
-struct Bar(u32);
-impl BoundTrait for Foo {
-	fn required_method(&self) -> u32 {
-		self.0
-	}
-}
-```
-
-Now both the `Foo` struct and the `Bar` implement the trait `BoundTrait` and can be used to call `generic_function`:
-
-```rust
-let foo = Foo;
-generic_function(foo);
-
-let bar = Bar(1);
-generic_function(bar);
-```
-
-This usage is zero-cost because the functions are monomophised at the compile time for each calling type.
-
-### Storing generic parameters
-
-Using generic parameters is one thing, but storing them is harder. Generic parameters can have different sizes that are not known at the definition time:
-
-```rust
-struct Holder<B: BoundTrait> {
-	item: B
-}
-
-let a = Holder { item: Foo };
-let b = Holder { item: Bar(1) };
-```
-
-In this snippet, it is unknown at the definition time how big the `Holder` struct will be in memory. Instead, it is decided at the use time. That is, the variable `a` possibly takes less space on the stack than the variable `b`. The size of a type is a function of its fields, if the field is generic, it can't be known up front.
-
-Generic parameters are a part of the type. Two `Holder`s with different generic parameters cannot be stored together in an uniform collection (like `Vec`). The only way to achieve that is by using dynamic dispatch.
-
-### Dynamic generics
-
-Dynamically dispatched generics can be used to mix and match different implementations of traits in the same place. It works by taking a pointer to the generic parameter and then "forgetting" the type of that parameter, only remembering the bounds. In rust, this is handled by trait objects in the form of `dyn BoundTrait`. This is an unsized (size isn't known at compile time) type and it cannot be stored directly on the stack or in uniform collections either. It needs to be behind some kind of pointer, whether it be a reference, `Box`, `Rc/Arc` or a raw pointer. This pointer will be a so-called "fat" pointer.
-
-For example, to store any kind of `BoundTrait` implementor in a `Vec`, it can be written like this:
-
-```rust
-let a = Foo;
-let b = Bar(1);
-
-let vec: Vec<Box<dyn BoundTrait>> = vec![
-	Box::new(a) as Box<dyn BoundTrait>,
-	Box::new(b) as Box<dyn BoundTrait>
-];
-```
-
-The downside of this is the access speed. Accessing methods on the object has to go through one more level of indirection than normally and also prevents certain powerful compiler optimizations. Thus is it undesirable to use dynamic dispatch when it is not necessary.
-
-### Generics in Vulkayes
-
 Generics are used in key places across Vulkayes. One example are device memory allocators, another would be image views. They are described in detail below.
 
-#### Device memory allocator generics {#sec:device_memory_allocator_generics}
+### Device memory allocator generics {#sec:device_memory_allocator_generics}
 
-Device memory allocators have one of the biggest impact on performance of Vulkan. There is no default memory allocator in Vulkan. Instead, memory has to be allocated manually from the device. That operation, however, can be slow. That is why it is recommended by the Vulkan specification to allocate memory in bigger chunks (about 128 to 256 MB) at once and then distribute and reuse the memory as best as possible in the user code.
+Device memory allocators have one of the biggest impact on performance of Vulkan. There is no default memory allocator in Vulkan. Instead, memory has to be allocated manually from the device. That operation, however, can be slow. That is why it is recommended by the Vulkan specification to allocate memory in bigger chunks at once and then distribute and reuse the memory as best as possible in the user code.
 
 For Vulkayes, this means it is required to support user-defined allocators. This is the perfect usecase for generics. An image, which needs some kind of memory backing to operate, has a simplified constructor like this:
 
@@ -118,9 +39,9 @@ Storing this memory thus has the same implications as mentioned above. We could 
 
 Since this is very limiting, the memory inside an image can be stored using dynamic generics. So the `??` in the above code snippet would be replaced with `Box<dyn DeviceMemoryAllocation>`.
 
-This would be ideal for images, where the memory does not need to be accessed until it is to be deallocated (barring linearly tiled images). For buffers, however, this is a common use case. Buffers are often used as staging or uniform. Data is uploaded into a buffer from the host and then copied using device operations into an image backed by fast device-local memory. The upload of data is done my mapping the memory into host memory using Vulkan provided mechanism and then writing to it as if it was normal host memory.
+This would be ideal for images, where the memory does not need to be accessed until it is to be deallocated (barring linearly tiled images). For buffers, however, this is a common use case. Buffers are often used as staging or uniform. Data is uploaded into a buffer from the host and then copied using device operations into an image backed by fast device-local memory. The upload of data is done by mapping the memory into host memory using Vulkan provided mechanism and then writing to it as if it was normal host memory.
 
-#### Mappable memory generics
+### Mappable memory generics
 
 Some use cases for mapped memory are performance-critical. For example, vertex animating data is done by continuously changing vertex buffer data according to the animation properties. This means the mapped memory has to be accessed every frame. This is where dynamic dispatch cost would be substantial, it is best to avoid it.
 
@@ -134,7 +55,7 @@ No other place of the memory handling needs custom user coding. This means it is
 
 The performance of this solution is measured in more detail in [@sec:device_memory_allocator_generics].
 
-#### Image view generics
+### Image view generics
 
 Image views are another object in Vulkano that has to deal with generics. Image view can wrap any type that can "act like" an image and create a view into some kind of subrange. This can be expressed using the `ImageTrait` like so:
 
@@ -172,4 +93,4 @@ As can be seen from the table, accessing a value through a dynamic dispatch is a
 
 Non-black boxed benchmarks show that the optimizations provided by the compiler for statically dispatched values can further reduce the overhead of static dispatch, while the dynamic dispatch stays mostly the same.
 
-This plays nicely as an alternative to normal generic to avoid generic parameter plague and was chosen as an acceptable way to treat image type dispatch in Vulkayes.
+This cones as an alternative to normal generic to avoid generic parameter plague and was chosen as an acceptable way to treat image type dispatch in Vulkayes.
