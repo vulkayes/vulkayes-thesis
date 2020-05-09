@@ -32,7 +32,7 @@ This project aims to design a flexible, usable and performant wrapper on top of 
 
 ## Vulkan API
 
-Vulkan API, originally released in 2016[@VulkanAPIRelease], is a specification of a an open API for high-efficiency, cross-platform access to graphics and compute on modern GPUs.
+Vulkan API, originally released in 2016[@VulkanAPIRelease], is a specification of an open API for high-efficiency, cross-platform access to graphics and compute on modern GPUs.
 
 It is designed to minimize the overhead between the user application and the hardware device. Vulkan achieves this by staying low level and explicitly requiring all relevant state to be referenced by the user application, minimizing required lookups and orchestration on the driver side. This allows the user application to optimize for their specific usecase instead of relying on the driver to guess the correct strategy. However, it requires much more complexity from the user application and is much harder to master than OpenGL.
 
