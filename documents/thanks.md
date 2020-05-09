@@ -2,7 +2,7 @@
 
 # Acknowledgements {.unnumbered .unlisted}
 
-Thanky.
+I would like to give thanks to doc. Ing. Jiří Bittner, Ph.D. for his guidance and valuable insights. I would also like to thank the open-source community around Rust for making their previous work on this subject openly licensed and available to learn from.
 
 \vfill
 
