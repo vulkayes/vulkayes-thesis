@@ -4,4 +4,6 @@
 
 ![](benchmark.md)
 
+\newpage
+
 ![](safety.md)

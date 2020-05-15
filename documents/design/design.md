@@ -131,7 +131,7 @@ let vec: Vec<Box<dyn BoundTrait>> = vec![
 
 The downside of this is both the allocation of heap memory and the access speed. Accessing methods on the object has to go through one more level of indirection than normally and also prevents certain powerful compiler optimizations. Thus is it undesirable to use dynamic dispatch when it is not necessary.
 
-## Object lifetime management
+## Object lifetime management {#sec:object_lifetime_management}
 
 ![Object Dependency Graph of Vulkayes](assets/diagrams/object_dependency_graph.svg){#fig:object_dependnency_graph}
 
@@ -149,7 +149,7 @@ Device memory, however, is a bigger topic in Vulkan. Applications are expected t
 
 ## Synchronization and validations
 
-Vulkan leaves almost all CPU synchronization to the user. Explicit synchronization requirements are described in the specification and Vulkan functions are not reentrant. The user application has to take care of all the synchronization requirements as to not cause a data race. Vulkayes solves this in two ways. When used normally, no synchronization is done and everything is as performant as it can be. Secondly, it provides a multi-thread feature ([@sec:multi_thread_feature]) where mutexes are used and proper synchronization is ensured.
+Vulkan leaves almost all CPU synchronization to the user. Explicit synchronization requirements are described in the specification and Vulkan objects are not reentrant. The user application has to take care of all the synchronization requirements as to not cause a data race. Vulkayes solves this in two ways. When used normally, no synchronization is done and everything is as performant as it can be. Secondly, it provides a multi-thread feature ([@sec:multi_thread_feature]) where mutexes are used and proper synchronization is ensured.
 
 Validations in Vulkan are generalization of synchronization requirements. Validations specify not only how to prevent data races, but also how to prevent other undefined behaviors. Vulkan validation requirements tend to be very long, dense and hard to parse, leading to an increased chance of breaking them. Vulkayes aims to alleviate this somewhat by guaranteeing at least the most common and statically solvable validations to be fulfilled.
 

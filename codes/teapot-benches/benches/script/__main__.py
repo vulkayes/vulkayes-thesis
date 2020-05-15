@@ -203,6 +203,25 @@ def read_input(path):
 	return np.array(data_points, dtype = np.int64)
 
 ## PLOTTING ##
+def annotate_average_bars(ax, bars):
+	y_limits = ax.get_ylim()
+	y_height = abs(y_limits[0] - y_limits[1])
+	annotation_height = y_height * 0.02
+
+	for bar in bars:
+		height = bar.get_height()
+
+		ax.annotate(
+			format_time(height),
+			xy = (
+				bar.get_x() + bar.get_width() / 2,
+				annotation_height
+			),
+			xytext = (0, 0), textcoords = "offset points",
+			ha = "center", va = "bottom",
+			rotation = 90
+		)
+
 def plot_averages(inputs, title):
 	print(f"Plotting averages: {title}.. ", file = sys.stderr, end = "", flush = True)
 
@@ -224,16 +243,7 @@ def plot_averages(inputs, title):
 			color = inp.color
 		)
 
-		for rect in bars:
-			height = rect.get_height()
-			ax.annotate(
-				format_time(height),
-				xy = (rect.get_x() + rect.get_width() / 2, height),
-				xytext = (0, 3), textcoords = "offset points",
-				ha = "center", va = "bottom",
-				rotation = 75
-			)
-
+		annotate_average_bars(ax, bars)
 		all_bars.append(bars)
 	
 	ax.set_title(title)
@@ -354,22 +364,22 @@ def main():
 		INPUTS,
 		"median time"
 	)
-	output_table_averages(
-		INPUTS[0], INPUTS[1:]
-	)
+	# output_table_averages(
+	# 	INPUTS[0], INPUTS[1:]
+	# )
 
-	for index in range(STAGE_COUNT):
-		plot_histograms(
-			INPUTS,
-			index,
-			f"{STAGE_LABELS[index]} samples"
-		)
+	# for index in range(STAGE_COUNT):
+	# 	plot_histograms(
+	# 		INPUTS,
+	# 		index,
+	# 		f"{STAGE_LABELS[index]} samples"
+	# 	)
 
-	if OUTPUT_FORMAT != "svg":
-		for inp in INPUTS:
-			plot_linear(
-				inp,
-				f"{inp.name} sample time"
-			)
+	# if OUTPUT_FORMAT != "svg":
+	# 	for inp in INPUTS:
+	# 		plot_linear(
+	# 			inp,
+	# 			f"{inp.name} sample time"
+	# 		)
 
 main()

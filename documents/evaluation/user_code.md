@@ -2,10 +2,8 @@
 
 One of the main concerns when designing a library is the user code. How the user code will look like, if it will be readable and comfortable to write.
 
-Below is an example of the code with same functionality from the original examples and from the current ones. The code after is three times shorter than the original code while exposing the same functionality and providing static validation guarantees.
-
 \codeColumnsBegin{2}
-```rust
+```{.rust .numberLines}
 let (vertex_buffer, vertex_buffer_memory) = {
 	let create_info = vk::BufferCreateInfo {
 		size: std::mem::size_of_val(
@@ -52,7 +50,7 @@ let (vertex_buffer, vertex_buffer_memory) = {
 };
 ```
 
-\columnbreak
+\codeColumnBreak
 ```rust
 let vertex_buffer = {
 	Buffer::new(
@@ -73,14 +71,16 @@ let vertex_buffer = {
 };
 ```
 
-\codeColumnsEnd
+\codeColumnsEnd{
+	An example of the code with same functionality from the original examples (left) and from the current ones (right). The code after is three times shorter than the original code while exposing the same functionality and providing static validation guarantees.
+}
 
 Overall, the code for benchmarking the spinning teapots written in pure `ash` has 1400 lines of Rust code. The code with Vulkayes with same semantics and even improved static validation guarantess has 942 lines. This is a difference of 458 lines of code. These numbers are clear indicators of the improvement in developer experience by using correctly designed wrappers.
 
 Another interesting code example is the uniform buffer usage:
 
 \codeColumnsBegin{2}
-```rust
+```{.rust .numberLines}
 unsafe {
 	*uniform_buffer_memory_ptr = frame_state;
 }
@@ -100,7 +100,7 @@ unsafe {
 }
 ```
 
-\columnbreak
+\codeColumnBreak
 ```rust
 uniform_buffer
 	.memory().unwrap()
@@ -112,6 +112,6 @@ uniform_buffer
 	.unwrap();
 ```
 
-\codeColumnsEnd
-
-The ash code is twice as long and in some cases possibly even unsafe. Vulkayes API guarantees proper locking and borrowing, provides simplified way to flush the memory and prevents unaligned writes which on some platforms might cause hard errors and abort the process. The checking for correctness, however, does have some runtime cost. One of the guarantees of safe Rust is memory safety and Vulkayes is targeting safe Rust. That is why the `mem.write_slice` method call above does more than just write to a pointer. There is logic to check the align of the pointer and make sure all writes are either properly aligned, or an unaligned instruction is used.
+\codeColumnsEnd{
+	The ash code (left) is twice as long and in some cases possibly even unsafe. Vulkayes API guarantees proper locking and borrowing, provides simplified way to flush the memory and prevents unaligned writes which on some platforms might cause hard errors and abort the process. The checking for correctness, however, does have some runtime cost. One of the guarantees of safe Rust is memory safety and Vulkayes is targeting safe Rust. That is why the write slice method call above does more than just write to a pointer. There is logic to check the align of the pointer and make sure all writes are either properly aligned, or an unaligned instruction is used.
+}
