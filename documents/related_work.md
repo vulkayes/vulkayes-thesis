@@ -44,7 +44,7 @@ However, many of the design considerations taken in Tephra revolve around safety
     Screenshot of one of the benchmarks for Tephra.[@Tephra]
 ](assets/images/tephra.png)
 
-### Summary
+## Summary
 
 Library |Status   |Language|Goals
 --------|---------|--------|----------------------------------------------
