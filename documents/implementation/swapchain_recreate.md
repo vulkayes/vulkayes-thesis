@@ -5,8 +5,8 @@ Swapchain is an object in Vulkan that facilitates image presentation onto surfac
 Requirement for our Swapchain object are:
 
 1. Only one swapchain can exist for one surface.
-2. Allow user to retrieve the surface when the swapchain is no longer in use.
-3. Allow user to recreate the swapchain, transferring the ownership of the surface to the new instance, retiring the old swapchain.
+2. Allow the user to retrieve the surface when the swapchain is no longer in use.
+3. Allow the user to recreate the swapchain, transferring the ownership of the surface to the new instance, retiring the old swapchain.
 4. Keep retired swapchain alive until all its acquired images are not longer in use.
 
 Satisfying all the conditions as they are is not trivial, mainly because the the first two conditions lead to the requirement of dropping the swapchain once the surface is moved out of it, however, the fourth condition requires us to keep it alive. This can also create problems where for some reason the retired swapchain outlives the active one. In such cases, the surface can happen to be dropped before the retired swapchain, which is incorrect.

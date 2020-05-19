@@ -1,16 +1,16 @@
 ## Vulkan API overview
 
-Vulkan API, originally released in 2016[@VulkanAPIRelease], is a specification of an open API for high-efficiency, cross-platform access to graphics and compute on modern GPUs.
+Vulkan API, originally released in 2016&nbsp;[@VulkanAPIRelease], is a specification of an open API for high-efficiency, cross-platform access to graphics and compute on modern GPUs.
 
 It is designed to minimize the overhead between the user application and the hardware device. Vulkan achieves this by staying low level and explicitly requiring all relevant state to be referenced by the user application, minimizing required lookups and orchestration on the driver side. This allows the user application to optimize for their specific usecase instead of relying on the driver to guess the correct strategy. However, it requires much more complexity from the user application and is much harder to master than OpenGL.
 
-One of the reasons for Vulkans popularity is that it was designed in an intense collaboration between leading hardware, game engine and platform vendors[@VulkanAPIRelease]. This resulted in a lot of vendors having zero-day support for the specification in their drivers and software and it being immediatelly adopted as a native rendering solution on many platforms.
+One of the reasons for Vulkans popularity is that it was designed in an intense collaboration between leading hardware, game engine and platform vendors&nbsp;[@VulkanAPIRelease]. This resulted in a lot of vendors having zero-day support for the specification in their drivers and software and it being immediatelly adopted as a native rendering solution on many platforms.
 
 The openness of Vulkan also goes hand-in-hand its cross-platform capabilities. Vulkan is available on all three major desktop platforms (Linux, macOS, Windows) and both major smartphone platforms (Android, iOS), but also on many smaller and embedded platforms. This allows applications to easily target multiple platforms with minimal variance in the rendering code. It also prevents vendor locks as seen with DirectX or Metal APIs. Lastly, it allows the community of both professionals and hobbyists to participate in the standard itself and improve it.
 
-One of the first mainstream games supporting Vulkan was Dota 2[@VulkanDota2] developed by Valve, the founding company behind LunarG. LunarG is a company that specializes in developing Vulkan SDK and increasing Vulkan support[@LunarG]. Support has also quickly been added to game engines such as Unity, Unreal or Godot, allowing its power to be presented to bigger and bigger audiences.
+One of the first mainstream games supporting Vulkan was Dota 2&nbsp;[@VulkanDota2] developed by Valve, the founding company behind LunarG. LunarG is a company that specializes in developing Vulkan SDK and increasing Vulkan support&nbsp;[@LunarG]. Support has also quickly been added to game engines such as Unity, Unreal or Godot, allowing its power to be presented to bigger and bigger audiences.
 
-Khronos Group, the industry consortium responsible for Vulkan API, has been continuously improving the API and releasing updates. The API is currently on version 1.2[@VulkanAPIRelease12], which brough important updates that have been requested by the community. This proves that Vulkan aims to improve alongside the industry and provide support and improvements into the forseeable future.
+Khronos Group, the industry consortium responsible for Vulkan API, has been continuously improving the API and releasing updates. The API is currently on version 1.2&nbsp;[@VulkanAPIRelease12], which brough important updates that have been requested by the community. This proves that Vulkan aims to improve alongside the industry and provide support and improvements into the forseeable future.
 
 ## Vulkan API architecture
 
@@ -39,10 +39,10 @@ There are parent-child relationships between certain objects and this structure 
 ### Application structure
 
 ![
-	Overwiew of Vulkan API objects and basic data flow.[@V-EZ]
-](assets/images/VulkanAPI.png)
+	Overwiew of Vulkan API objects and basic data flow&nbsp;[@V-EZ].
+](assets/images/VulkanAPI.png){#fig:vulkan_api_overview}
 
-The high level structure of Vulkan is that the user application creates an instance and chooses one or more physical devices. Queues on these devices can be split into graphics, compute, transfer and sparse categories. Some queues may support multiple properties. The application will create the queues as needed together with the device.
+The high level structure of Vulkan, as seen in [@fig:vulkan_api_overview], is that the user application creates an instance and chooses one or more physical devices. Queues on these devices can be split into graphics, compute, transfer and sparse categories. Some queues may support multiple properties. The application will create the queues as needed together with the device.
 
 After device creation, the application is expected to describe as much state as it can beforehand. The application needs to create the render pass and within it describe all attachments, subpasses and dependencies of those subpasses. This early definition allows the implementation to transform this description into internal performance-oriented representation that is specific to the device. Similar process happens with the descriptor set layouts and pipeline layouts, where the application describes the requested features and settings of the descriptor/pipeline and then can allocate these objects based on those descriptions.
 
@@ -64,16 +64,16 @@ To render a singular frame not much beyond the device `waitIdle` method is need.
 
 After preparing all the necessary resources, descriptions and actualization, the work to be done needs to be recorded into a command buffer. Command buffer is allocated from the command pool and then a few types of commands are recorded into it. Some commands may perform work of more than one type.
 
-First type is state setting type. These commands alter the current state of the command buffer at the time of the command execution. These commands are generally not reordered during execution because they create an implicit happens-before relationship with commands after it that use that same state. These commands will bind the actualizations to the current context, such as the current framebuffers, pipeline and descriptors.
+The first type is the state setting type. These commands alter the current state of the command buffer at the time of the command execution. These commands are generally not reordered during execution because they create an implicit happens-before relationship with commands after it that use that same state. These commands will bind the actualizations to the current context, such as the current framebuffers, pipeline and descriptors.
 
-Second type is action type. These commands peform actions on resources, perform reads and writes and produce observable results. In general, these commands are most likely to be reordered and executed in parallel to improve performance. These commands include clearing, copying, blitting, drawing and computing.
+The second type is the action type. These commands peform actions on resources, perform reads and writes and produce observable results. In general, these commands are most likely to be reordered and executed in parallel to improve performance. These commands include clearing, copying, blitting, drawing and computing.
 
-Last type is synchronization type. These commands explicitly define relationships and constrains of the reodering of other commands. For example, to avoid race conditions between writing to an image and subsequently reading from it a pipeline barrier must be inserted using a synchronization command.
+The last type is the synchronization type. These commands explicitly define relationships and constrains of the reodering of other commands. For example, to avoid race conditions between writing to an image and subsequently reading from it a pipeline barrier must be inserted using a synchronization command.
 
 Finally, after a command buffer is recorded, it may be submitted for execution on a selected device queue. This queue must support the command types used within the command buffer. All resources used by the command buffer must be kept alive for at least as long as the execution lasts and all images must have the correct layouts at the time of execution of the specific command inside the command buffer that layout is defined in. All this has to be done manually by the application.
 
 ### Complexity
 
-As can be seen from the previous section, complexity of Vulkan applications is much greater than of its predecessor OpenGL. All this complexity gives opportunity to the application to fully express exactly when it does and doesn't need and thus be as performant as possible. However, adhering to the strict rules imposed by the API can be challenging for programmers and can be improved upon by using modern programming technologies and concepts.
+As can be seen from the previous section, complexity of Vulkan applications is much greater than of its predecessor OpenGL. All this complexity gives an opportunity to the application to fully express exactly when it does and doesn't need and thus be as performant as possible. However, adhering to the strict rules imposed by the API can be challenging for programmers and can be improved upon by using modern programming technologies and concepts.
 
 Most notably, keeping track of object lifetimes can become tedious and error prone, which is why many higher-level abstractions over Vulkan tend to focus on it. Vulkayes uses reference counting and children always link to their parent so that the parent can never be destroyed before its children. Another common source of errors in applications is synchronization. Synchronization is a very complex topic even in non-Vulkan programming and can be hard to grasp and properly implement, much more so when the requirements are as dynamic as in Vulkan. This is why many wrapppers tend to offer some kind of synchronization solution.

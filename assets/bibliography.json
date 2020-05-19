@@ -132,5 +132,12 @@
 		"title": "Vulkayes",
 		"URL": "https://github.com/vulkayes",
 		"accessed": "2020-02-04"
+	},
+	{
+		"id": "FireTrail",
+		"type": "Webpage",
+		"title": "Fire Trail",
+		"URL": "https://cent.felk.cvut.cz/courses/PGR/archives/2018-2019/S-FEL/lavusedu/",
+		"accessed": "2020-05-19"
 	}
 ]

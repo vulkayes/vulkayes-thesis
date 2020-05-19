@@ -6,7 +6,7 @@ The benchmark results have three separate columns. `ash` is the control sample/b
 
 ![
 	The benchmark consists of 25 non-instanced teapots with each having 531 vertices and normals and 3072 indices. Teapots at even positions are controlled by taking the $sin(time)$ while odd positions are using $-sin(time)$. Color and spin of the teapot is computed using the harmonic function. Color and world matrix are uploaded using push constants while view and projection matrices are uploaded using uniform buffers. View and projection matrices don't change but are uploaded anyway to bench their speed. There is a very simple lighting model with hard-coded directional light in the fragment shader.
-](assets/images/teapot_bench_screenshot.png)
+](assets/images/teapot_bench_screenshot.png){width=80%}
 
 ### Stages
 
@@ -50,7 +50,7 @@ The benchmarks were run on three hardware and software configurations, note that
 
 ![
 	_Average median time (n = 99000): macOS 10.15.3 (19D76), Quad-Core Intel Core i5, Intel Iris Plus Graphics 655, Vulkan 1.2.135_
-](assets/images/mac_bars.svg)
+](assets/images/mac_bars.svg){width=70%}
 
 Table: _Average median time (n = 99000): macOS 10.15.3 (19D76), Quad-Core Intel Core i5, Intel Iris Plus Graphics 655, Vulkan 1.2.135_
 
@@ -63,7 +63,7 @@ present|32.76 us|33.36 us (102%)|34.14 us (104%)
 
 ![
 	_Average median time (n = 99000): Linux 5.4.35_1, Intel i5-7300HQ,  Intel HD Graphics 630, Vulkan v1.2.137_
-](assets/images/linux_intel_bars.svg)
+](assets/images/linux_intel_bars.svg){width=70%}
 
 Table: _Average median time (n = 99000): Linux 5.4.35_1, Intel i5-7300HQ,  Intel HD Graphics 630, Vulkan v1.2.137_
 
@@ -76,7 +76,7 @@ present|25.34 us|26.07 us (103%)|26.45 us (104%)
 
 ![
 	_Average median time (n = 99000): Linux 5.4.35_1, Intel i5-7300HQ, NVIDIA GeForce GTX 1050 Mobile, Vulkan v1.2.137_
-](assets/images/linux_nv_bars.svg)
+](assets/images/linux_nv_bars.svg){width=70%}
 
 Table: _Average median time (n = 99000): Linux 5.4.35_1, Intel i5-7300HQ, NVIDIA GeForce GTX 1050 Mobile, Vulkan v1.2.137_
 
@@ -93,11 +93,11 @@ The submit stage also closely follows the ash baseline. This stage potentially l
 
 The present stage, similaliry, does not exhibit any noticeable slowdown. The reasoning is the same as for the submit stage. Additionaly, the present stage may also include the vertical synchronization delay if enabled, and will thus shadow smaller overhead factors such as locking mutexes.
 
-Finally, the uniform stage exhibits the most interesting results. The accesses performed in Vulkayes are 1.5 to 2 times as slow as when performed by ash. This seems like a lot, but it is important to mention that the absolute difference between the median points is in range of 1 micro second and the overhead is of constant nature.
-
 ![
 	_Histogram of uniform stage of the benchmarks (n = 99000). It is clear that ash is faster than both single- and multi-threaded Vulkayes. However, the overhead is constant._
-](assets/images/uniform_mac_hist.svg)
+](assets/images/uniform_mac_hist.svg){width=70%}
+
+Finally, the uniform stage exhibits the most interesting results. The accesses performed in Vulkayes are 1.5 to 2 times as slow as when performed by ash. This seems like a lot, but it is important to mention that the absolute difference between the median points is in range of 1 micro second and the overhead is of constant nature.
 
 Furthermore, [@tbl:macos_uniform_1000] demonstrates doing 1000 writes into the mapped memory instead of 1 each frame. In fact, Vulkayes is even sligtly faster in this case because it decides on the most efficient strategy for the write, which becomes efficient with larger number of writes.
 
@@ -109,4 +109,4 @@ Table: _Average median time (n = 99000): macOS 10.15.3 (19D76), Quad-Core Intel 
 
 ![
 	_Histogram of uniform stage of the benchmarks (n = 99000) with 1000 writes instead of 1. The overhead displayed in previous bench is overshadowed by the gains of proper writing strategy._
-](assets/images/uniform1000_mac_hist.svg)
+](assets/images/uniform1000_mac_hist.svg){width=70%}

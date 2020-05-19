@@ -1,6 +1,6 @@
 ## User code {#sec:user-code}
 
-One of the main concerns when designing a library is the user code. How the user code will look like, if it will be readable and comfortable to write.
+One of the main concerns when designing a library is the user code. How the user code will look like, if it will be readable and comfortable to write. Vulkayes user code was compared with code extracted from `ash` usage examples&nbsp;[@ash], which serve as a baseline for Rust Vulkan bindings, in code samples \ref{code_vertex_buffer_upload_example} and \ref{code_memory_map_example}.
 
 \codeColumnsBegin{2}
 ```{.rust .numberLines}
@@ -72,8 +72,8 @@ let vertex_buffer = {
 ```
 
 \codeColumnsEnd{
-	An example of the code with same functionality from the original examples (left) and from the current ones (right). The code after is three times shorter than the original code while exposing the same functionality and providing static validation guarantees.
-}
+	An example of the code with same functionality from the original examples in ash (left) and from the current ones (right). The code after is three times shorter than the original code while exposing the same functionality and providing static validation guarantees.
+}{code_vertex_buffer_upload_example}
 
 Overall, the code for benchmarking the spinning teapots written in pure `ash` has 1400 lines of Rust code. The code with Vulkayes with same semantics and even improved static validation guarantess has 942 lines. This is a difference of 458 lines of code. These numbers are clear indicators of the improvement in developer experience by using correctly designed wrappers.
 
@@ -114,4 +114,4 @@ uniform_buffer
 
 \codeColumnsEnd{
 	The ash code (left) is twice as long and in some cases possibly even unsafe. Vulkayes API guarantees proper locking and borrowing, provides simplified way to flush the memory and prevents unaligned writes which on some platforms might cause hard errors and abort the process. The checking for correctness, however, does have some runtime cost. One of the guarantees of safe Rust is memory safety and Vulkayes is targeting safe Rust. That is why the write slice method call above does more than just write to a pointer. There is logic to check the align of the pointer and make sure all writes are either properly aligned, or an unaligned instruction is used.
-}
+}{code_memory_map_example}

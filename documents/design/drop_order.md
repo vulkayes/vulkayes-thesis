@@ -1,6 +1,6 @@
 ### Drop
 
-The term `drop` refers to what is often called `destructor` in OOP languages. It is a piece of code that runs at most once exactly before the object is destroyed. In Rust, a user-provided `drop` code can be provided by implementing the `Drop`[@RustDrop] trait for your type:
+The term `drop` refers to what is often called `destructor` in OOP languages. It is a piece of code that runs at most once exactly before the object is destroyed. In Rust, a user-provided `drop` code can be provided by implementing the `Drop`&nbsp;[@RustDrop] trait for your type:
 
 ```rust
 pub trait Drop {
@@ -84,11 +84,11 @@ This code compiles and works. However, the `unsafe` block in the `drop` implemne
 
 Drop order of fields in structs in Rust is defined to be in the order of declaration, which is sometimes non-obivous and needs good documentation so that nobody accidentally moves struct fields around. The example above declares `window` field before `inner` field which would result in the wrong drop order and cause problems.
 
-This solution is viable, however, relying on the drop order in Rust has been slightly controversial, as it clashes with the notion that the declaration order of fields in struct does not imply their memory layout. Indeed, while drop order has been stabilized in [@RFC-1857], it is still recommended for clarity to use `std::mem::ManuallyDrop` when something non-trivial is happening with drop.
+This solution is viable, however, relying on the drop order in Rust has been slightly controversial, as it clashes with the notion that the declaration order of fields in struct does not imply their memory layout. Indeed, while drop order has been stabilized in&nbsp;[@RFC-1857], it is still recommended for clarity to use `std::mem::ManuallyDrop` when something non-trivial is happening with drop.
 
 ##### Third attempt
 
-Third and final attempt was inspired by the recommendation in the documentation of `ManuallyDrop`[@RustManuallyDrop]. The code looks like this:
+Third and final attempt was inspired by the recommendation in the documentation of `ManuallyDrop`&nbsp;[@RustManuallyDrop]. The code looks like this:
 
 ```rust
 struct Surface<Window> {

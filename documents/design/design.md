@@ -10,9 +10,9 @@ The API was designed to fullfil three goals:
 
 Where performance is critical, programmers often fall back to the "classical" languages such as C and C++. These languages, however, are often burdened by legacy, backwards compatiblity and outdated design concepts.
 
-C is a very simple and fast language. However, programming industry has changed quite a lot since its first appearance 48 years ago[@clang]. Concepts common at the time in programming, such as easy low-level memory access and easy mapping to machine instruction, are hardly transferrable to todays high-level requirements of programming.
+C is a very simple and fast language. However, programming industry has changed quite a lot since its first appearance 48 years ago&nbsp;[@clang]. Concepts common at the time in programming, such as easy low-level memory access and easy mapping to machine instruction, are hardly transferrable to todays high-level requirements of programming.
 
-C++ attempted to extend C with a useful standard library of data types, algorithms and other features. This made C++ a much better candidate at creating complex performance-critical applications. However, stemming from C, it still caries the burden of past decisions. Writing sound code often requires the programmer to be _more_ expressive and pay more attention to intricacies of the language. This comes at an expense in code quality, readability and sometimes programmer sanity.
+C++ attempted to extend C with a useful standard library of data types, algorithms and other features. This made C++ a much better candidate at creating complex performance-critical applications. However, stemming from C, it still caries the burden of past decisions. Writing sound code often requires the programmer to be _more_ expressive and pay more attention to intricacies of the language. This comes at an expense in code quality, readability and sometimes programmer sanity. Even newer versions of the language such as C++17 and C++20 aim to be mostly backwards compatible, so new features require new syntax, which still leaves lot of room for error by using the older syntax constructs and types with less safety.
 
 The Rust programming language became a natural choice for this project because goals 2. and 3. are already core concepts of the language itself. Unlike C, it has extensive standard library and was designed for high-level programming. Unlike C++, higher code safety requires _less_ work from the programmer. That is, safety is enforced by the language features in form of statical analysis.
 
@@ -46,7 +46,7 @@ All of this is done at compile time and thus has no runtime cost. All code is as
 
 ### Cargo {#sec:design_cargo}
 
-Cargo[@Cargo] is Rusts package manager. It takes care of indexing and retrieving dependencies, compiling them and publishing libraries and binaries to the registry. Cargo also takes care of project configuration. In C/C++ codebases it is common to either invoke the compiler directly, or to use build tools such as `make` or `CMake`. Cargo is similar to those build tools, but it is a component of Rust ecosystem and is targeted at Rust only.
+Cargo&nbsp;[@Cargo] is Rusts package manager. It takes care of indexing and retrieving dependencies, compiling them and publishing libraries and binaries to the registry. Cargo also takes care of project configuration. In C/C++ codebases it is common to either invoke the compiler directly, or to use build tools such as `make` or `CMake`. Cargo is similar to those build tools, but it is a component of Rust ecosystem and is targeted at Rust only.
 
 Being a part of Rust itself, cargo is able to provide lots of useful abstraction over the rust compiler. The configuration file `Cargo.toml` is filled with useful project information such as the project name, author and short description. The file also contains technical information, like the targeted language edition, compiler and optimization flags, all of the dependencies (and how/where to look for them) and project features. Platform-specific configuration is also possible.
 
@@ -153,4 +153,4 @@ Vulkan leaves almost all CPU synchronization to the user. Explicit synchronizati
 
 Validations in Vulkan are generalization of synchronization requirements. Validations specify not only how to prevent data races, but also how to prevent other undefined behaviors. Vulkan validation requirements tend to be very long, dense and hard to parse, leading to an increased chance of breaking them. Vulkayes aims to alleviate this somewhat by guaranteeing at least the most common and statically solvable validations to be fulfilled.
 
-Last topic of synchronization is GPU synchronization. This encompasses synchronization of resource usage in command buffers executed on the GPU queues as well as the synchronization between CPU and GPU. This kind of synchronization is very important, but it is a complex topic on its own and is left to be added to Vulkayes as a separate project.
+The last topic of synchronization is GPU synchronization. This encompasses synchronization of resource usage in command buffers executed on the GPU queues as well as the synchronization between CPU and GPU. This kind of synchronization is very important, but it is a complex topic on its own and is left to be added to Vulkayes as a separate project.
