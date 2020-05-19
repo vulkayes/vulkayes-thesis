@@ -8,18 +8,19 @@ edition = "2018"
 nalgebra = "0.21"
 
 edwardium_logger = "1.1"
+# edwardium_logger = { version = "1.1", default-features = false, features = ["stderr_target"] }
 
 [dependencies.vulkayes-window]
-# git = "https://github.com/vulkayes/vulkayes-window"
-path = "../../../vulkayes-window"
+git = "https://github.com/vulkayes/vulkayes-window"
+# path = "../../../vulkayes-window"
 default-features = false
 features = [
     "minifb_window"
 ]
 
 [dependencies.vulkayes-core]
-# git = "https://github.com/vulkayes/vulkayes-core"
-path = "../../../vulkayes-core"
+git = "https://github.com/vulkayes/vulkayes-core"
+# path = "../../../vulkayes-core"
 default-features = false
 features = [
     "naive_device_allocator",
