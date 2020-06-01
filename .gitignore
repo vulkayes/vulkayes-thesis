@@ -1,3 +1,4 @@
 assets/ctu
 .DS_Store
 documents/*.tex
+tmp

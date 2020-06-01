@@ -867,6 +867,7 @@ checksum = "6a02e4885ed3bc0f2de90ea6dd45ebcbb66dacffe03547fadbb0eeae2770887d"
 [[package]]
 name = "vulkayes-core"
 version = "0.1.0"
+source = "git+https://github.com/vulkayes/vulkayes-core#199ee37908516fbf98248a6a4d782f0802d5eee0"
 dependencies = [
  "arrayvec",
  "ash",
@@ -878,6 +879,7 @@ dependencies = [
 [[package]]
 name = "vulkayes-window"
 version = "0.1.0"
+source = "git+https://github.com/vulkayes/vulkayes-window#1e54ec1ba640bf34c97ee1805da3223a9557b80c"
 dependencies = [
  "cocoa",
  "metal",
