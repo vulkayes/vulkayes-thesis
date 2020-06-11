@@ -114,3 +114,18 @@ Project name: Vulkayes
 * Vulkayes performs as fast as ash
 * Safety is greatly increased thanks to both Rust and API design
 * Vulkayes is a good step towards a more complex modular solution
+
+## Unanswered questions
+
+* What do you see as the biggest advantage of your system?
+	- Transparency over bindings (ash). This allows Vulkayes to grow iteratively with unfinished parts being written in ash until they are implemented. It is great for prototyping and also allows for benchmarking code very selectively.
+
+## Unanswered questions
+
+* Subsection 3.4 mentions a need to correctly synchronize CPU and GPU in respect to sharing resources. Do you have have any ideas about possible solutions?
+	- I've done a lot of work on Vulkano synchronization to make it as generic as possible before starting Vulkayes. I later learned that Tephra does something quite similar. It would seem like that is a good way to start, so porting the work I did on Vulkano would be my first attempt. However, controlling the synchronization is very hard, because it requires full control over the environment (like Vulkano and Tephra do). I would like to think that we can do better over time.
+
+## Unanswered questions
+
+* Subsection 3.3 references a recommentation from Vulkan about allocating memory in bigger chunks (e.g. 256MB). From the implementation description it is not quite clear how exactly allocation happens in Vulkayes, respectively who is responsible for effective allocation/deallocation. Is it the programmer, Rust or Vulkayes?
+	- Vulkayes core (this work) only exposes interface (Rust trait and some structs) for dealing with device memory allocations. Integration of specific memory allocators is required (such as the VMA), but outside of scope of the core library. However, Vulkayes does provide a Cargo feature `naive_memory_allocator` which provides a very simple implementation of this core interface to allow quick prototyping. There is a plan to support VMA explicitly through another crate (similar to `vulkayes-window`).
