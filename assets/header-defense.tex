@@ -1,5 +1,9 @@
 \definecolor{CTU-blue}{cmyk}{1, 0.43, 0, 0}
 \definecolor{CTU-lightblue}{cmyk}{0.3, 0.13, 0, 0}
+\definecolor{CTU-orange}{cmyk}{0, 0.57, 1.00, 0}
+
+\newcommand{\centerme}{\begin{center}}
+\newcommand{\centermeend}{\end{center}}
 
 \newcommand{\projectType}{Bachelor's Thesis}
 \newcommand{\universityName}{Czech Technical University in Prague}
@@ -24,6 +28,9 @@
 \setbeamercolor{itemize subitem}{fg = CTU-lightblue}
 \setbeamertemplate{itemize subitem}[circle]
 
+\setbeamercolor{itemize subsubitem}{fg = CTU-lightblue}
+\setbeamertemplate{itemize subsubitem}{-}
+
 \setbeamercolor*{palette primary}{fg = CTU-blue, bg = CTU-lightblue}
 \setbeamercolor*{palette secondary}{fg = CTU-blue, bg = gray!15!white}
 \setbeamercolor*{palette tertiary}{bg = CTU-blue, fg = gray!10!white}
@@ -43,5 +50,14 @@
 
 \setbeamercolor*{separation line}{}
 \setbeamercolor*{fine separation line}{}
+
+\setbeamersize{text margin left=10pt,text margin right=10pt}
+
+\setbeamertemplate{footline}{
+	\hfill
+	\color{CTU-blue}
+	\small{\insertframenumber}
+	\kern2pt\vskip4pt
+}
 
 \mode<all>

@@ -38,9 +38,12 @@ component [BufferView] <<Vrc>> #66FF98
 component [CommandPool] <<Vrc>> #66FF98
 component [CommandBuffer] <<Vrc>> #66CDFF
 
+component [QueryPool] <<Vrc>> #FF6680
+
 component [RenderPass] <<Vrc>> #66FF98
 component [FrameBuffer] <<Vrc>> #66FF98
-' component [ComputePipeline] <<Vrc>> #FF6680
+component [ComputePipeline] <<Vrc>> #FF6680
+component [RaytracingPipeline] <<Vrc>> #FF6680
 component [GraphicsPipeline] <<Vrc>> #66CDFF
 
 component [DescriptorSetLayout] <<Vrc>> #66FF98
@@ -51,6 +54,7 @@ component [DescriptorSet] <<Vrc>> #66FF98
 
 component [Semaphore] <<Vrc>> #66FF98
 component [Fence] <<Vrc>> #66FF98
+component [Event] <<Vrc>> #FF6680
 
 [Instance] <-- [PhysicalDevice]
 [Instance] <-- [Surface]
@@ -66,11 +70,13 @@ component [Fence] <<Vrc>> #66FF98
 [Device] <-- [Buffer]
 [Device] <-- [Sampler]
 [Device] <-- [CommandPool]
+[Device] <- [QueryPool]
 [Device] <-- [RenderPass]
 [Device] <-- [DescriptorSetLayout]
 [Device] <-- [DescriptorPool]
 [Device] <- [Semaphore]
 [Device] <- [Fence]
+[Device] <- [Event]
 
 [Swapchain] <-- [SwapchainImage]
 
@@ -86,7 +92,8 @@ component [Fence] <<Vrc>> #66FF98
 [RenderPass] <-- [FrameBuffer]
 [DescriptorSetLayout] <-- [DescriptorSet]
 [DescriptorSetLayout] <-- [PipelineLayout]
-' [PipelineLayout] <.. [ComputePipeline]
+[PipelineLayout] <-- [ComputePipeline]
+[PipelineLayout] <-- [RaytracingPipeline]
 [PipelineLayout] <-- [GraphicsPipeline]
 [DescriptorPool] <-- [DescriptorSet]
 

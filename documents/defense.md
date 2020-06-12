@@ -4,7 +4,7 @@ author: Eduard Lavuš
 institute: 
 	- Faculty of Electrical Engineering
 	- Czech Technical University in Prague
-date: 2020-06-01
+# date: 2020-06-01
 lang: en
 
 bibliography:
@@ -24,6 +24,7 @@ urlcolor: blue
 
 * Motivation
 	- Abandoned open-source projects with similar aim
+		- Vulkano and partially gfx-rs
 	- Rust safety features exploration
 
 * Aim
@@ -31,7 +32,7 @@ urlcolor: blue
 	- Comparing design to previous attempts and measuring development and performance cost
 	- Creating the "core" for future work to build upon
 
-## Structure of the thesis
+<!-- ## Structure of the thesis
 
 * Introduction to Vulkan
 * Overview of existing projects in both Rust and C++
@@ -40,41 +41,53 @@ urlcolor: blue
 * Evaluation
 	- Developer experience
 	- Performance
-	- Safety
+	- Safety -->
 
 ## Rust and Vulkan
 
-* Rust
-	- Fast
-	- Flexible
-	- Safe
-	- Developer friendly
-* Vulkan
-	- Fast
-	- Flexible
-	- Unsafe
-	- Developer unfriendly
+Vulkan API|C++|Rust
+----------|---|----
+Fast|Fast|Fast
+Flexible|Flexible|Flexible
+\color{CTU-orange}Unsafe|\color{CTU-orange}Unsafe|\color{CTU-blue}Safe
+\color{CTU-orange}Developer unfriendly|Developer hard|\color{CTU-blue}Developer friendly
 
-## Design and implementation
+\centerme
+C++ has a lot of legacy.
 
-![Object Dependency Graph of Vulkayes](assets/diagrams/object_dependency_graph.svg)
+Use Rust to make Vulkan safer and more friendly.
+
+![](assets/images/Rust_programming_language_black_logo.svg){width=15%}
+![](assets/images/Vulkan_RGB_Dec16.svg){width=40%}
+
+\centermeend
 
 ## Design and implementation
 
 Project name: Vulkayes
 
-* Design
+* **Design**
 	- Transparent
+		- Easy to fall down to low-level
 	- Minimal overhead
 	- Statical safety
-* Implementation
+		- Rust references are always valid (raw pointers are rare)
+		- Non-zero number types
+		- Tagged union types
+* **Implementation**
 	- Cargo features
+		- Condition compilation
+		- Multi-threaded feature
 	- Vrc, Deref, generics
+		- Vrc type alias allows seamless feature switching
+		- Deref is already familiar to Rust developers
 	- Flexibility
 
-## Results and evaluation
+## Design and implementation
 
-![Benchmarking application output](assets/images/teapot_bench_screenshot.png)
+![](assets/diagrams/object_dependency_graph.svg)
+
+Vulkayes Object Dependency Graph, most Vulkan object are wrapped
 
 ## Results and evaluation
 
@@ -92,21 +105,28 @@ Project name: Vulkayes
 
 ## Results and evaluation
 
-![
-	_Average median time (n = 99000): macOS 10.15.3 (19D76), Quad-Core Intel Core i5, Intel Iris Plus Graphics 655, Vulkan 1.2.135_
-](assets/images/mac_bars.svg){width=80%}
+\centerme
+![](assets/images/teapot_bench_screenshot.png){width=90%}
+
+Benchmarking program output
+
+\centermeend
 
 ## Results and evaluation
 
-![
-	_Histogram of uniform stage of the benchmarks (n = 99000). It is clear that ash is faster than both single- and multi-threaded Vulkayes. However, the overhead is constant._
-](assets/images/uniform_mac_hist.svg){width=80%}
+\centerme
+![](assets/images/mac_bars.svg){width=80%}
+
+_Average median time (n = 99000)_
+
+\centermeend
 
 ## Results and evaluation
 
-![
-	_Histogram of uniform stage of the benchmarks (n = 99000) with 1000 writes instead of 1. The overhead displayed in previous bench is overshadowed by the gains of proper writing strategy._
-](assets/images/uniform1000_mac_hist.svg){width=80%}
+![](assets/images/uniform_mac_hist.svg){width=49%}
+![](assets/images/uniform1000_mac_hist.svg){width=49%}
+
+_Histogram of uniform stage of the benchmarks (n = 99000). On right: 1000 writes instead of one._
 
 ## Conclusion
 
@@ -114,18 +134,29 @@ Project name: Vulkayes
 * Vulkayes performs as fast as ash
 * Safety is greatly increased thanks to both Rust and API design
 * Vulkayes is a good step towards a more complex modular solution
+* Open-source, licensed under either MIT or Apache 2.0 at https://github.com/vulkayes
 
 ## Unanswered questions
 
 * What do you see as the biggest advantage of your system?
-	- Transparency over bindings (ash). This allows Vulkayes to grow iteratively with unfinished parts being written in ash until they are implemented. It is great for prototyping and also allows for benchmarking code very selectively.
+	- Transparency and developer experience
+		- Fast prototyping
+		- Shorter and safer code
+		- Easy to work around missing parts
+		- Allows very selective benchmarking
 
 ## Unanswered questions
 
 * Subsection 3.4 mentions a need to correctly synchronize CPU and GPU in respect to sharing resources. Do you have have any ideas about possible solutions?
-	- I've done a lot of work on Vulkano synchronization to make it as generic as possible before starting Vulkayes. I later learned that Tephra does something quite similar. It would seem like that is a good way to start, so porting the work I did on Vulkano would be my first attempt. However, controlling the synchronization is very hard, because it requires full control over the environment (like Vulkano and Tephra do). I would like to think that we can do better over time.
+	- Experience with Vulkano synchronization before starting Vulkayes
+	- Tephra does something similar
+	- Initial attempt based on this, but full control is too restrictive
+	- Can we do better?
 
 ## Unanswered questions
 
 * Subsection 3.3 references a recommentation from Vulkan about allocating memory in bigger chunks (e.g. 256MB). From the implementation description it is not quite clear how exactly allocation happens in Vulkayes, respectively who is responsible for effective allocation/deallocation. Is it the programmer, Rust or Vulkayes?
-	- Vulkayes core (this work) only exposes interface (Rust trait and some structs) for dealing with device memory allocations. Integration of specific memory allocators is required (such as the VMA), but outside of scope of the core library. However, Vulkayes does provide a Cargo feature `naive_memory_allocator` which provides a very simple implementation of this core interface to allow quick prototyping. There is a plan to support VMA explicitly through another crate (similar to `vulkayes-window`).
+	- Core only exposes interface for allocations
+		- Integration of specific allocators is out of scope
+	- However, Vulkayes provides `naive_memory_allocator` Cargo feature
+	- Plan to support VMA explicitly in a separate crate (similar to `vulkayes-window`)
